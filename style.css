@@ -1064,27 +1064,29 @@ textarea {
 .install-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-    gap: 1.25rem;
+    gap: 1.35rem;
     align-items: stretch;
 }
 
 .install-card {
     position: relative;
     padding: 1.8rem;
-    background: rgba(10, 13, 32, 0.82);
+    background: linear-gradient(145deg, rgba(10, 13, 32, 0.9), rgba(12, 16, 38, 0.82));
     border-radius: var(--radius-lg);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: var(--shadow-soft);
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.45);
     display: grid;
     gap: 1rem;
     overflow: hidden;
+    backdrop-filter: blur(8px);
+    transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
 }
 
 .install-card::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(108, 92, 231, 0.1), rgba(15, 208, 192, 0.12));
+    background: linear-gradient(135deg, rgba(108, 92, 231, 0.16), rgba(15, 208, 192, 0.14));
     opacity: 0;
     transition: var(--transition);
 }
@@ -1093,14 +1095,23 @@ textarea {
     opacity: 1;
 }
 
+.install-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(255, 255, 255, 0.18);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5);
+}
+
 .install-card__media {
     position: relative;
-    height: 140px;
-    border-radius: var(--radius-md);
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    border-radius: calc(var(--radius-md) + 4px);
     display: grid;
     place-items: center;
     overflow: hidden;
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    padding: 0.45rem;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(108, 92, 231, 0.1));
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08), 0 16px 32px rgba(0, 0, 0, 0.35);
 }
 
 .install-card__media span {
@@ -1119,37 +1130,41 @@ textarea {
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 0.12), transparent 45%),
-        radial-gradient(circle at 80% 60%, rgba(255, 255, 255, 0.08), transparent 45%);
-    opacity: 0.35;
+    background: radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 0.14), transparent 45%),
+        radial-gradient(circle at 78% 65%, rgba(108, 92, 231, 0.12), transparent 45%);
+    opacity: 0.45;
+    pointer-events: none;
 }
 
 .install-card__media img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    object-position: center;
+    padding: 0.25rem;
     border-radius: inherit;
     display: block;
+    filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.35));
 }
 
 .brand-samsung {
-    background: linear-gradient(135deg, #0f1a3a, #1d2f70);
+    background: linear-gradient(135deg, rgba(16, 32, 72, 0.9), rgba(42, 78, 147, 0.9));
 }
 
 .brand-lg {
-    background: linear-gradient(135deg, #1a0f3a, #592f80);
+    background: linear-gradient(135deg, rgba(45, 16, 70, 0.9), rgba(115, 54, 146, 0.9));
 }
 
 .brand-android {
-    background: linear-gradient(135deg, #0f2a2a, #145c4c);
+    background: linear-gradient(135deg, rgba(12, 46, 46, 0.9), rgba(36, 128, 108, 0.9));
 }
 
 .brand-apple {
-    background: linear-gradient(135deg, #0f111a, #2a2e3d);
+    background: linear-gradient(135deg, rgba(14, 15, 26, 0.92), rgba(54, 58, 78, 0.9));
 }
 
 .brand-windows {
-    background: linear-gradient(135deg, #0f2340, #1d4b8f);
+    background: linear-gradient(135deg, rgba(16, 40, 78, 0.92), rgba(42, 98, 172, 0.9));
 }
 
 @media (min-width: 1200px) {
