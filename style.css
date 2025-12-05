@@ -277,12 +277,18 @@ a {
     min-height: 90vh;
     display: flex;
     align-items: center;
+    overflow: hidden;
+    isolation: isolate;
 }
 
 .hero-overlay {
     position: absolute;
     inset: 0;
-    background: var(--gradient-hero);
+    background:
+        linear-gradient(180deg, rgba(5, 7, 20, 0.78) 0%, rgba(5, 7, 20, 0.38) 22%, rgba(5, 7, 20, 0) 44%),
+        linear-gradient(180deg, rgba(5, 7, 20, 0) 58%, rgba(5, 7, 20, 0.32) 80%, rgba(5, 7, 20, 0.82) 100%),
+        var(--gradient-hero);
+    pointer-events: none;
     z-index: 0;
 }
 
@@ -950,7 +956,23 @@ a {
 }
 
 .contact-section {
+    position: relative;
     padding: 5rem 0;
+    background: linear-gradient(180deg, rgba(5, 7, 20, 0.98) 0%, rgba(5, 7, 20, 0.92) 46%, rgba(5, 7, 20, 0.88) 100%);
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.contact-section::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 160px;
+    background: linear-gradient(180deg, rgba(5, 7, 20, 0) 0%, rgba(5, 7, 20, 0.9) 68%, rgba(5, 7, 20, 0.96) 100%);
+    pointer-events: none;
+    z-index: 0;
 }
 
 .contact-grid {
@@ -958,6 +980,8 @@ a {
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 3rem;
     align-items: start;
+    position: relative;
+    z-index: 1;
 }
 
 .contact-info p {
@@ -1063,8 +1087,28 @@ textarea {
 }
 
 .install-section {
+    position: relative;
     padding: 5rem 0 4rem;
-    background: linear-gradient(180deg, rgba(8, 11, 26, 0.65), rgba(8, 11, 26, 0.35));
+    background: linear-gradient(180deg, rgba(5, 7, 20, 0.96) 0%, rgba(5, 7, 20, 0.92) 38%, rgba(6, 9, 24, 0.9) 100%);
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.install-section::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -1px;
+    height: 160px;
+    background: linear-gradient(180deg, rgba(5, 7, 20, 0.94) 0%, rgba(5, 7, 20, 0) 100%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.install-section .container {
+    position: relative;
+    z-index: 1;
 }
 
 .install-grid {
