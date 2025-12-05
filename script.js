@@ -110,6 +110,45 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Device install dropdowns
+    const deviceCards = document.querySelectorAll('.device-card');
+    if (deviceCards.length > 0) {
+        deviceCards.forEach(card => {
+            const header = card.querySelector('.device-card__header');
+            const dropdown = card.querySelector('.device-dropdown');
+            if (!header || !dropdown) return;
+
+            header.addEventListener('click', () => {
+                const isOpen = card.classList.contains('active');
+
+                deviceCards.forEach(other => {
+                    if (other !== card) {
+                        other.classList.remove('active');
+                        const otherDropdown = other.querySelector('.device-dropdown');
+                        if (otherDropdown) {
+                            otherDropdown.style.maxHeight = null;
+                        }
+                    }
+                });
+
+                if (!isOpen) {
+                    card.classList.add('active');
+                    dropdown.style.maxHeight = `${dropdown.scrollHeight}px`;
+                } else {
+                    card.classList.remove('active');
+                    dropdown.style.maxHeight = null;
+                }
+            });
+        });
+
+        window.addEventListener('resize', () => {
+            const activeDropdown = document.querySelector('.device-card.active .device-dropdown');
+            if (activeDropdown) {
+                activeDropdown.style.maxHeight = `${activeDropdown.scrollHeight}px`;
+            }
+        });
+    }
+
     // Animated counters for stats section
     const statCards = document.querySelectorAll('.stat-card');
     const observerOptions = {
