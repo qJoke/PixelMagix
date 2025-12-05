@@ -482,6 +482,38 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Highlight install card based on devices tap/click
+    const installSection = document.getElementById('instalare');
+    const installCards = document.querySelectorAll('.install-card[data-install]');
+    const deviceLinks = document.querySelectorAll('.devices-logos a[data-install-target]');
+    const highlightDuration = 1800;
+
+    const clearInstallHighlights = () => {
+        installCards.forEach(card => card.classList.remove('highlight-install'));
+    };
+
+    const highlightInstallCard = (card) => {
+        clearInstallHighlights();
+        card.classList.add('highlight-install');
+        window.setTimeout(() => card.classList.remove('highlight-install'), highlightDuration);
+    };
+
+    deviceLinks.forEach(link => {
+        link.addEventListener('click', (event) => {
+            const targetKey = link.dataset.installTarget;
+            const targetCard = targetKey ? document.querySelector(`.install-card[data-install="${targetKey}"]`) : null;
+
+            if (installSection) {
+                event.preventDefault();
+                installSection.scrollIntoView({ behavior: 'smooth' });
+            }
+
+            if (targetCard) {
+                window.setTimeout(() => highlightInstallCard(targetCard), 240);
+            }
+        });
+    });
+
     // Require at least one contact method in the form + send via EmailJS
     const contactForm = document.querySelector('.contact-form form');
     const phoneInput = document.getElementById('telefon');
