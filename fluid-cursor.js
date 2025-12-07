@@ -1,9 +1,20 @@
 const useFluidCursor = () => {
   const canvas = document.getElementById('fluid');
-  canvas.width = 1920;
-  canvas.height = 1080;
 
-  console.log("Canvas size:", canvas.width, canvas.height);
+  // Device detection (do this first before setting canvas size)
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  const isLowPowerDevice = navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4;
+
+  // Set initial canvas size based on device (will be resized by resizeCanvas later)
+  if (isMobile) {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  } else {
+    canvas.width = 1920;
+    canvas.height = 1080;
+  }
+
+  console.log("Fluid cursor initialized - Mobile:", isMobile, "Canvas:", canvas.width + "x" + canvas.height);
 
   let config = {
     SIM_RESOLUTION: 128,
@@ -23,15 +34,34 @@ const useFluidCursor = () => {
     TRANSPARENT: true,
   };
 
-  // Mobile optimization
-  if (window.matchMedia('(max-width: 768px)').matches) {
+  // Comprehensive mobile optimization
+  if (isMobile) {
     config.SIM_RESOLUTION = 64;
-    config.DYE_RESOLUTION = 512;
+    config.DYE_RESOLUTION = 384;           // Reduced from 512 for better performance
     config.PRESSURE_ITERATIONS = 3;
     config.SPLAT_FORCE = 6000;
     config.SPLAT_RADIUS = 0.25;
     config.SHADING = false;
+    config.CURL = 8;                       // Reduced from 12 for less GPU work
+    config.VELOCITY_DISSIPATION = 4.5;     // Increased for faster fade (less work)
+    config.DENSITY_DISSIPATION = 4;        // Increased for faster fade
   }
+
+  // Additional optimization for low-power devices (even on desktop)
+  if (isLowPowerDevice && !isMobile) {
+    config.DYE_RESOLUTION = 1024;
+    config.PRESSURE_ITERATIONS = 15;
+  }
+
+  // Frame rate throttling for mobile (target ~30fps instead of 60fps)
+  let frameSkip = isMobile ? 1 : 0;  // Skip every other frame on mobile
+  let frameCount = 0;
+
+  // Dynamic quality adjustment based on performance
+  let performanceHistory = [];
+  const PERFORMANCE_SAMPLE_SIZE = 30;
+  let qualityReduced = false;
+
   function pointerPrototype() {
     this.id = -1;
     this.texcoordX = 0;
@@ -840,6 +870,38 @@ const useFluidCursor = () => {
   let colorUpdateTimer = 0.0;
   function update() {
     const dt = calcDeltaTime();
+
+    // Frame rate throttling for mobile - skip frames to target ~30fps
+    if (frameSkip > 0) {
+      frameCount++;
+      if (frameCount % (frameSkip + 1) !== 0) {
+        requestAnimationFrame(update);
+        return;
+      }
+    }
+
+    // Dynamic quality adjustment based on actual performance
+    if (dt > 0) {
+      const fps = 1 / dt;
+      performanceHistory.push(fps);
+      if (performanceHistory.length > PERFORMANCE_SAMPLE_SIZE) {
+        performanceHistory.shift();
+      }
+
+      // If we have enough samples, check if device is struggling
+      if (performanceHistory.length === PERFORMANCE_SAMPLE_SIZE && !qualityReduced) {
+        const avgFps = performanceHistory.reduce((a, b) => a + b, 0) / PERFORMANCE_SAMPLE_SIZE;
+        if (avgFps < 25) {
+          // Device is struggling, reduce quality further
+          console.log('Fluid cursor: Reducing quality due to low FPS (' + avgFps.toFixed(1) + ')');
+          config.DYE_RESOLUTION = Math.max(256, config.DYE_RESOLUTION / 2);
+          config.PRESSURE_ITERATIONS = Math.max(2, Math.floor(config.PRESSURE_ITERATIONS / 2));
+          qualityReduced = true;
+          initFramebuffers();
+        }
+      }
+    }
+
     if (resizeCanvas()) initFramebuffers();
     updateColors(dt);
     applyInputs();
