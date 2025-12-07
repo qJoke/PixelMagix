@@ -1770,3 +1770,21 @@ textarea {
     object-fit: cover;
     aspect-ratio: 3 / 2;
 }
+
+/* Fix channels-card image display on desktop */
+.channels-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    aspect-ratio: 16 / 9;
+}
+
+.channels-media {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.channels-card {
+    max-width: 550px;
+}
