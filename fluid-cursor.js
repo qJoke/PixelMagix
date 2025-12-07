@@ -1163,9 +1163,51 @@ const useFluidCursor = () => {
     const touches = e.changedTouches;
     let pointer = pointers[0];
     for (let i = 0; i < touches.length; i++) {
-      updatePointerUpData(pointer);
+      // Only update if this touch matches the pointer's tracked touch
+      if (pointer.id === touches[i].identifier || pointer.id === -1) {
+        updatePointerUpData(pointer);
+      }
     }
   });
+
+  // CRITICAL: Handle touchcancel - this fires when touch is interrupted
+  // (e.g., by system gestures, alerts, or when browser takes over the touch)
+  window.addEventListener('touchcancel', (e) => {
+    const touches = e.changedTouches;
+    let pointer = pointers[0];
+    for (let i = 0; i < touches.length; i++) {
+      updatePointerUpData(pointer);
+    }
+    // Force reset all pointers on touchcancel to prevent stuck state
+    resetAllPointers();
+  });
+
+  // Reset pointers when page visibility changes (e.g., switching apps on mobile)
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      resetAllPointers();
+    }
+  });
+
+  // Reset pointers when window loses focus
+  window.addEventListener('blur', () => {
+    resetAllPointers();
+  });
+
+  // Reset pointers on page unload/beforeunload
+  window.addEventListener('pagehide', () => {
+    resetAllPointers();
+  });
+
+  // Helper function to reset all pointer states
+  function resetAllPointers() {
+    for (let i = 0; i < pointers.length; i++) {
+      pointers[i].down = false;
+      pointers[i].moved = false;
+      pointers[i].id = -1;
+    }
+  }
+
   function updatePointerDownData(pointer, id, posX, posY) {
     pointer.id = id;
     pointer.down = true;
