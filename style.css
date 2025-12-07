@@ -750,22 +750,24 @@ a {
     padding: 0.25rem 0.75rem 0.75rem;
     mask-image: linear-gradient(90deg, transparent, #fff 6%, #fff 94%, transparent);
     -webkit-mask-image: linear-gradient(90deg, transparent, #fff 6%, #fff 94%, transparent);
-    scrollbar-width: thin;
-    scrollbar-color: rgba(108, 92, 231, 0.6) rgba(255, 255, 255, 0.06);
+    /* Hide scrollbar completely */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
     cursor: grab;
-    scroll-snap-type: x mandatory;
-    scroll-padding-inline: 0.75rem;
     overscroll-behavior-x: contain;
     will-change: scroll-position;
+    touch-action: pan-x;
 }
 
 .testimonials-window.is-grabbing {
     cursor: grabbing;
     user-select: none;
+    scroll-behavior: auto;
 }
 
 .testimonials-window.is-gliding {
     cursor: grabbing;
+    scroll-behavior: auto;
 }
 
 .testimonials-window.is-grabbing .testimonial-card,
@@ -781,22 +783,11 @@ a {
     transform: translateY(-2px);
 }
 
+/* Hide scrollbar for WebKit browsers */
 .testimonials-window::-webkit-scrollbar {
-    height: 8px;
-}
-
-.testimonials-window::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.04);
-    border-radius: 999px;
-}
-
-.testimonials-window::-webkit-scrollbar-thumb {
-    background: linear-gradient(135deg, var(--color-primary), #5430ff);
-    border-radius: 999px;
-}
-
-.testimonials-window::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(135deg, var(--color-primary-light), #7a6bff);
+    display: none;
+    height: 0;
+    width: 0;
 }
 
 .testimonials-track {

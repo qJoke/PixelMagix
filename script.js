@@ -153,15 +153,39 @@ document.addEventListener('DOMContentLoaded', () => {
         statCards.forEach(card => animateCounter({ target: card }));
     }
 
-    // Testimonials slider
+    // Testimonials infinite slider
     const sliderTrack = document.querySelector('.testimonials-track');
     const sliderWindow = document.querySelector('.testimonials-window');
     const prevButton = document.querySelector('.slider-btn--prev');
     const nextButton = document.querySelector('.slider-btn--next');
 
     if (sliderTrack && sliderWindow) {
-        const slides = Array.from(sliderTrack.children);
-        let snapPoints = [];
+        const originalSlides = Array.from(sliderTrack.children);
+        const slideCount = originalSlides.length;
+        const cloneCount = Math.min(3, slideCount); // Clone first/last 3 cards for seamless loop
+
+        // Clone slides for infinite effect
+        const setupInfiniteLoop = () => {
+            // Clone last N slides and prepend
+            for (let i = slideCount - 1; i >= slideCount - cloneCount; i--) {
+                const clone = originalSlides[i].cloneNode(true);
+                clone.classList.add('clone');
+                clone.setAttribute('aria-hidden', 'true');
+                sliderTrack.insertBefore(clone, sliderTrack.firstChild);
+            }
+            // Clone first N slides and append
+            for (let i = 0; i < cloneCount; i++) {
+                const clone = originalSlides[i].cloneNode(true);
+                clone.classList.add('clone');
+                clone.setAttribute('aria-hidden', 'true');
+                sliderTrack.appendChild(clone);
+            }
+        };
+
+        setupInfiniteLoop();
+
+        const allSlides = Array.from(sliderTrack.children);
+        let currentIndex = cloneCount; // Start at first real slide
         let isDragging = false;
         let startX = 0;
         let startScrollLeft = 0;
@@ -169,7 +193,20 @@ document.addEventListener('DOMContentLoaded', () => {
         let lastTimestamp = 0;
         let velocity = 0;
         let momentumFrame = null;
-        let scrollSyncFrame = null;
+        let isRepositioning = false;
+
+        const getSlideWidth = () => {
+            const slide = allSlides[cloneCount];
+            if (!slide) return 300;
+            const style = window.getComputedStyle(sliderTrack);
+            const gap = parseFloat(style.gap) || 24;
+            return slide.offsetWidth + gap;
+        };
+
+        const getScrollPositionForIndex = (index) => {
+            const slideWidth = getSlideWidth();
+            return index * slideWidth;
+        };
 
         const stopMomentum = () => {
             if (momentumFrame) {
@@ -179,59 +216,68 @@ document.addEventListener('DOMContentLoaded', () => {
             sliderWindow.classList.remove('is-gliding');
         };
 
-        const getMaxScroll = () => Math.max(0, sliderTrack.scrollWidth - sliderWindow.clientWidth);
-        const clampScroll = (value) => Math.min(Math.max(value, 0), getMaxScroll());
+        // Instantly reposition without animation when reaching clones
+        const checkBoundaries = () => {
+            if (isRepositioning) return;
 
-        const rebuildSnapPoints = () => {
-            const baseOffset = sliderTrack.offsetLeft;
-            const maxScroll = getMaxScroll();
-            snapPoints = [
-                0,
-                ...slides.map(slide => Math.round(slide.offsetLeft - baseOffset)),
-                maxScroll
-            ];
-            snapPoints = [...new Set(snapPoints)].sort((a, b) => a - b);
+            const slideWidth = getSlideWidth();
+            const scrollLeft = sliderWindow.scrollLeft;
+            const firstRealPosition = cloneCount * slideWidth;
+            const lastRealPosition = (cloneCount + slideCount - 1) * slideWidth;
+            const cloneStartThreshold = (cloneCount - 1) * slideWidth;
+            const cloneEndThreshold = (cloneCount + slideCount) * slideWidth;
+
+            if (scrollLeft <= cloneStartThreshold) {
+                // Jumped to start clones - reposition to end real slides
+                isRepositioning = true;
+                const offset = scrollLeft - cloneStartThreshold;
+                sliderWindow.style.scrollBehavior = 'auto';
+                sliderWindow.scrollLeft = lastRealPosition + offset;
+                currentIndex = cloneCount + slideCount - 1;
+                requestAnimationFrame(() => {
+                    sliderWindow.style.scrollBehavior = '';
+                    isRepositioning = false;
+                });
+            } else if (scrollLeft >= cloneEndThreshold) {
+                // Jumped to end clones - reposition to start real slides
+                isRepositioning = true;
+                const offset = scrollLeft - cloneEndThreshold;
+                sliderWindow.style.scrollBehavior = 'auto';
+                sliderWindow.scrollLeft = firstRealPosition + offset;
+                currentIndex = cloneCount;
+                requestAnimationFrame(() => {
+                    sliderWindow.style.scrollBehavior = '';
+                    isRepositioning = false;
+                });
+            }
         };
 
-        const getNearestIndex = (current = sliderWindow.scrollLeft) => {
-            if (snapPoints.length === 0) return 0;
-            return snapPoints.reduce((nearest, point, index) => {
-                return Math.abs(point - current) < Math.abs(snapPoints[nearest] - current) ? index : nearest;
-            }, 0);
-        };
-
-        const syncButtons = () => {
-            const maxScroll = getMaxScroll();
-            const current = sliderWindow.scrollLeft;
-            if (prevButton) prevButton.disabled = current <= 6;
-            if (nextButton) nextButton.disabled = current >= maxScroll - 6;
-        };
-
-        const queueSyncButtons = () => {
-            if (scrollSyncFrame) return;
-            scrollSyncFrame = requestAnimationFrame(() => {
-                syncButtons();
-                scrollSyncFrame = null;
+        // Initialize position to first real slide
+        const initPosition = () => {
+            sliderWindow.style.scrollBehavior = 'auto';
+            sliderWindow.scrollLeft = getScrollPositionForIndex(cloneCount);
+            requestAnimationFrame(() => {
+                sliderWindow.style.scrollBehavior = '';
             });
         };
 
-        const snapToNearest = () => {
-            if (snapPoints.length === 0) return;
-            const nearest = getNearestIndex();
-            const target = clampScroll(snapPoints[nearest]);
-            sliderWindow.scrollTo({ left: target, behavior: 'smooth' });
-            syncButtons();
+        const scrollToIndex = (index, smooth = true) => {
+            stopMomentum();
+            currentIndex = index;
+            const targetScroll = getScrollPositionForIndex(index);
+            sliderWindow.scrollTo({
+                left: targetScroll,
+                behavior: smooth ? 'smooth' : 'auto'
+            });
         };
 
         const scrollByStep = (direction) => {
             stopMomentum();
-            rebuildSnapPoints();
-            if (snapPoints.length === 0) return;
-            const currentIndex = getNearestIndex();
-            const targetIndex = Math.min(Math.max(currentIndex + direction, 0), snapPoints.length - 1);
-            const target = clampScroll(snapPoints[targetIndex]);
-            sliderWindow.scrollTo({ left: target, behavior: 'smooth' });
-            syncButtons();
+            currentIndex += direction;
+            scrollToIndex(currentIndex, true);
+
+            // Check boundaries after scroll completes
+            setTimeout(checkBoundaries, 350);
         };
 
         prevButton?.addEventListener('click', () => scrollByStep(-1));
@@ -241,25 +287,32 @@ document.addEventListener('DOMContentLoaded', () => {
             stopMomentum();
             sliderWindow.classList.add('is-gliding');
             const friction = 0.94;
-            const minVelocity = 0.005;
-            const maxScroll = getMaxScroll();
+            const minVelocity = 0.008;
             let currentVelocity = Math.max(Math.min(velocity, 3.5), -3.5);
             let lastTime = performance.now();
 
             const step = (now) => {
-                const deltaTime = now - lastTime;
-                lastTime = now;
-                sliderWindow.scrollLeft = clampScroll(sliderWindow.scrollLeft + currentVelocity * deltaTime);
-                currentVelocity *= friction;
-
-                const atEdge = sliderWindow.scrollLeft <= 0 || sliderWindow.scrollLeft >= maxScroll;
-                if (atEdge || Math.abs(currentVelocity) < minVelocity) {
-                    stopMomentum();
-                    snapToNearest();
+                if (isRepositioning) {
+                    momentumFrame = requestAnimationFrame(step);
                     return;
                 }
 
-                queueSyncButtons();
+                const deltaTime = now - lastTime;
+                lastTime = now;
+                sliderWindow.scrollLeft += currentVelocity * deltaTime;
+                currentVelocity *= friction;
+
+                checkBoundaries();
+
+                if (Math.abs(currentVelocity) < minVelocity) {
+                    stopMomentum();
+                    // Snap to nearest slide
+                    const slideWidth = getSlideWidth();
+                    const nearestIndex = Math.round(sliderWindow.scrollLeft / slideWidth);
+                    scrollToIndex(nearestIndex, true);
+                    return;
+                }
+
                 momentumFrame = requestAnimationFrame(step);
             };
 
@@ -273,7 +326,10 @@ document.addEventListener('DOMContentLoaded', () => {
             sliderWindow.style.scrollBehavior = '';
 
             if (Math.abs(velocity) < 0.01) {
-                snapToNearest();
+                // Snap to nearest slide
+                const slideWidth = getSlideWidth();
+                const nearestIndex = Math.round(sliderWindow.scrollLeft / slideWidth);
+                scrollToIndex(nearestIndex, true);
             } else {
                 startMomentumScroll();
             }
@@ -291,7 +347,6 @@ document.addEventListener('DOMContentLoaded', () => {
         sliderWindow.addEventListener('pointerdown', (event) => {
             if (event.pointerType === 'mouse' && event.button !== 0) return;
             stopMomentum();
-            rebuildSnapPoints();
             isDragging = true;
             startX = event.clientX;
             startScrollLeft = sliderWindow.scrollLeft;
@@ -308,7 +363,7 @@ document.addEventListener('DOMContentLoaded', () => {
         sliderWindow.addEventListener('pointermove', (event) => {
             if (!isDragging) return;
             const delta = event.clientX - startX;
-            sliderWindow.scrollLeft = clampScroll(startScrollLeft - delta);
+            sliderWindow.scrollLeft = startScrollLeft - delta;
 
             const now = performance.now();
             const elapsed = now - lastTimestamp;
@@ -318,21 +373,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 lastScrollLeft = currentScroll;
                 lastTimestamp = now;
             }
+
+            checkBoundaries();
         });
 
         ['pointerup', 'pointerleave', 'pointercancel'].forEach(type => {
             sliderWindow.addEventListener(type, endDrag);
         });
 
-        sliderWindow.addEventListener('scroll', queueSyncButtons, { passive: true });
+        sliderWindow.addEventListener('scroll', () => {
+            if (!isDragging && !isRepositioning) {
+                checkBoundaries();
+            }
+        }, { passive: true });
+
         window.addEventListener('resize', () => {
             stopMomentum();
-            rebuildSnapPoints();
-            sliderWindow.scrollLeft = clampScroll(sliderWindow.scrollLeft);
-            syncButtons();
+            // Recenter on current slide after resize
+            scrollToIndex(currentIndex, false);
         });
-        rebuildSnapPoints();
-        syncButtons();
+
+        // Initialize
+        initPosition();
     }
 
     // WhatsApp chat interactions
