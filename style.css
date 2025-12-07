@@ -1756,3 +1756,17 @@ textarea {
 .testimonials-track>* {
     flex: 0 0 min(320px, 85vw);
 }
+
+/* Promo card image fix for mobile */
+.promo-image-container {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.promo-image-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    aspect-ratio: 3 / 2;
+}
