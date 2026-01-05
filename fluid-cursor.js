@@ -3,6 +3,15 @@ const useFluidCursor = () => {
 
   // Device detection (do this first before setting canvas size)
   const isMobile = window.matchMedia('(max-width: 768px)').matches;
+
+  // Completely disable fluid cursor on mobile phones
+  if (isMobile) {
+    if (canvas) {
+      canvas.style.display = 'none';
+    }
+    console.log("Fluid cursor disabled on mobile device");
+    return;
+  }
   const isLowPowerDevice = navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4;
 
   // Set initial canvas size based on device (will be resized by resizeCanvas later)
