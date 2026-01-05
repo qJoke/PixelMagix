@@ -403,7 +403,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeChatBtn = document.getElementById('close-chat-btn');
     const sendMessageBtn = document.getElementById('send-whatsapp-message');
     const whatsappTextarea = document.getElementById('whatsapp-message');
-    const whatsappNumber = '972555171043';
+    const whatsappNumber = '447449765468';
     const whatsappDefaultMessage = 'Salut! Sunt interesat de abonamentele Pixel Magix TV. Vreau sa aflu detalii si sa primesc un test gratuit de 24h. Multumesc!';
 
     const openWhatsAppWithMessage = (message = whatsappDefaultMessage) => {
@@ -412,7 +412,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.open(url, '_blank');
     };
 
-    const whatsappLinks = document.querySelectorAll('a[href^="https://wa.me/972555171043"]:not(.js-whatsapp-plan)');
+    const whatsappLinks = document.querySelectorAll('a[href^="https://wa.me/447449765468"]:not(.js-whatsapp-plan)');
     const defaultWhatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappDefaultMessage)}`;
 
     whatsappLinks.forEach(link => {
