@@ -1031,6 +1031,92 @@ textarea {
     resize: vertical;
 }
 
+.iti {
+    width: 100%;
+    --iti-border-color: var(--color-border);
+    --iti-dropdown-bg: rgba(10, 13, 32, 0.98);
+    --iti-hover-color: rgba(108, 92, 231, 0.2);
+    --iti-dialcode-color: var(--color-text-muted);
+    --iti-search-icon-color: rgba(230, 232, 252, 0.65);
+    --iti-arrow-color: rgba(230, 232, 252, 0.75);
+}
+
+.iti__selected-flag {
+    background: rgba(6, 9, 25, 0.85);
+    border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0 0.75rem;
+}
+
+.iti__selected-flag:hover,
+.iti__selected-flag:focus {
+    background: rgba(10, 13, 32, 0.95);
+}
+
+.iti__selected-dial-code {
+    color: #fff;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+.iti__tel-input,
+.iti input[type="tel"] {
+    width: 100%;
+}
+
+.iti__dropdown-content {
+    background: rgba(10, 13, 32, 0.98);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+}
+
+.iti--inline-dropdown .iti__dropdown-content {
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-soft);
+}
+
+.iti__country-list {
+    background: rgba(10, 13, 32, 0.98);
+    border: none;
+    box-shadow: none;
+    color: #fff;
+}
+
+.iti__country {
+    padding: 0.55rem 0.8rem;
+}
+
+.iti__country.iti__highlight {
+    background: rgba(108, 92, 231, 0.2);
+}
+
+.iti__dial-code {
+    color: var(--color-text-muted);
+}
+
+.iti__divider {
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.iti__search-input + .iti__country-list {
+    border-top: 1px solid var(--color-border);
+}
+
+.iti__search-input {
+    background: rgba(6, 9, 25, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border-radius: 999px;
+    padding: 0.45rem 0.75rem 0.45rem 2.3rem;
+    background-position: 0.8rem center;
+    background-repeat: no-repeat;
+    background-size: 14px;
+}
+
+.iti__search-input::placeholder {
+    color: var(--color-text-muted);
+}
+
 .input-note {
     font-size: 0.85rem;
     color: var(--color-text-muted);

@@ -594,6 +594,55 @@ document.addEventListener('DOMContentLoaded', () => {
         templateId: 'template_0knsbj1',
         publicKey: 'AyXyYZ2ZGPHEsL38U'
     };
+    const phoneUtilsUrl = 'https://cdn.jsdelivr.net/npm/intl-tel-input@25.12.4/build/js/utils.js';
+
+    const initPhoneInput = () => {
+        if (!phoneInput || typeof window.intlTelInput !== 'function') {
+            if (phoneInput) {
+                console.warn('intl-tel-input nu este disponibil.');
+            }
+            return null;
+        }
+
+        return window.intlTelInput(phoneInput, {
+            initialCountry: 'auto',
+            geoIpLookup: (success) => {
+                fetch('https://ipinfo.io/json?token=b4bd4c28b8a326')
+                    .then((response) => response.json())
+                    .then((data) => {
+                        if (data && data.country) {
+                            success(data.country.toLowerCase());
+                        } else {
+                            success('ro');
+                        }
+                    })
+                    .catch(() => {
+                        success('ro');
+                    });
+            },
+            separateDialCode: true,
+            nationalMode: true,
+            showFlags: true,
+            autoPlaceholder: 'aggressive',
+            customPlaceholder: (selectedCountryPlaceholder) => `Ex. ${selectedCountryPlaceholder}`,
+            formatAsYouType: true,
+            countrySearch: true,
+            countryOrder: ['ro', 'gb', 'it', 'es', 'de', 'fr', 'us', 'ca'],
+            fixDropdownWidth: true,
+            useFullscreenPopup: false,
+            loadUtils: () => import(phoneUtilsUrl)
+        });
+    };
+
+    const phoneIti = initPhoneInput();
+    let phoneUtilsReady = false;
+    if (phoneIti && phoneIti.promise) {
+        phoneIti.promise.then(() => {
+            phoneUtilsReady = true;
+        }).catch(() => {
+            phoneUtilsReady = false;
+        });
+    }
 
     const formatDate = () => {
         const now = new Date();
@@ -608,18 +657,41 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (contactForm && phoneInput && emailInput) {
+        const getPhoneValue = () => {
+            const rawValue = phoneInput.value.trim();
+            if (rawValue.length === 0) return '';
+            if (phoneIti && phoneUtilsReady && typeof phoneIti.getNumber === 'function') {
+                const fullNumber = phoneIti.getNumber();
+                return fullNumber || rawValue;
+            }
+            return rawValue;
+        };
+
+        const isPhoneValid = () => {
+            const rawValue = phoneInput.value.trim();
+            if (rawValue.length === 0) return false;
+            if (phoneIti && phoneUtilsReady && typeof phoneIti.isValidNumber === 'function') {
+                return phoneIti.isValidNumber();
+            }
+            return true;
+        };
+
         const validateContactFields = () => {
             const hasPhone = phoneInput.value.trim().length > 0;
             const hasEmail = emailInput.value.trim().length > 0;
             const helperText = 'Completează numărul de telefon (cu prefix) sau adresa de email.';
+            let phoneError = '';
+            let emailError = '';
 
             if (!hasPhone && !hasEmail) {
-                phoneInput.setCustomValidity(helperText);
-                emailInput.setCustomValidity(helperText);
-            } else {
-                phoneInput.setCustomValidity('');
-                emailInput.setCustomValidity('');
+                phoneError = helperText;
+                emailError = helperText;
+            } else if (hasPhone && !hasEmail && phoneIti && phoneUtilsReady && !isPhoneValid()) {
+                phoneError = 'Numărul de telefon pare invalid.';
             }
+
+            phoneInput.setCustomValidity(phoneError);
+            emailInput.setCustomValidity(emailError);
         };
 
         const hideStatus = () => {
@@ -654,6 +726,12 @@ document.addEventListener('DOMContentLoaded', () => {
             hideStatus();
             validateContactFields();
         });
+        if (phoneIti) {
+            phoneInput.addEventListener('countrychange', () => {
+                hideStatus();
+                validateContactFields();
+            });
+        }
         emailInput.addEventListener('input', () => {
             hideStatus();
             validateContactFields();
@@ -683,7 +761,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const templateParams = {
                 nume: nameInput?.value.trim() || '',
                 email: emailInput.value.trim(),
-                telefon: phoneInput.value.trim(),
+                telefon: getPhoneValue(),
                 tara: countryInput?.value.trim() || '',
                 provider: providerInput?.value.trim() || '',
                 mesaj: messageInput?.value.trim() || '',
@@ -694,6 +772,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 await emailClient.send(emailConfig.serviceId, emailConfig.templateId, templateParams);
                 showStatus('Mulțumim! Formularul a fost trimis. Revenim cât mai rapid.');
                 contactForm.reset();
+                if (phoneIti) {
+                    phoneIti.setNumber('');
+                }
                 phoneInput.setCustomValidity('');
                 emailInput.setCustomValidity('');
             } catch (error) {
@@ -757,7 +838,3 @@ document.addEventListener('DOMContentLoaded', () => {
         currentYear.textContent = new Date().getFullYear().toString();
     }
 });
-
-
-
-

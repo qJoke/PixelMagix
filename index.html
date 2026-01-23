@@ -32,6 +32,7 @@
         content="Acces instant la peste 6.000 de canale internaționale, 450 de canale românești, 15.000 de filme și 500 de seriale.">
     <meta name="twitter:image" content="https://pixelmagix.shop/Pixel Magix.webp">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@25.12.4/build/css/intlTelInput.css">
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
@@ -671,11 +672,12 @@
                             <label for="nume">Nume complet</label>
                             <input type="text" id="nume" name="nume" placeholder="Introduceți numele" required>
                         </div>
-                        <div class="form-group">
-                            <label for="telefon">Număr de telefon (cu prefix țară)</label>
-                            <input type="tel" id="telefon" name="telefon" placeholder="Ex. +44 7700 900123">
-                            <p class="input-note">Include codul țării (ex. +44 pentru UK). Completează fie telefonul,
-                                fie emailul.</p>
+                        <div class="form-group phone-group">
+                            <label for="telefon">Număr de telefon</label>
+                            <input type="tel" id="telefon" name="telefon" placeholder="Ex. 0712 345 678"
+                                autocomplete="tel" inputmode="tel">
+                            <p class="input-note">Alege prefixul țării din listă (se detectează automat). Completează
+                                fie telefonul, fie emailul.</p>
                         </div>
                         <div class="form-group">
                             <label for="email">Adresă de email</label>
@@ -846,6 +848,7 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="fluid-cursor.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@25.12.4/build/js/intlTelInput.min.js"></script>
     <script src="script.js"></script>
 </body>
 
