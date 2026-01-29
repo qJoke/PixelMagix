@@ -403,79 +403,116 @@ document.addEventListener('DOMContentLoaded', () => {
         initPosition();
     }
 
-    // Recent movies slider + TMDB integration + trailer modal
+    // Recent movies slider + trailer modal
     const recentMoviesTrack = document.getElementById('recent-movies-track');
     const recentMoviesWindow = document.querySelector('.recent-movies-window');
     const recentMoviesPrev = document.querySelector('.recent-movies-btn--prev');
     const recentMoviesNext = document.querySelector('.recent-movies-btn--next');
 
-    // Add your TMDB API key to enable posters + trailers.
-    const TMDB_API_KEY = 'b618d07fcef49a9edf2aaf7d548d0234';
-    const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
-    let tmdbConfig = null;
-
     const recentMovies = [
         {
             title: 'Prompt',
-            query: 'Prompt'
+            query: 'Prompt',
+            poster: 'posters/prompt.jpg',
+            releaseDate: '2025-12-05',
+            trailerUrl: 'https://www.youtube.com/watch?v=RTuoFcydFtw'
         },
         {
             title: 'Ricky Gervais: Mortality',
-            query: 'Ricky Gervais: Mortality'
+            query: 'Ricky Gervais: Mortality',
+            poster: 'posters/ricky-gervais-mortality.jpg',
+            releaseDate: '2025-12-30',
+            trailerUrl: 'https://www.youtube.com/watch?v=GBe-qmZ9weo'
         },
         {
             title: 'The Choral',
-            query: 'The Choral'
+            query: 'The Choral',
+            poster: 'posters/the-choral.jpg',
+            releaseDate: '2025-12-25',
+            trailerUrl: 'https://www.youtube.com/watch?v=6zRVP-ZgMm8'
         },
         {
             title: 'Space/Time',
-            query: 'Space/Time'
+            query: 'Space/Time',
+            poster: 'posters/space-time.jpg',
+            releaseDate: '2026-01-13',
+            trailerUrl: 'https://www.youtube.com/watch?v=qA87_ceGoOg'
         },
         {
             title: 'The History of Sound',
-            query: 'The History of Sound'
+            query: 'The History of Sound',
+            poster: 'posters/the-history-of-sound.jpg',
+            releaseDate: '2025-09-12',
+            trailerUrl: 'https://www.youtube.com/watch?v=YfEYUoefwb8'
         },
         {
             title: 'The Strangers: Chapter 2',
-            query: 'The Strangers: Chapter 2'
+            query: 'The Strangers: Chapter 2',
+            poster: 'posters/the-strangers-chapter-2.jpg',
+            releaseDate: '2025-09-26',
+            trailerUrl: 'https://www.youtube.com/watch?v=Y3dXWFcoVqg'
         },
         {
             title: 'The Sound of Balloons 2',
             query: 'The Sound of Balloons 2',
+            poster: 'posters/the-sound-of-balloons-2.jpg',
+            releaseDate: '2025-06-21',
             trailerUrl: 'https://www.youtube.com/watch?v=yOiJBcxD6D0'
         },
         {
             title: 'Dead to Rights',
             query: 'Dead to Rights',
-            tmdbId: 1500536
+            poster: 'posters/dead-to-rights.jpg',
+            releaseDate: '2025-08-15',
+            trailerUrl: 'https://www.youtube.com/watch?v=_PX1WNbKdAE'
         },
         {
             title: 'Music Box: Happy and You Know It',
-            query: 'Music Box: Happy and You Know It'
+            query: 'Music Box: Happy and You Know It',
+            poster: 'posters/music-box-happy-and-you-know-it.jpg',
+            releaseDate: '2025-11-15',
+            trailerUrl: 'https://www.youtube.com/watch?v=fZuvEvNeuFA'
         },
         {
             title: 'Not Without Hope',
-            query: 'Not Without Hope'
+            query: 'Not Without Hope',
+            poster: 'posters/not-without-hope.jpg',
+            releaseDate: '2025-12-12',
+            trailerUrl: 'https://www.youtube.com/watch?v=rzDAcL3rOcU'
         },
         {
             title: 'Preparation for the Next Life',
-            query: 'Preparation for the Next Life'
+            query: 'Preparation for the Next Life',
+            poster: 'posters/preparation-for-the-next-life.jpg',
+            releaseDate: '2025-09-05',
+            trailerUrl: 'https://www.youtube.com/watch?v=d-LdHBuxCvs'
         },
         {
             title: 'P77',
-            query: 'P77'
+            query: 'P77',
+            poster: 'posters/p77.jpg',
+            releaseDate: '2025-07-30',
+            trailerUrl: 'https://www.youtube.com/watch?v=bVeOi_YNhd8'
         },
         {
             title: 'Nuremberg',
-            query: 'Nuremberg'
+            query: 'Nuremberg',
+            poster: 'posters/nuremberg.jpg',
+            releaseDate: '2025-11-07',
+            trailerUrl: 'https://www.youtube.com/watch?v=WvAy9C-bipY'
         },
         {
             title: 'Gladiator II',
-            query: 'Gladiator II'
+            query: 'Gladiator II',
+            poster: 'posters/gladiator-2.jpg',
+            releaseDate: '2024-11-22',
+            trailerUrl: 'https://www.youtube.com/watch?v=4rgYUipGJNo'
         },
         {
             title: 'Shell',
             query: 'Shell',
+            poster: 'posters/shell.jpg',
+            releaseDate: '2013-03-15',
             trailerUrl: 'https://www.youtube.com/watch?v=R6W6YzhRuTA'
         }
     ];
@@ -491,8 +528,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     movie.imdbRating === 0 || movie.imdbRating
                         ? movie.imdbRating.toString()
                         : '—';
-                const ratingLabelText =
-                    movie.imdbRating === 0 || movie.imdbRating ? 'IMDb' : 'TMDB';
+                const ratingLabelText = 'IMDb';
                 const dateMarkup = movie.addedDate
                     ? `
                             <span class="movie-card__date">
@@ -502,11 +538,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         `
                     : '';
                 const releaseText = movie.releaseDate ? formatReleaseDate(movie.releaseDate) : '—';
+                const posterSrc = movie.poster || placeholderPoster;
                 return `
                 <article class="movie-card" data-index="${index}">
                     <div class="movie-card__poster">
-                        <img src="${placeholderPoster}" alt="Poster ${movie.title}" loading="lazy"
-                            decoding="async">
+                        <img src="${posterSrc}" alt="Poster ${movie.title}" loading="lazy"
+                            decoding="async" onerror="this.src='${placeholderPoster}'">
                         <button class="movie-card__play" type="button" data-trailer-index="${index}"
                             aria-label="Reda trailer pentru ${movie.title}">
                             <i class="fas fa-play"></i>
@@ -673,117 +710,11 @@ document.addEventListener('DOMContentLoaded', () => {
         recentMoviesNext.addEventListener('click', () => scrollRecentMoviesBy(1));
     }
 
-    const tmdbRequest = async (path, params = {}) => {
-        if (!TMDB_API_KEY) return null;
-        const url = new URL(`${TMDB_BASE_URL}${path}`);
-        url.searchParams.set('api_key', TMDB_API_KEY);
-        Object.entries(params).forEach(([key, value]) => {
-            if (value !== undefined && value !== null && value !== '') {
-                url.searchParams.set(key, value);
-            }
-        });
-
-        const response = await fetch(url.toString());
-        if (!response.ok) {
-            throw new Error('TMDB request failed');
-        }
-        return response.json();
-    };
-
-    const getTmdbConfig = async () => {
-        if (tmdbConfig) return tmdbConfig;
-        const data = await tmdbRequest('/configuration');
-        tmdbConfig = data || null;
-        return tmdbConfig;
-    };
-
-    const getPosterUrl = (posterPath) => {
-        if (!tmdbConfig || !tmdbConfig.images || !posterPath) return null;
-        const baseUrl = tmdbConfig.images.secure_base_url || tmdbConfig.images.base_url || '';
-        const sizes = tmdbConfig.images.poster_sizes || [];
-        const preferredSize = sizes.includes('w500')
-            ? 'w500'
-            : sizes.includes('w342')
-                ? 'w342'
-                : sizes[sizes.length - 1];
-        return preferredSize ? `${baseUrl}${preferredSize}${posterPath}` : null;
-    };
-
-    const searchTmdbMovie = async (movie) => {
-        const queries = [movie.query, movie.title].filter(Boolean);
-        const languages = ['ro-RO', 'en-US'];
-        for (const language of languages) {
-            for (const query of queries) {
-                const data = await tmdbRequest('/search/movie', {
-                    query,
-                    year: movie.year,
-                    language
-                });
-                if (data && Array.isArray(data.results) && data.results.length > 0) {
-                    return data.results[0];
-                }
-            }
-        }
-        return null;
-    };
-
-    const getTmdbMovieData = async (movie) => {
-        if (movie.tmdbId) {
-            const data = await tmdbRequest(`/movie/${movie.tmdbId}`, { language: 'en-US' });
-            return data || null;
-        }
-        return searchTmdbMovie(movie);
-    };
-
     const formatReleaseDate = (releaseDate) => {
         if (!releaseDate) return '—';
         const parts = releaseDate.split('-');
         if (parts.length !== 3) return releaseDate;
         return `${parts[2]}.${parts[1]}.${parts[0]}`;
-    };
-
-    const hydrateRecentMoviesFromTmdb = async () => {
-        if (!TMDB_API_KEY || !recentMoviesTrack) return;
-
-        try {
-            await getTmdbConfig();
-            for (const [index, movie] of recentMovies.entries()) {
-                const cards = recentMoviesTrack.querySelectorAll(`[data-index="${index}"]`);
-                if (!cards.length) continue;
-                const tmdbData = await getTmdbMovieData(movie);
-                if (!tmdbData) continue;
-                movie.tmdbId = tmdbData.id;
-                if (tmdbData.release_date) {
-                    movie.releaseDate = tmdbData.release_date;
-                }
-                const posterUrl = getPosterUrl(tmdbData.poster_path);
-                cards.forEach((card) => {
-                    const posterImg = card.querySelector('img');
-                    if (posterImg && posterUrl) {
-                        posterImg.src = posterUrl;
-                        posterImg.alt = `Poster ${tmdbData.title || movie.title}`;
-                    }
-                    const ratingValue = card.querySelector('.movie-rating__value');
-                    const ratingLabel = card.querySelector('.movie-rating__label');
-                    if (
-                        ratingValue &&
-                        typeof tmdbData.vote_average === 'number' &&
-                        (movie.imdbRating === undefined || movie.imdbRating === null)
-                    ) {
-                        ratingValue.textContent = tmdbData.vote_average.toFixed(1);
-                        if (ratingLabel) {
-                            ratingLabel.textContent = 'TMDB';
-                        }
-                    }
-                    const releaseValue = card.querySelector('.movie-release__value');
-                    if (releaseValue && tmdbData.release_date) {
-                        releaseValue.textContent = formatReleaseDate(tmdbData.release_date);
-                    }
-                });
-            }
-        } catch (error) {
-            console.warn('TMDB loading failed:', error);
-        }
     };
 
     const trailerModal = document.getElementById('trailer-modal');
@@ -806,38 +737,6 @@ document.addEventListener('DOMContentLoaded', () => {
         setTrailerFallback(false);
     };
 
-    const pickTrailerKey = (data) => {
-        if (!data || !Array.isArray(data.results)) return null;
-        const trailer = data.results.find(
-            (video) => video.site === 'YouTube' && video.type === 'Trailer'
-        );
-        if (trailer) return trailer.key;
-        const youtubeVideo = data.results.find((video) => video.site === 'YouTube');
-        return youtubeVideo ? youtubeVideo.key : null;
-    };
-
-    const fetchTrailerKey = async (movie) => {
-        if (!TMDB_API_KEY) return null;
-        if (movie.trailerKey) return movie.trailerKey;
-
-        if (!movie.tmdbId) {
-            const tmdbData = await searchTmdbMovie(movie);
-            if (!tmdbData) return null;
-            movie.tmdbId = tmdbData.id;
-        }
-
-        const languages = ['ro-RO', 'en-US'];
-        for (const language of languages) {
-            const data = await tmdbRequest(`/movie/${movie.tmdbId}/videos`, { language });
-            const key = pickTrailerKey(data);
-            if (key) {
-                movie.trailerKey = key;
-                return key;
-            }
-        }
-        return null;
-    };
-
     const openTrailer = async (movie) => {
         if (!trailerModal || !trailerFrame) return;
         trailerModal.classList.add('is-open');
@@ -852,19 +751,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 .concat('?autoplay=1&rel=0');
             return;
         }
-
-        try {
-            const key = await fetchTrailerKey(movie);
-            if (key) {
-                setTrailerFallback(false);
-                trailerFrame.src = `https://www.youtube.com/embed/${key}?autoplay=1&rel=0`;
-                return;
-            }
-            setTrailerFallback(true);
-        } catch (error) {
-            console.warn('Trailer loading failed:', error);
-            setTrailerFallback(true);
-        }
+        setTrailerFallback(true);
     };
 
     if (trailerModal) {
@@ -911,7 +798,6 @@ document.addEventListener('DOMContentLoaded', () => {
             scheduleRecentAuto();
         });
         startRecentAuto();
-        hydrateRecentMoviesFromTmdb();
     }
 
     // WhatsApp chat interactions
