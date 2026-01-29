@@ -119,8 +119,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const animateCounter = (entry) => {
         const element = entry.target;
         const targetValue = parseInt(element.dataset.target || '0', 10);
+        const suffix = element.dataset.suffix || '';
         const valueElement = element.querySelector('.stat-value');
         if (!valueElement) return;
+
+        const formatValue = (value, includeSuffix = false) => {
+            const formatted = value.toLocaleString('ro-RO');
+            return includeSuffix && suffix ? `${formatted}${suffix}` : formatted;
+        };
 
         let current = 0;
         const duration = 1800;
@@ -130,10 +136,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const counterInterval = setInterval(() => {
             current += step;
             if (current >= targetValue) {
-                valueElement.textContent = targetValue.toLocaleString('ro-RO');
+                valueElement.textContent = formatValue(targetValue, true);
                 clearInterval(counterInterval);
             } else {
-                valueElement.textContent = current.toLocaleString('ro-RO');
+                valueElement.textContent = formatValue(current);
             }
         }, stepTime);
     };
@@ -395,6 +401,517 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Initialize
         initPosition();
+    }
+
+    // Recent movies slider + TMDB integration + trailer modal
+    const recentMoviesTrack = document.getElementById('recent-movies-track');
+    const recentMoviesWindow = document.querySelector('.recent-movies-window');
+    const recentMoviesPrev = document.querySelector('.recent-movies-btn--prev');
+    const recentMoviesNext = document.querySelector('.recent-movies-btn--next');
+
+    // Add your TMDB API key to enable posters + trailers.
+    const TMDB_API_KEY = 'b618d07fcef49a9edf2aaf7d548d0234';
+    const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
+    let tmdbConfig = null;
+
+    const recentMovies = [
+        {
+            title: 'Prompt',
+            query: 'Prompt'
+        },
+        {
+            title: 'Ricky Gervais: Mortality',
+            query: 'Ricky Gervais: Mortality'
+        },
+        {
+            title: 'The Choral',
+            query: 'The Choral'
+        },
+        {
+            title: 'Space/Time',
+            query: 'Space/Time'
+        },
+        {
+            title: 'The History of Sound',
+            query: 'The History of Sound'
+        },
+        {
+            title: 'The Strangers: Chapter 2',
+            query: 'The Strangers: Chapter 2'
+        },
+        {
+            title: 'The Sound of Balloons 2',
+            query: 'The Sound of Balloons 2',
+            trailerUrl: 'https://www.youtube.com/watch?v=yOiJBcxD6D0'
+        },
+        {
+            title: 'Dead to Rights',
+            query: 'Dead to Rights',
+            tmdbId: 1500536
+        },
+        {
+            title: 'Music Box: Happy and You Know It',
+            query: 'Music Box: Happy and You Know It'
+        },
+        {
+            title: 'Not Without Hope',
+            query: 'Not Without Hope'
+        },
+        {
+            title: 'Preparation for the Next Life',
+            query: 'Preparation for the Next Life'
+        },
+        {
+            title: 'P77',
+            query: 'P77'
+        },
+        {
+            title: 'Nuremberg',
+            query: 'Nuremberg'
+        },
+        {
+            title: 'Gladiator II',
+            query: 'Gladiator II'
+        },
+        {
+            title: 'Shell',
+            query: 'Shell',
+            trailerUrl: 'https://www.youtube.com/watch?v=R6W6YzhRuTA'
+        }
+    ];
+
+    const placeholderPoster =
+        'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
+
+    const renderRecentMovies = () => {
+        if (!recentMoviesTrack) return;
+        recentMoviesTrack.innerHTML = recentMovies
+            .map((movie, index) => {
+                const rating =
+                    movie.imdbRating === 0 || movie.imdbRating
+                        ? movie.imdbRating.toString()
+                        : '—';
+                const ratingLabelText =
+                    movie.imdbRating === 0 || movie.imdbRating ? 'IMDb' : 'TMDB';
+                const dateMarkup = movie.addedDate
+                    ? `
+                            <span class="movie-card__date">
+                                <i class="far fa-calendar"></i>
+                                <span class="movie-date__value">${movie.addedDate}</span>
+                            </span>
+                        `
+                    : '';
+                const releaseText = movie.releaseDate ? formatReleaseDate(movie.releaseDate) : '—';
+                return `
+                <article class="movie-card" data-index="${index}">
+                    <div class="movie-card__poster">
+                        <img src="${placeholderPoster}" alt="Poster ${movie.title}" loading="lazy"
+                            decoding="async">
+                        <button class="movie-card__play" type="button" data-trailer-index="${index}"
+                            aria-label="Reda trailer pentru ${movie.title}">
+                            <i class="fas fa-play"></i>
+                        </button>
+                    </div>
+                    <div class="movie-card__body">
+                        <h3 class="movie-card__title">${movie.title}</h3>
+                        <div class="movie-card__meta">
+                            <span class="movie-card__rating">
+                                <i class="fas fa-star"></i>
+                                <span class="movie-rating__value">${rating}</span>
+                                <span class="movie-rating__label">${ratingLabelText}</span>
+                            </span>
+                            <span class="movie-card__release">
+                                <i class="far fa-clock"></i>
+                                <span class="movie-release__value">${releaseText}</span>
+                            </span>
+                            ${dateMarkup}
+                        </div>
+                    </div>
+                </article>
+            `;
+            })
+            .join('');
+    };
+
+    let recentSlideCount = 0;
+    let recentCloneCount = 0;
+    let recentCurrentIndex = 0;
+    let recentIsRepositioning = false;
+    let recentAutoTimer = null;
+    let recentAutoResumeTimer = null;
+
+    const prefersReducedMotion = window.matchMedia
+        ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        : false;
+
+    const getRecentSlideWidth = () => {
+        if (!recentMoviesTrack) return 260;
+        const slide = recentMoviesTrack.querySelector('.movie-card');
+        if (!slide) return 260;
+        const gap = parseFloat(getComputedStyle(recentMoviesTrack).gap) || 24;
+        return slide.offsetWidth + gap;
+    };
+
+    const getRecentScrollForIndex = (index) => index * getRecentSlideWidth();
+
+    const initRecentPosition = () => {
+        if (!recentMoviesWindow) return;
+        recentMoviesWindow.style.scrollBehavior = 'auto';
+        recentMoviesWindow.scrollLeft = getRecentScrollForIndex(recentCloneCount);
+        requestAnimationFrame(() => {
+            recentMoviesWindow.style.scrollBehavior = '';
+        });
+    };
+
+    const checkRecentBoundaries = () => {
+        if (recentIsRepositioning || !recentMoviesWindow) return;
+        const slideWidth = getRecentSlideWidth();
+        const scrollLeft = recentMoviesWindow.scrollLeft;
+        const cloneStartThreshold = (recentCloneCount - 1) * slideWidth;
+        const cloneEndThreshold = (recentCloneCount + recentSlideCount) * slideWidth;
+        const firstRealPosition = recentCloneCount * slideWidth;
+        const lastRealPosition = (recentCloneCount + recentSlideCount - 1) * slideWidth;
+
+        if (scrollLeft <= cloneStartThreshold) {
+            recentIsRepositioning = true;
+            const offset = scrollLeft - cloneStartThreshold;
+            recentMoviesWindow.style.scrollBehavior = 'auto';
+            recentMoviesWindow.scrollLeft = lastRealPosition + offset;
+            recentCurrentIndex = recentCloneCount + recentSlideCount - 1;
+            requestAnimationFrame(() => {
+                recentMoviesWindow.style.scrollBehavior = '';
+                recentIsRepositioning = false;
+            });
+        } else if (scrollLeft >= cloneEndThreshold) {
+            recentIsRepositioning = true;
+            const offset = scrollLeft - cloneEndThreshold;
+            recentMoviesWindow.style.scrollBehavior = 'auto';
+            recentMoviesWindow.scrollLeft = firstRealPosition + offset;
+            recentCurrentIndex = recentCloneCount;
+            requestAnimationFrame(() => {
+                recentMoviesWindow.style.scrollBehavior = '';
+                recentIsRepositioning = false;
+            });
+        }
+    };
+
+    const scrollRecentToIndex = (index, smooth = true) => {
+        if (!recentMoviesWindow) return;
+        recentCurrentIndex = index;
+        recentMoviesWindow.scrollTo({
+            left: getRecentScrollForIndex(index),
+            behavior: smooth && !prefersReducedMotion ? 'smooth' : 'auto'
+        });
+    };
+
+    const stopRecentAuto = () => {
+        if (recentAutoTimer) {
+            clearInterval(recentAutoTimer);
+            recentAutoTimer = null;
+        }
+        if (recentAutoResumeTimer) {
+            clearTimeout(recentAutoResumeTimer);
+            recentAutoResumeTimer = null;
+        }
+    };
+
+    const startRecentAuto = () => {
+        if (prefersReducedMotion) return;
+        stopRecentAuto();
+        recentAutoTimer = setInterval(() => {
+            scrollRecentToIndex(recentCurrentIndex + 1, true);
+            setTimeout(checkRecentBoundaries, 360);
+        }, 4200);
+    };
+
+    const scheduleRecentAuto = () => {
+        if (prefersReducedMotion) return;
+        stopRecentAuto();
+        recentAutoResumeTimer = setTimeout(startRecentAuto, 5000);
+    };
+
+    const scrollRecentMoviesBy = (direction) => {
+        stopRecentAuto();
+        scrollRecentToIndex(recentCurrentIndex + direction, true);
+        setTimeout(checkRecentBoundaries, 360);
+        scheduleRecentAuto();
+    };
+
+    const setupRecentMoviesInfinite = () => {
+        if (!recentMoviesTrack) return;
+        const originalSlides = Array.from(recentMoviesTrack.children);
+        recentSlideCount = originalSlides.length;
+        if (recentSlideCount === 0) return;
+        recentCloneCount = Math.min(3, recentSlideCount);
+
+        for (let i = recentSlideCount - 1; i >= recentSlideCount - recentCloneCount; i--) {
+            const clone = originalSlides[i].cloneNode(true);
+            clone.classList.add('clone');
+            clone.setAttribute('aria-hidden', 'true');
+            clone.querySelectorAll('button').forEach((button) => {
+                button.setAttribute('tabindex', '-1');
+            });
+            recentMoviesTrack.insertBefore(clone, recentMoviesTrack.firstChild);
+        }
+
+        for (let i = 0; i < recentCloneCount; i++) {
+            const clone = originalSlides[i].cloneNode(true);
+            clone.classList.add('clone');
+            clone.setAttribute('aria-hidden', 'true');
+            clone.querySelectorAll('button').forEach((button) => {
+                button.setAttribute('tabindex', '-1');
+            });
+            recentMoviesTrack.appendChild(clone);
+        }
+
+        recentCurrentIndex = recentCloneCount;
+        initRecentPosition();
+    };
+
+    if (recentMoviesPrev && recentMoviesNext) {
+        recentMoviesPrev.addEventListener('click', () => scrollRecentMoviesBy(-1));
+        recentMoviesNext.addEventListener('click', () => scrollRecentMoviesBy(1));
+    }
+
+    const tmdbRequest = async (path, params = {}) => {
+        if (!TMDB_API_KEY) return null;
+        const url = new URL(`${TMDB_BASE_URL}${path}`);
+        url.searchParams.set('api_key', TMDB_API_KEY);
+        Object.entries(params).forEach(([key, value]) => {
+            if (value !== undefined && value !== null && value !== '') {
+                url.searchParams.set(key, value);
+            }
+        });
+
+        const response = await fetch(url.toString());
+        if (!response.ok) {
+            throw new Error('TMDB request failed');
+        }
+        return response.json();
+    };
+
+    const getTmdbConfig = async () => {
+        if (tmdbConfig) return tmdbConfig;
+        const data = await tmdbRequest('/configuration');
+        tmdbConfig = data || null;
+        return tmdbConfig;
+    };
+
+    const getPosterUrl = (posterPath) => {
+        if (!tmdbConfig || !tmdbConfig.images || !posterPath) return null;
+        const baseUrl = tmdbConfig.images.secure_base_url || tmdbConfig.images.base_url || '';
+        const sizes = tmdbConfig.images.poster_sizes || [];
+        const preferredSize = sizes.includes('w500')
+            ? 'w500'
+            : sizes.includes('w342')
+                ? 'w342'
+                : sizes[sizes.length - 1];
+        return preferredSize ? `${baseUrl}${preferredSize}${posterPath}` : null;
+    };
+
+    const searchTmdbMovie = async (movie) => {
+        const queries = [movie.query, movie.title].filter(Boolean);
+        const languages = ['ro-RO', 'en-US'];
+        for (const language of languages) {
+            for (const query of queries) {
+                const data = await tmdbRequest('/search/movie', {
+                    query,
+                    year: movie.year,
+                    language
+                });
+                if (data && Array.isArray(data.results) && data.results.length > 0) {
+                    return data.results[0];
+                }
+            }
+        }
+        return null;
+    };
+
+    const getTmdbMovieData = async (movie) => {
+        if (movie.tmdbId) {
+            const data = await tmdbRequest(`/movie/${movie.tmdbId}`, { language: 'en-US' });
+            return data || null;
+        }
+        return searchTmdbMovie(movie);
+    };
+
+    const formatReleaseDate = (releaseDate) => {
+        if (!releaseDate) return '—';
+        const parts = releaseDate.split('-');
+        if (parts.length !== 3) return releaseDate;
+        return `${parts[2]}.${parts[1]}.${parts[0]}`;
+    };
+
+    const hydrateRecentMoviesFromTmdb = async () => {
+        if (!TMDB_API_KEY || !recentMoviesTrack) return;
+
+        try {
+            await getTmdbConfig();
+            for (const [index, movie] of recentMovies.entries()) {
+                const cards = recentMoviesTrack.querySelectorAll(`[data-index="${index}"]`);
+                if (!cards.length) continue;
+                const tmdbData = await getTmdbMovieData(movie);
+                if (!tmdbData) continue;
+                movie.tmdbId = tmdbData.id;
+                if (tmdbData.release_date) {
+                    movie.releaseDate = tmdbData.release_date;
+                }
+                const posterUrl = getPosterUrl(tmdbData.poster_path);
+                cards.forEach((card) => {
+                    const posterImg = card.querySelector('img');
+                    if (posterImg && posterUrl) {
+                        posterImg.src = posterUrl;
+                        posterImg.alt = `Poster ${tmdbData.title || movie.title}`;
+                    }
+                    const ratingValue = card.querySelector('.movie-rating__value');
+                    const ratingLabel = card.querySelector('.movie-rating__label');
+                    if (
+                        ratingValue &&
+                        typeof tmdbData.vote_average === 'number' &&
+                        (movie.imdbRating === undefined || movie.imdbRating === null)
+                    ) {
+                        ratingValue.textContent = tmdbData.vote_average.toFixed(1);
+                        if (ratingLabel) {
+                            ratingLabel.textContent = 'TMDB';
+                        }
+                    }
+                    const releaseValue = card.querySelector('.movie-release__value');
+                    if (releaseValue && tmdbData.release_date) {
+                        releaseValue.textContent = formatReleaseDate(tmdbData.release_date);
+                    }
+                });
+            }
+        } catch (error) {
+            console.warn('TMDB loading failed:', error);
+        }
+    };
+
+    const trailerModal = document.getElementById('trailer-modal');
+    const trailerFrame = trailerModal ? trailerModal.querySelector('iframe') : null;
+    const trailerFallback = trailerModal ? trailerModal.querySelector('.trailer-modal__fallback') : null;
+
+    const setTrailerFallback = (isVisible) => {
+        if (!trailerFallback) return;
+        trailerFallback.classList.toggle('visible', isVisible);
+    };
+
+    const closeTrailer = () => {
+        if (!trailerModal) return;
+        trailerModal.classList.remove('is-open');
+        trailerModal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        if (trailerFrame) {
+            trailerFrame.src = '';
+        }
+        setTrailerFallback(false);
+    };
+
+    const pickTrailerKey = (data) => {
+        if (!data || !Array.isArray(data.results)) return null;
+        const trailer = data.results.find(
+            (video) => video.site === 'YouTube' && video.type === 'Trailer'
+        );
+        if (trailer) return trailer.key;
+        const youtubeVideo = data.results.find((video) => video.site === 'YouTube');
+        return youtubeVideo ? youtubeVideo.key : null;
+    };
+
+    const fetchTrailerKey = async (movie) => {
+        if (!TMDB_API_KEY) return null;
+        if (movie.trailerKey) return movie.trailerKey;
+
+        if (!movie.tmdbId) {
+            const tmdbData = await searchTmdbMovie(movie);
+            if (!tmdbData) return null;
+            movie.tmdbId = tmdbData.id;
+        }
+
+        const languages = ['ro-RO', 'en-US'];
+        for (const language of languages) {
+            const data = await tmdbRequest(`/movie/${movie.tmdbId}/videos`, { language });
+            const key = pickTrailerKey(data);
+            if (key) {
+                movie.trailerKey = key;
+                return key;
+            }
+        }
+        return null;
+    };
+
+    const openTrailer = async (movie) => {
+        if (!trailerModal || !trailerFrame) return;
+        trailerModal.classList.add('is-open');
+        trailerModal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+
+        if (movie.trailerUrl) {
+            setTrailerFallback(false);
+            trailerFrame.src = movie.trailerUrl
+                .replace('watch?v=', 'embed/')
+                .replace('youtu.be/', 'www.youtube.com/embed/')
+                .concat('?autoplay=1&rel=0');
+            return;
+        }
+
+        try {
+            const key = await fetchTrailerKey(movie);
+            if (key) {
+                setTrailerFallback(false);
+                trailerFrame.src = `https://www.youtube.com/embed/${key}?autoplay=1&rel=0`;
+                return;
+            }
+            setTrailerFallback(true);
+        } catch (error) {
+            console.warn('Trailer loading failed:', error);
+            setTrailerFallback(true);
+        }
+    };
+
+    if (trailerModal) {
+        const closeButtons = trailerModal.querySelectorAll('[data-trailer-close]');
+        closeButtons.forEach((button) => button.addEventListener('click', closeTrailer));
+        window.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && trailerModal.classList.contains('is-open')) {
+                closeTrailer();
+            }
+        });
+    }
+
+    if (recentMoviesTrack) {
+        renderRecentMovies();
+        setupRecentMoviesInfinite();
+        recentMoviesTrack.addEventListener('click', (event) => {
+            const button = event.target.closest('.movie-card__play');
+            if (!button) return;
+            const index = Number(button.dataset.trailerIndex || '-1');
+            const movie = recentMovies[index];
+            if (!movie) return;
+            openTrailer(movie);
+        });
+        if (recentMoviesWindow) {
+            recentMoviesWindow.addEventListener('scroll', () => {
+                if (!recentIsRepositioning) {
+                    checkRecentBoundaries();
+                }
+                scheduleRecentAuto();
+            }, { passive: true });
+            recentMoviesWindow.addEventListener('pointerdown', () => {
+                stopRecentAuto();
+            });
+            recentMoviesWindow.addEventListener('pointerup', scheduleRecentAuto);
+            recentMoviesWindow.addEventListener('mouseenter', stopRecentAuto);
+            recentMoviesWindow.addEventListener('mouseleave', scheduleRecentAuto);
+            recentMoviesWindow.addEventListener('focusin', stopRecentAuto);
+            recentMoviesWindow.addEventListener('focusout', scheduleRecentAuto);
+        }
+        window.addEventListener('resize', () => {
+            if (!recentMoviesWindow) return;
+            stopRecentAuto();
+            initRecentPosition();
+            scheduleRecentAuto();
+        });
+        startRecentAuto();
+        hydrateRecentMoviesFromTmdb();
     }
 
     // WhatsApp chat interactions
