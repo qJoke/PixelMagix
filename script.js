@@ -411,109 +411,164 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const recentMovies = [
         {
-            title: 'Prompt',
-            query: 'Prompt',
-            poster: 'posters/prompt.jpg',
-            releaseDate: '2025-12-05',
-            trailerUrl: 'https://www.youtube.com/watch?v=RTuoFcydFtw'
+            title: 'Avatar',
+            query: 'Avatar 2009',
+            poster: 'https://image.tmdb.org/t/p/w780/gKY6q7SjCkAU6FqvqWybDYgUKIF.jpg',
+            releaseDate: '2009-12-18',
+            imdbRating: '7.9',
+            trailerUrl: 'https://www.youtube.com/watch?v=5PSNL1qE6VY'
         },
         {
-            title: 'Ricky Gervais: Mortality',
-            query: 'Ricky Gervais: Mortality',
-            poster: 'posters/ricky-gervais-mortality.jpg',
-            releaseDate: '2025-12-30',
-            trailerUrl: 'https://www.youtube.com/watch?v=GBe-qmZ9weo'
+            title: 'Avengers: Endgame',
+            query: 'Avengers: Endgame 2019',
+            poster: 'https://image.tmdb.org/t/p/w780/ulzhLuWrPK07P1YkdWQLZnQh1JL.jpg',
+            releaseDate: '2019-04-26',
+            imdbRating: '8.4',
+            trailerUrl: 'https://www.youtube.com/watch?v=TcMBFSGVi1c'
         },
         {
-            title: 'The Choral',
-            query: 'The Choral',
-            poster: 'posters/the-choral.jpg',
-            releaseDate: '2025-12-25',
-            trailerUrl: 'https://www.youtube.com/watch?v=6zRVP-ZgMm8'
+            title: 'Avatar: The Way of Water',
+            query: 'Avatar: The Way of Water 2022',
+            poster: 'https://image.tmdb.org/t/p/w780/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg',
+            releaseDate: '2022-12-16',
+            imdbRating: '7.5',
+            trailerUrl: 'https://www.youtube.com/watch?v=d9MyW72ELq0'
         },
         {
-            title: 'Space/Time',
-            query: 'Space/Time',
-            poster: 'posters/space-time.jpg',
-            releaseDate: '2026-01-13',
-            trailerUrl: 'https://www.youtube.com/watch?v=qA87_ceGoOg'
+            title: 'Titanic',
+            query: 'Titanic 1997',
+            poster: 'https://image.tmdb.org/t/p/w780/9xjZS2rlVxm8SFx8kPC3aIGCOYQ.jpg',
+            releaseDate: '1997-12-19',
+            imdbRating: '7.9',
+            trailerUrl: 'https://www.youtube.com/watch?v=kVrqfYjkTdQ'
         },
         {
-            title: 'The History of Sound',
-            query: 'The History of Sound',
-            poster: 'posters/the-history-of-sound.jpg',
-            releaseDate: '2025-09-12',
-            trailerUrl: 'https://www.youtube.com/watch?v=YfEYUoefwb8'
+            title: 'Ne Zha 2',
+            query: 'Ne Zha 2 2025',
+            poster: 'https://image.tmdb.org/t/p/w780/cb5NyNrqiCNNoDkA8FfxHAtypdG.jpg',
+            releaseDate: '2025-01-29',
+            imdbRating: '7.1',
+            trailerUrl: 'https://www.youtube.com/watch?v=nsXQijb0F4I'
         },
         {
-            title: 'The Strangers: Chapter 2',
-            query: 'The Strangers: Chapter 2',
-            poster: 'posters/the-strangers-chapter-2.jpg',
-            releaseDate: '2025-09-26',
-            trailerUrl: 'https://www.youtube.com/watch?v=Y3dXWFcoVqg'
+            title: 'Star Wars: Episode VII - The Force Awakens',
+            query: 'Star Wars: The Force Awakens 2015',
+            poster: 'https://image.tmdb.org/t/p/w780/wqnLdwVXoBjKibFRR5U3y0aDUhs.jpg',
+            releaseDate: '2015-12-18',
+            imdbRating: '7.8',
+            trailerUrl: 'https://www.youtube.com/watch?v=sGbxmsDFVnE'
         },
         {
-            title: 'The Sound of Balloons 2',
-            query: 'The Sound of Balloons 2',
-            poster: 'posters/the-sound-of-balloons-2.jpg',
-            releaseDate: '2025-06-21',
-            trailerUrl: 'https://www.youtube.com/watch?v=yOiJBcxD6D0'
+            title: 'Avengers: Infinity War',
+            query: 'Avengers: Infinity War 2018',
+            poster: 'https://image.tmdb.org/t/p/w780/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg',
+            releaseDate: '2018-04-27',
+            imdbRating: '8.4',
+            trailerUrl: 'https://www.youtube.com/watch?v=6ZfuNTqbHE8'
         },
         {
-            title: 'Dead to Rights',
-            query: 'Dead to Rights',
-            poster: 'posters/dead-to-rights.jpg',
-            releaseDate: '2025-08-15',
-            trailerUrl: 'https://www.youtube.com/watch?v=_PX1WNbKdAE'
+            title: 'Spider-Man: No Way Home',
+            query: 'Spider-Man: No Way Home 2021',
+            poster: 'https://image.tmdb.org/t/p/w780/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg',
+            releaseDate: '2021-12-17',
+            imdbRating: '8.2',
+            trailerUrl: 'https://www.youtube.com/watch?v=JfVOs4VSpmA'
         },
         {
-            title: 'Music Box: Happy and You Know It',
-            query: 'Music Box: Happy and You Know It',
-            poster: 'posters/music-box-happy-and-you-know-it.jpg',
-            releaseDate: '2025-11-15',
-            trailerUrl: 'https://www.youtube.com/watch?v=fZuvEvNeuFA'
+            title: 'Zootopia 2',
+            query: 'Zootopia 2 2025',
+            poster: 'https://image.tmdb.org/t/p/w780/oJ7g2CifqpStmoYQyaLQgEU32qO.jpg',
+            releaseDate: '2025-11-26',
+            imdbRating: 'TBD',
+            trailerUrl: 'https://www.youtube.com/watch?v=sEgPQ7HKoBA'
         },
         {
-            title: 'Not Without Hope',
-            query: 'Not Without Hope',
-            poster: 'posters/not-without-hope.jpg',
-            releaseDate: '2025-12-12',
-            trailerUrl: 'https://www.youtube.com/watch?v=rzDAcL3rOcU'
+            title: 'Inside Out 2',
+            query: 'Inside Out 2 2024',
+            poster: 'https://image.tmdb.org/t/p/w780/vpnVM9B6NMmQpWeZvzLvDESb2QY.jpg',
+            releaseDate: '2024-06-14',
+            imdbRating: '7.6',
+            trailerUrl: 'https://www.youtube.com/watch?v=LEjhY15eCx0'
         },
         {
-            title: 'Preparation for the Next Life',
-            query: 'Preparation for the Next Life',
-            poster: 'posters/preparation-for-the-next-life.jpg',
-            releaseDate: '2025-09-05',
-            trailerUrl: 'https://www.youtube.com/watch?v=d-LdHBuxCvs'
+            title: 'Jurassic World',
+            query: 'Jurassic World 2015',
+            poster: 'https://image.tmdb.org/t/p/w780/rhr4y79GpxQF9IsfJItRXVaoGs4.jpg',
+            releaseDate: '2015-06-12',
+            imdbRating: '6.9',
+            trailerUrl: 'https://www.youtube.com/watch?v=RFinNxS5KN4'
         },
         {
-            title: 'P77',
-            query: 'P77',
-            poster: 'posters/p77.jpg',
-            releaseDate: '2025-07-30',
-            trailerUrl: 'https://www.youtube.com/watch?v=bVeOi_YNhd8'
+            title: 'The Lion King (2019)',
+            query: 'The Lion King 2019',
+            poster: 'https://image.tmdb.org/t/p/w780/dzBtMocZuJbjLOXvrl4zGYigDzh.jpg',
+            releaseDate: '2019-07-19',
+            imdbRating: '6.8',
+            trailerUrl: 'https://www.youtube.com/watch?v=7TavVZMewpY'
         },
         {
-            title: 'Nuremberg',
-            query: 'Nuremberg',
-            poster: 'posters/nuremberg.jpg',
-            releaseDate: '2025-11-07',
-            trailerUrl: 'https://www.youtube.com/watch?v=WvAy9C-bipY'
+            title: 'The Avengers',
+            query: 'The Avengers 2012',
+            poster: 'https://image.tmdb.org/t/p/w780/RYMX2wcKCBAr24UyPD7xwmjaTn.jpg',
+            releaseDate: '2012-05-04',
+            imdbRating: '8.0',
+            trailerUrl: 'https://www.youtube.com/watch?v=eOrNdBpGMv8'
         },
         {
-            title: 'Gladiator II',
-            query: 'Gladiator II',
-            poster: 'posters/gladiator-2.jpg',
-            releaseDate: '2024-11-22',
-            trailerUrl: 'https://www.youtube.com/watch?v=4rgYUipGJNo'
+            title: 'Furious 7',
+            query: 'Furious 7 2015',
+            poster: 'https://image.tmdb.org/t/p/w780/ktofZ9Htrjiy0P6LEowsDaxd3Ri.jpg',
+            releaseDate: '2015-04-03',
+            imdbRating: '7.1',
+            trailerUrl: 'https://www.youtube.com/watch?v=Skpu5HaVkOc'
         },
         {
-            title: 'Shell',
-            query: 'Shell',
-            poster: 'posters/shell.jpg',
-            releaseDate: '2013-03-15',
-            trailerUrl: 'https://www.youtube.com/watch?v=R6W6YzhRuTA'
+            title: 'Top Gun: Maverick',
+            query: 'Top Gun: Maverick 2022',
+            poster: 'https://image.tmdb.org/t/p/w780/62HCnUTziyWcpDaBO2i1DX17ljH.jpg',
+            releaseDate: '2022-05-27',
+            imdbRating: '8.2',
+            trailerUrl: 'https://www.youtube.com/watch?v=giXco2jaZ_4'
+        },
+        {
+            title: 'Frozen II',
+            query: 'Frozen II 2019',
+            poster: 'https://image.tmdb.org/t/p/w780/mINJaa34MtknCYl5AjtNJzWj8cD.jpg',
+            releaseDate: '2019-11-22',
+            imdbRating: '6.8',
+            trailerUrl: 'https://www.youtube.com/watch?v=Zi4LMpSDccc'
+        },
+        {
+            title: 'Barbie',
+            query: 'Barbie 2023',
+            poster: 'https://image.tmdb.org/t/p/w780/iuFNMS8U5cb6xfzi51Dbkovj7vM.jpg',
+            releaseDate: '2023-07-21',
+            imdbRating: '6.8',
+            trailerUrl: 'https://www.youtube.com/watch?v=pBk4NYhWNMM'
+        },
+        {
+            title: 'Avengers: Age of Ultron',
+            query: 'Avengers: Age of Ultron 2015',
+            poster: 'https://image.tmdb.org/t/p/w780/4ssDuvEDkSArWEdyBl2X5EHvYKU.jpg',
+            releaseDate: '2015-05-01',
+            imdbRating: '7.3',
+            trailerUrl: 'https://www.youtube.com/watch?v=tmeOjFno6Do'
+        },
+        {
+            title: 'Avatar: Fire and Ash',
+            query: 'Avatar: Fire and Ash 2025',
+            poster: 'https://image.tmdb.org/t/p/w780/bRBeSHfGHwkEpImlhxPmOcUsaeg.jpg',
+            releaseDate: '2025-12-19',
+            imdbRating: 'TBD',
+            trailerUrl: 'https://www.youtube.com/watch?v=nb_fFj_0rq8'
+        },
+        {
+            title: 'The Super Mario Bros. Movie',
+            query: 'The Super Mario Bros. Movie 2023',
+            poster: 'https://image.tmdb.org/t/p/w780/qNBAXBIQlnOThrVvA6mA2B5ggV6.jpg',
+            releaseDate: '2023-04-05',
+            imdbRating: '7.0',
+            trailerUrl: 'https://www.youtube.com/watch?v=KydqdKKyGEk'
         }
     ];
 
@@ -543,7 +598,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 <article class="movie-card" data-index="${index}">
                     <div class="movie-card__poster">
                         <img src="${posterSrc}" alt="Poster ${movie.title}" loading="lazy"
-                            decoding="async" onerror="this.src='${placeholderPoster}'">
+                            decoding="async" draggable="false" onerror="this.src='${placeholderPoster}'">
+                        <span class="movie-card__quality-badge">HD/4K</span>
                         <button class="movie-card__play" type="button" data-trailer-index="${index}"
                             aria-label="Reda trailer pentru ${movie.title}">
                             <i class="fas fa-play"></i>
@@ -574,8 +630,17 @@ document.addEventListener('DOMContentLoaded', () => {
     let recentCloneCount = 0;
     let recentCurrentIndex = 0;
     let recentIsRepositioning = false;
+    let recentIsDragging = false;
+    let recentDragStartX = 0;
+    let recentDragStartScrollLeft = 0;
+    let recentHasDragged = false;
     let recentAutoTimer = null;
     let recentAutoResumeTimer = null;
+    let recentIsAutoPaused = false;
+
+    const recentAutoSpeed = 18;
+    const recentAutoIntervalMs = 30;
+    const recentAutoStepPx = (recentAutoSpeed * recentAutoIntervalMs) / 1000;
 
     const prefersReducedMotion = window.matchMedia
         ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -591,10 +656,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const getRecentScrollForIndex = (index) => index * getRecentSlideWidth();
 
+    const getNearestRecentIndex = () => {
+        if (!recentMoviesWindow) return recentCloneCount;
+        const slideWidth = getRecentSlideWidth();
+        if (!slideWidth) return recentCloneCount;
+        return Math.round(recentMoviesWindow.scrollLeft / slideWidth);
+    };
+
+    const syncRecentIndex = () => {
+        recentCurrentIndex = getNearestRecentIndex();
+    };
+
     const initRecentPosition = () => {
         if (!recentMoviesWindow) return;
         recentMoviesWindow.style.scrollBehavior = 'auto';
         recentMoviesWindow.scrollLeft = getRecentScrollForIndex(recentCloneCount);
+        syncRecentIndex();
         requestAnimationFrame(() => {
             recentMoviesWindow.style.scrollBehavior = '';
         });
@@ -618,6 +695,7 @@ document.addEventListener('DOMContentLoaded', () => {
             requestAnimationFrame(() => {
                 recentMoviesWindow.style.scrollBehavior = '';
                 recentIsRepositioning = false;
+                syncRecentIndex();
             });
         } else if (scrollLeft >= cloneEndThreshold) {
             recentIsRepositioning = true;
@@ -628,6 +706,7 @@ document.addEventListener('DOMContentLoaded', () => {
             requestAnimationFrame(() => {
                 recentMoviesWindow.style.scrollBehavior = '';
                 recentIsRepositioning = false;
+                syncRecentIndex();
             });
         }
     };
@@ -641,11 +720,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    const stopRecentAuto = () => {
-        if (recentAutoTimer) {
-            clearInterval(recentAutoTimer);
-            recentAutoTimer = null;
-        }
+    const pauseRecentAuto = () => {
+        recentIsAutoPaused = true;
         if (recentAutoResumeTimer) {
             clearTimeout(recentAutoResumeTimer);
             recentAutoResumeTimer = null;
@@ -653,25 +729,40 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const startRecentAuto = () => {
-        if (prefersReducedMotion) return;
-        stopRecentAuto();
+        if (prefersReducedMotion || !recentMoviesWindow) return;
+        if (recentAutoTimer) return;
+        recentIsAutoPaused = false;
         recentAutoTimer = setInterval(() => {
-            scrollRecentToIndex(recentCurrentIndex + 1, true);
-            setTimeout(checkRecentBoundaries, 360);
-        }, 4200);
+            if (recentIsAutoPaused || recentIsDragging || recentIsRepositioning) return;
+            recentMoviesWindow.scrollLeft += recentAutoStepPx;
+            checkRecentBoundaries();
+            syncRecentIndex();
+        }, recentAutoIntervalMs);
     };
 
-    const scheduleRecentAuto = () => {
+    const scheduleRecentAuto = (delay = 1000) => {
         if (prefersReducedMotion) return;
-        stopRecentAuto();
-        recentAutoResumeTimer = setTimeout(startRecentAuto, 5000);
+        if (recentAutoResumeTimer) {
+            clearTimeout(recentAutoResumeTimer);
+        }
+        recentAutoResumeTimer = setTimeout(() => {
+            recentIsAutoPaused = false;
+            if (!recentAutoTimer) {
+                startRecentAuto();
+            }
+        }, delay);
     };
 
     const scrollRecentMoviesBy = (direction) => {
-        stopRecentAuto();
-        scrollRecentToIndex(recentCurrentIndex + direction, true);
-        setTimeout(checkRecentBoundaries, 360);
-        scheduleRecentAuto();
+        if (!recentMoviesWindow) return;
+        pauseRecentAuto();
+        const baseIndex = getNearestRecentIndex();
+        scrollRecentToIndex(baseIndex + direction, true);
+        setTimeout(() => {
+            checkRecentBoundaries();
+            syncRecentIndex();
+        }, 380);
+        scheduleRecentAuto(1200);
     };
 
     const setupRecentMoviesInfinite = () => {
@@ -703,6 +794,67 @@ document.addEventListener('DOMContentLoaded', () => {
 
         recentCurrentIndex = recentCloneCount;
         initRecentPosition();
+    };
+
+    const startRecentDrag = (event) => {
+        if (!recentMoviesWindow) return;
+        if (event.pointerType === 'mouse' && event.button !== 0) return;
+        if (event.target.closest('.movie-card__play')) return;
+
+        recentIsDragging = true;
+        recentHasDragged = false;
+        recentDragStartX = event.clientX;
+        recentDragStartScrollLeft = recentMoviesWindow.scrollLeft;
+        recentMoviesWindow.classList.add('is-grabbing');
+        recentMoviesWindow.style.scrollBehavior = 'auto';
+        pauseRecentAuto();
+
+        if (typeof recentMoviesWindow.setPointerCapture === 'function') {
+            recentMoviesWindow.setPointerCapture(event.pointerId);
+        }
+    };
+
+    const moveRecentDrag = (event) => {
+        if (!recentIsDragging || !recentMoviesWindow) return;
+        const delta = event.clientX - recentDragStartX;
+        if (!recentHasDragged && Math.abs(delta) > 3) {
+            recentHasDragged = true;
+        }
+
+        recentMoviesWindow.scrollLeft = recentDragStartScrollLeft - delta;
+        checkRecentBoundaries();
+        syncRecentIndex();
+
+        if (recentHasDragged) {
+            event.preventDefault();
+        }
+    };
+
+    const endRecentDrag = (event) => {
+        if (!recentIsDragging || !recentMoviesWindow) return;
+        recentIsDragging = false;
+        recentMoviesWindow.classList.remove('is-grabbing');
+        recentMoviesWindow.style.scrollBehavior = '';
+
+        if (
+            event &&
+            typeof recentMoviesWindow.releasePointerCapture === 'function' &&
+            typeof recentMoviesWindow.hasPointerCapture === 'function' &&
+            recentMoviesWindow.hasPointerCapture(event.pointerId)
+        ) {
+            recentMoviesWindow.releasePointerCapture(event.pointerId);
+        }
+
+        if (recentHasDragged) {
+            const targetIndex = getNearestRecentIndex();
+            scrollRecentToIndex(targetIndex, true);
+            setTimeout(() => {
+                checkRecentBoundaries();
+                syncRecentIndex();
+            }, 380);
+        }
+
+        scheduleRecentAuto(recentHasDragged ? 1200 : 700);
     };
 
     if (recentMoviesPrev && recentMoviesNext) {
@@ -737,18 +889,35 @@ document.addEventListener('DOMContentLoaded', () => {
         setTrailerFallback(false);
     };
 
+    const getYoutubeEmbedUrl = (url) => {
+        if (!url) return '';
+        try {
+            const parsedUrl = new URL(url);
+            let videoId = '';
+
+            if (parsedUrl.hostname.includes('youtu.be')) {
+                videoId = parsedUrl.pathname.replace('/', '');
+            } else if (parsedUrl.hostname.includes('youtube.com')) {
+                videoId = parsedUrl.searchParams.get('v') || parsedUrl.pathname.split('/').filter(Boolean).pop() || '';
+            }
+
+            if (!/^[A-Za-z0-9_-]{11}$/.test(videoId)) return '';
+            return `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&playsinline=1`;
+        } catch (error) {
+            return '';
+        }
+    };
+
     const openTrailer = async (movie) => {
         if (!trailerModal || !trailerFrame) return;
         trailerModal.classList.add('is-open');
         trailerModal.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
 
-        if (movie.trailerUrl) {
+        const embedUrl = getYoutubeEmbedUrl(movie.trailerUrl);
+        if (embedUrl) {
             setTrailerFallback(false);
-            trailerFrame.src = movie.trailerUrl
-                .replace('watch?v=', 'embed/')
-                .replace('youtu.be/', 'www.youtube.com/embed/')
-                .concat('?autoplay=1&rel=0');
+            trailerFrame.src = embedUrl;
             return;
         }
         setTrailerFallback(true);
@@ -767,6 +936,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (recentMoviesTrack) {
         renderRecentMovies();
         setupRecentMoviesInfinite();
+        recentMoviesTrack.addEventListener('dragstart', (event) => {
+            event.preventDefault();
+        });
         recentMoviesTrack.addEventListener('click', (event) => {
             const button = event.target.closest('.movie-card__play');
             if (!button) return;
@@ -780,22 +952,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!recentIsRepositioning) {
                     checkRecentBoundaries();
                 }
-                scheduleRecentAuto();
+                syncRecentIndex();
             }, { passive: true });
-            recentMoviesWindow.addEventListener('pointerdown', () => {
-                stopRecentAuto();
+            recentMoviesWindow.addEventListener('pointerdown', startRecentDrag);
+            recentMoviesWindow.addEventListener('pointermove', moveRecentDrag);
+            ['pointerup', 'pointerleave', 'pointercancel'].forEach((eventType) => {
+                recentMoviesWindow.addEventListener(eventType, endRecentDrag);
             });
-            recentMoviesWindow.addEventListener('pointerup', scheduleRecentAuto);
-            recentMoviesWindow.addEventListener('mouseenter', stopRecentAuto);
-            recentMoviesWindow.addEventListener('mouseleave', scheduleRecentAuto);
-            recentMoviesWindow.addEventListener('focusin', stopRecentAuto);
-            recentMoviesWindow.addEventListener('focusout', scheduleRecentAuto);
+            recentMoviesWindow.addEventListener('focusin', pauseRecentAuto);
+            recentMoviesWindow.addEventListener('focusout', () => scheduleRecentAuto(700));
         }
         window.addEventListener('resize', () => {
             if (!recentMoviesWindow) return;
-            stopRecentAuto();
-            initRecentPosition();
-            scheduleRecentAuto();
+            syncRecentIndex();
+            scrollRecentToIndex(recentCurrentIndex, false);
+            checkRecentBoundaries();
+            scheduleRecentAuto(300);
         });
         startRecentAuto();
     }

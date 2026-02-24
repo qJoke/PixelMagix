@@ -788,16 +788,24 @@ a {
     overflow-y: visible;
     scroll-behavior: smooth;
     padding: 0.5rem 0.75rem 1.2rem;
-    scroll-snap-type: x mandatory;
+    scroll-snap-type: none;
     scrollbar-width: none;
     -ms-overflow-style: none;
     mask-image: linear-gradient(90deg, transparent, #fff 5%, #fff 95%, transparent);
     -webkit-mask-image: linear-gradient(90deg, transparent, #fff 5%, #fff 95%, transparent);
     cursor: grab;
+    overscroll-behavior-x: contain;
+    touch-action: pan-y;
 }
 
 .recent-movies-window:active {
     cursor: grabbing;
+}
+
+.recent-movies-window.is-grabbing {
+    cursor: grabbing;
+    user-select: none;
+    scroll-behavior: auto;
 }
 
 .recent-movies-window::-webkit-scrollbar {
@@ -863,6 +871,28 @@ a {
     transition: transform 0.4s ease;
     position: relative;
     z-index: 0;
+    -webkit-user-drag: none;
+    user-select: none;
+}
+
+.movie-card__quality-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.55));
+    color: #fff;
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 5px 10px;
+    border-radius: 0 var(--card-radius, 12px) 0 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    z-index: 2;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    pointer-events: none;
 }
 
 .movie-card:hover .movie-card__poster img {
@@ -877,7 +907,7 @@ a {
 .movie-card__play {
     position: absolute;
     top: 12px;
-    right: 12px;
+    left: 12px;
     width: 42px;
     height: 42px;
     border-radius: 50%;
