@@ -12,25 +12,96 @@ document.addEventListener('DOMContentLoaded', () => {
     const toggleButtons = document.querySelectorAll('.toggle-btn');
     const pricingGrids = document.querySelectorAll('.pricing-grid');
 
+    const setActivePricingPlan = (plan) => {
+        const targetGrid = document.getElementById(`${plan}-plans`);
+        if (!targetGrid) return;
+
+        toggleButtons.forEach(btn => {
+            btn.classList.toggle('active', btn.getAttribute('data-plan') === plan);
+        });
+
+        pricingGrids.forEach(grid => {
+            grid.classList.toggle('active', grid === targetGrid);
+        });
+    };
+
     toggleButtons.forEach(button => {
         button.addEventListener('click', () => {
-            if (button.classList.contains('active')) return;
-
-            toggleButtons.forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
-
             const plan = button.getAttribute('data-plan');
-            const targetGrid = document.getElementById(`${plan}-plans`);
-
-            pricingGrids.forEach(grid => {
-                if (grid === targetGrid) {
-                    grid.classList.add('active');
-                } else {
-                    grid.classList.remove('active');
-                }
-            });
+            if (!plan || button.classList.contains('active')) return;
+            setActivePricingPlan(plan);
         });
     });
+
+    // Local package finder recommendation
+    const packageFinder = document.querySelector('.package-finder');
+    const finderRegion = document.getElementById('finder-region');
+    const finderDevice = document.getElementById('finder-device');
+    const finderTier = document.getElementById('finder-tier');
+    const finderResult = document.getElementById('package-finder-result');
+    const finderApply = packageFinder?.querySelector('.package-finder__apply');
+
+    const recommendationCopy = {
+        'Standard 4 luni': 'Cel mai bun punct de pornire pentru canale românești și testare pe termen mediu.',
+        'Standard 7 luni': 'Recomandat pentru familii care vor stabilitate mai mult timp, cu o lună bonus.',
+        'VIP 4 luni': 'Cel mai echilibrat pachet pentru testare serioasă, calitate 4K și suport complet.',
+        'VIP 8 luni': 'Recomandat pentru diaspora departe de țară: durată mai lungă, 4K și două luni bonus.'
+    };
+
+    const getPackageRecommendation = () => {
+        const tier = finderTier?.value || 'vip';
+        const region = finderRegion?.value || 'eu';
+        const device = finderDevice?.value || 'smart-tv';
+        const longerSetup = region === 'na' || device === 'android' || device === 'windows';
+
+        if (tier === 'standard') {
+            return longerSetup ? 'Standard 7 luni' : 'Standard 4 luni';
+        }
+
+        return longerSetup ? 'VIP 8 luni' : 'VIP 4 luni';
+    };
+
+    const clearRecommendedPlans = () => {
+        document.querySelectorAll('.pricing-card--recommended').forEach(card => {
+            card.classList.remove('pricing-card--recommended');
+        });
+    };
+
+    const findPlanCard = (planName) => {
+        const planNames = document.querySelectorAll('.plan-name');
+        return Array.from(planNames).find(name => name.textContent.trim() === planName)?.closest('.pricing-card') || null;
+    };
+
+    const updatePackageFinder = () => {
+        if (!finderResult) return null;
+        const planName = getPackageRecommendation();
+        const resultTitle = finderResult.querySelector('strong');
+        const resultText = finderResult.querySelector('p');
+        if (resultTitle) resultTitle.textContent = planName;
+        if (resultText) resultText.textContent = recommendationCopy[planName] || recommendationCopy['VIP 4 luni'];
+        return planName;
+    };
+
+    const applyPackageRecommendation = () => {
+        const planName = updatePackageFinder();
+        if (!planName) return;
+        const tier = planName.toLowerCase().includes('standard') ? 'standard' : 'vip';
+        setActivePricingPlan(tier);
+        clearRecommendedPlans();
+
+        const card = findPlanCard(planName);
+        if (card) {
+            card.classList.add('pricing-card--recommended');
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    };
+
+    [finderRegion, finderDevice, finderTier].forEach(control => {
+        control?.addEventListener('change', updatePackageFinder);
+    });
+
+    finderApply?.addEventListener('click', applyPackageRecommendation);
+    updatePackageFinder();
 
     // Locale-aware currency display
     const priceElements = document.querySelectorAll('.price-value[data-price]');

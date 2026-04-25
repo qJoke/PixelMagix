@@ -33,7 +33,7 @@
     <meta name="twitter:image" content="https://pixelmagix.shop/Pixel Magix.webp">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@25.12.4/build/css/intlTelInput.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=cinematic-broadcast">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -290,6 +290,46 @@
                     <h2>Alege abonamentul perfect pentru familia ta</h2>
                     <p>Toate abonamentele includ acces la conținut premium, actualizări automate ale listelor și suport
                         tehnic non-stop.</p>
+                </div>
+                <div class="package-finder" data-aos="fade-up">
+                    <div class="package-finder__copy">
+                        <span>Recomandare rapidă</span>
+                        <h3>Găsim pachetul potrivit în 10 secunde</h3>
+                        <p>Alege contextul tău și îți marcăm planul cu cel mai bun raport între preț, durată și suport.
+                        </p>
+                    </div>
+                    <div class="package-finder__controls" aria-label="Selector pachet recomandat">
+                        <label for="finder-region">
+                            Regiune
+                            <select id="finder-region">
+                                <option value="eu">Europa</option>
+                                <option value="uk">Marea Britanie</option>
+                                <option value="na">America de Nord</option>
+                            </select>
+                        </label>
+                        <label for="finder-device">
+                            Dispozitiv
+                            <select id="finder-device">
+                                <option value="smart-tv">Smart TV</option>
+                                <option value="android">Android / Fire TV</option>
+                                <option value="apple">Apple / iOS</option>
+                                <option value="windows">Windows</option>
+                            </select>
+                        </label>
+                        <label for="finder-tier">
+                            Preferință
+                            <select id="finder-tier">
+                                <option value="vip">VIP</option>
+                                <option value="standard">Standard</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="package-finder__result" id="package-finder-result" aria-live="polite">
+                        <span class="package-finder__label">Recomandat pentru tine</span>
+                        <strong>VIP 4 luni</strong>
+                        <p>Cel mai echilibrat pachet pentru testare serioasă, calitate 4K și suport complet.</p>
+                        <button type="button" class="btn btn--secondary package-finder__apply">Vezi planul</button>
+                    </div>
                 </div>
                 <div class="toggle-container" data-aos="fade-up">
                     <button class="toggle-btn" data-plan="standard">Standard</button>
@@ -928,7 +968,7 @@
     <script src="fluid-cursor.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@25.12.4/build/js/intlTelInput.min.js"></script>
-    <script src="script.js"></script>
+    <script src="script.js?v=cinematic-broadcast"></script>
 </body>
 
 </html>
