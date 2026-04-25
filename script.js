@@ -103,6 +103,25 @@ document.addEventListener('DOMContentLoaded', () => {
     finderApply?.addEventListener('click', applyPackageRecommendation);
     updatePackageFinder();
 
+    // Pricing feature expand/collapse
+    document.querySelectorAll('.pricing-card').forEach(card => {
+        const featureList = card.querySelector('.features-list');
+        if (!featureList || featureList.children.length <= 5) return;
+
+        const toggle = document.createElement('button');
+        toggle.type = 'button';
+        toggle.className = 'pricing-details-toggle';
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.textContent = 'Vezi toate beneficiile';
+        featureList.insertAdjacentElement('afterend', toggle);
+
+        toggle.addEventListener('click', () => {
+            const isExpanded = card.classList.toggle('is-expanded');
+            toggle.setAttribute('aria-expanded', String(isExpanded));
+            toggle.textContent = isExpanded ? 'Ascunde beneficiile extra' : 'Vezi toate beneficiile';
+        });
+    });
+
     // Locale-aware currency display
     const priceElements = document.querySelectorAll('.price-value[data-price]');
     if (priceElements.length > 0) {
