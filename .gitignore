@@ -2,3 +2,7 @@
 __pycache__/
 *.py[cod]
 .mypy_cache/
+
+# Local browser QA artifacts
+.playwright-mcp/
+theme-preview.png
