@@ -675,7 +675,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             decoding="async" draggable="false" onerror="this.src='${placeholderPoster}'">
                         <span class="movie-card__quality-badge">HD/4K</span>
                         <button class="movie-card__play" type="button" data-trailer-index="${index}"
-                            aria-label="Reda trailer pentru ${movie.title}">
+                            aria-label="Redă previzualizarea video pentru ${movie.title}">
                             <i class="fas fa-play"></i>
                         </button>
                     </div>
@@ -1053,7 +1053,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const sendMessageBtn = document.getElementById('send-whatsapp-message');
     const whatsappTextarea = document.getElementById('whatsapp-message');
     const whatsappNumber = '447449765468';
-    const whatsappDefaultMessage = 'Salut! Sunt interesat de abonamentele Pixel Magix TV. Vreau sa aflu detalii si sa primesc un test gratuit de 24h. Multumesc!';
+    const whatsappDefaultMessage = 'Salut! Sunt interesat de abonamentele Pixel Magix TV. Vreau să aflu detalii și să primesc un test gratuit de 24h. Mulțumesc!';
 
     const openWhatsAppWithMessage = (message = whatsappDefaultMessage) => {
         const finalMessage = (message || '').trim() || whatsappDefaultMessage;
@@ -1111,7 +1111,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const price = card?.querySelector('.price-value')?.textContent.trim() || '';
             const durationPart = duration ? ` (${duration})` : '';
             const pricePart = price ? ` la ${price}` : '';
-            const message = `Salut! Vreau sa activez pachetul ${planName}${durationPart}${pricePart}. Imi puteti trimite detaliile si pasii de plata?`;
+            const message = `Salut! Vreau să activez pachetul ${planName}${durationPart}${pricePart}. Îmi puteți trimite detaliile și pașii de plată?`;
             openWhatsAppWithMessage(message);
         });
     });
@@ -1468,7 +1468,7 @@ document.addEventListener('DOMContentLoaded', () => {
             setNewsletterSending(true);
 
             newsletterTimeout = window.setTimeout(() => {
-                setNewsletterMessage('Gata! Am trimis o confirmare (demo) \u00een inbox. Mul\u021bumim!', 'success');
+                setNewsletterMessage('Gata! Am trimis o confirmare de prob\u0103 \u00een c\u0103su\u021ba de email. Mul\u021bumim!', 'success');
                 newsletterForm.reset();
                 setNewsletterSending(false);
             }, 900);
