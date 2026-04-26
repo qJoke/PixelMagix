@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     fetchOptions.signal = controller.signal;
                 }
 
-                const response = await fetch('https://ipinfo.io/json', fetchOptions);
+                const response = await fetch('/geo.json', fetchOptions);
                 if (!response.ok) return false;
 
                 const data = await response.json();

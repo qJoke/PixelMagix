@@ -1,0 +1,12 @@
+{
+  "name": "pixelmagix-geo",
+  "main": "geo-worker.mjs",
+  "compatibility_date": "2026-04-27",
+  "workers_dev": false,
+  "routes": [
+    {
+      "pattern": "pixelmagix.shop/geo.json",
+      "zone_name": "pixelmagix.shop"
+    }
+  ]
+}
