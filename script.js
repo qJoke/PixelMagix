@@ -134,26 +134,46 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         };
 
-        // Heuristic fallback (Timezone/Language)
-        const checkHeuristic = () => {
-            if (typeof Intl === 'undefined') return false;
+        const detectLocation = async () => {
+            if (typeof fetch !== 'function') return false;
+
+            const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+            const timeoutId = controller ? window.setTimeout(() => controller.abort(), 2500) : null;
+
             try {
-                const languages = navigator.languages || [navigator.language];
-                if (languages.some(lang => typeof lang === 'string' && lang.toLowerCase().includes('en-gb'))) {
-                    return true;
+                const fetchOptions = {
+                    cache: 'no-store',
+                    credentials: 'omit',
+                    headers: { Accept: 'application/json' },
+                    referrerPolicy: 'no-referrer'
+                };
+
+                if (controller) {
+                    fetchOptions.signal = controller.signal;
                 }
-                const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
-                return ['Europe/London', 'Europe/Belfast', 'Europe/Guernsey', 'Europe/Jersey', 'Europe/Isle_of_Man'].includes(timeZone);
+
+                const response = await fetch('https://ipinfo.io/json', fetchOptions);
+                if (!response.ok) return false;
+
+                const data = await response.json();
+                const countryCode = typeof data?.country === 'string' ? data.country.trim().toUpperCase() : '';
+
+                return countryCode === 'GB';
             } catch (error) {
                 return false;
+            } finally {
+                if (timeoutId) {
+                    window.clearTimeout(timeoutId);
+                }
             }
         };
 
-        const detectLocation = async () => checkHeuristic();
+        applyCurrency('EUR');
 
-        // Initialize
-        detectLocation().then(isUK => {
-            applyCurrency(isUK ? 'GBP' : 'EUR');
+        detectLocation().then(isGB => {
+            if (isGB) {
+                applyCurrency('GBP');
+            }
         });
     }
 
