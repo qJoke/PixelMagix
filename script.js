@@ -35,30 +35,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Local package finder recommendation
     const packageFinder = document.querySelector('.package-finder');
-    const finderRegion = document.getElementById('finder-region');
-    const finderDevice = document.getElementById('finder-device');
+    const finderDuration = document.getElementById('finder-duration');
     const finderTier = document.getElementById('finder-tier');
     const finderResult = document.getElementById('package-finder-result');
     const finderApply = packageFinder?.querySelector('.package-finder__apply');
 
     const recommendationCopy = {
-        'Standard 4 luni': 'Cel mai bun punct de pornire pentru canale românești și testare pe termen mediu.',
-        'Standard 7 luni': 'Recomandat pentru familii care vor stabilitate mai mult timp, cu o lună bonus.',
-        'VIP 4 luni': 'Cel mai echilibrat pachet pentru testare serioasă, calitate 4K și suport complet.',
-        'VIP 8 luni': 'Recomandat pentru diaspora departe de țară: durată mai lungă, 4K și două luni bonus.'
+        'Standard 1 lună': 'Cel mai mic cost ca să testezi serviciul complet, fără angajament.',
+        'Standard 4 luni': 'Echilibru bun între preț și durată: 3 luni plătite + 1 lună bonus.',
+        'Standard 7 luni': 'Acoperă un sezon întreg: 6 luni plătite + 1 lună bonus.',
+        'Standard 13 luni': 'Un an întreg cu o lună bonus — cel mai bun preț pe lună din linia Standard.',
+        'VIP 1 lună': 'O lună de probă cu tot conținutul, inclusiv calitate 4K.',
+        'VIP 4 luni': 'Cel mai echilibrat pachet VIP: 3 luni + 1 bonus, calitate 4K și suport complet.',
+        'VIP 8 luni': 'Durată lungă pentru diaspora: 6 luni plătite + 2 luni bonus, în 4K.',
+        'VIP 14 luni': 'Plan anual cu două luni cadou — cel mai bun preț pe lună la calitate 4K.'
+    };
+
+    const planMatrix = {
+        standard: { '1': 'Standard 1 lună', '4': 'Standard 4 luni', '8': 'Standard 7 luni', '14': 'Standard 13 luni' },
+        vip: { '1': 'VIP 1 lună', '4': 'VIP 4 luni', '8': 'VIP 8 luni', '14': 'VIP 14 luni' }
     };
 
     const getPackageRecommendation = () => {
-        const tier = finderTier?.value || 'vip';
-        const region = finderRegion?.value || 'eu';
-        const device = finderDevice?.value || 'smart-tv';
-        const longerSetup = region === 'na' || device === 'android' || device === 'windows';
-
-        if (tier === 'standard') {
-            return longerSetup ? 'Standard 7 luni' : 'Standard 4 luni';
-        }
-
-        return longerSetup ? 'VIP 8 luni' : 'VIP 4 luni';
+        const tier = finderTier?.value === 'standard' ? 'standard' : 'vip';
+        const duration = finderDuration?.value || '4';
+        return planMatrix[tier][duration] || planMatrix[tier]['4'];
     };
 
     const clearRecommendedPlans = () => {
@@ -96,10 +97,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    [finderRegion, finderDevice, finderTier].forEach(control => {
-        control?.addEventListener('change', updatePackageFinder);
+    finderDuration?.addEventListener('change', updatePackageFinder);
+    finderTier?.addEventListener('change', () => {
+        updatePackageFinder();
+        setActivePricingPlan(finderTier.value === 'standard' ? 'standard' : 'vip');
     });
-
     finderApply?.addEventListener('click', applyPackageRecommendation);
     updatePackageFinder();
 
