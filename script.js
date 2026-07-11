@@ -1375,8 +1375,11 @@ document.addEventListener('DOMContentLoaded', () => {
             emailInput.setCustomValidity(emailError);
         };
 
+        let statusLockUntil = 0;
+
         const hideStatus = () => {
             if (!statusBox) return;
+            if (Date.now() < statusLockUntil) return;
             statusBox.classList.remove('visible', 'error');
             statusBox.setAttribute('aria-hidden', 'true');
         };
@@ -1395,6 +1398,8 @@ document.addEventListener('DOMContentLoaded', () => {
             statusBox.classList.toggle('error', Boolean(isError));
             statusBox.classList.add('visible');
             statusBox.setAttribute('aria-hidden', 'false');
+            statusLockUntil = Date.now() + 400;
+            statusBox.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'nearest' });
         };
 
         const setSendingState = (isSending) => {
@@ -1416,6 +1421,25 @@ document.addEventListener('DOMContentLoaded', () => {
         emailInput.addEventListener('input', () => {
             hideStatus();
             validateContactFields();
+        });
+
+        const requiredFieldMessages = [
+            [nameInput, 'Te rugăm să completezi numele.'],
+            [countryInput, 'Te rugăm să completezi țara de reședință.']
+        ];
+        requiredFieldMessages.forEach(([field, message]) => {
+            if (!field) return;
+            field.addEventListener('invalid', () => {
+                if (field.validity.valueMissing) {
+                    field.setCustomValidity(message);
+                }
+            });
+            field.addEventListener('input', () => field.setCustomValidity(''));
+        });
+        emailInput.addEventListener('invalid', () => {
+            if (emailInput.validity.typeMismatch) {
+                emailInput.setCustomValidity('Adresa de email nu pare validă (ex. nume@domeniu.com).');
+            }
         });
 
         contactForm.addEventListener('submit', async (event) => {
@@ -1451,13 +1475,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             try {
                 await emailClient.send(emailConfig.serviceId, emailConfig.templateId, templateParams);
-                showStatus('Mulțumim! Formularul a fost trimis. Revenim cât mai rapid.');
                 contactForm.reset();
                 if (phoneIti) {
                     phoneIti.setNumber('');
                 }
                 phoneInput.setCustomValidity('');
                 emailInput.setCustomValidity('');
+                showStatus('Mulțumim! Formularul a fost trimis. Revenim cât mai rapid.');
             } catch (error) {
                 console.error('EmailJS error:', error);
                 showStatus('Nu am putut trimite mesajul. Încearcă din nou sau contactează-ne pe WhatsApp.', true);
