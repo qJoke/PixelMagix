@@ -2318,10 +2318,43 @@ textarea {
     gap: 2rem;
     border-right: 1px solid rgba(32, 231, 180, 0.18);
     box-shadow: 24px 0 60px rgba(0, 0, 0, 0.32);
+    overflow-y: auto;
 }
 
 .sidebar.active {
     transform: translateX(0);
+}
+
+.sidebar-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+}
+
+.sidebar-nav a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0.35rem 0.25rem;
+    font-weight: 600;
+    color: var(--color-text);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    transition: var(--transition);
+}
+
+.sidebar-nav li:last-child a {
+    border-bottom: none;
+}
+
+.sidebar-nav a:hover {
+    color: var(--color-primary-light);
+}
+
+.sidebar-cta {
+    margin-top: 1.25rem;
+    width: 100%;
+    justify-content: center;
 }
 
 .close-btn {
