@@ -1491,12 +1491,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Newsletter fake confirmation message
+    // Newsletter subscription via EmailJS
     const newsletterForm = document.querySelector('.newsletter-form');
     const newsletterInput = newsletterForm ? newsletterForm.querySelector('input[type="email"]') : null;
     const newsletterButton = newsletterForm ? newsletterForm.querySelector('button[type="submit"]') : null;
     const newsletterStatus = document.querySelector('.newsletter-status');
-    let newsletterTimeout = null;
+    let newsletterSending = false;
 
     if (newsletterForm && newsletterInput && newsletterButton && newsletterStatus) {
         const setNewsletterMessage = (message, type = 'success') => {
@@ -1506,34 +1506,52 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         const setNewsletterSending = (isSending) => {
+            newsletterSending = isSending;
             newsletterButton.disabled = isSending;
             newsletterButton.innerHTML = isSending
                 ? '<i class="fas fa-spinner fa-spin"></i>'
                 : '<i class="fas fa-paper-plane"></i>';
         };
 
-        newsletterForm.addEventListener('submit', (event) => {
+        newsletterForm.addEventListener('submit', async (event) => {
             event.preventDefault();
-            const emailValue = newsletterInput.value.trim();
-            if (newsletterTimeout) {
-                clearTimeout(newsletterTimeout);
-                newsletterTimeout = null;
-            }
+            if (newsletterSending) return;
 
-            if (emailValue.length === 0 || !emailValue.includes('@')) {
-                setNewsletterMessage('Adaug\u0103 un email valid ca s\u0103 \u00eencheiem abonarea.', 'error');
+            const emailValue = newsletterInput.value.trim();
+            if (!/\S+@\S+\.\S+/.test(emailValue)) {
+                setNewsletterMessage('Adaugă un email valid ca să încheiem abonarea.', 'error');
                 newsletterInput.focus();
                 return;
             }
 
-            setNewsletterMessage('Se proceseaz\u0103 abonarea...', 'success');
+            if (!emailClient || typeof emailClient.send !== 'function') {
+                setNewsletterMessage('Abonarea nu este disponibilă acum. Scrie-ne pe WhatsApp și te notăm noi.', 'error');
+                return;
+            }
+
+            setNewsletterMessage('Se procesează abonarea...', 'success');
             setNewsletterSending(true);
 
-            newsletterTimeout = window.setTimeout(() => {
-                setNewsletterMessage('Gata! Am trimis o confirmare de prob\u0103 \u00een c\u0103su\u021ba de email. Mul\u021bumim!', 'success');
+            const templateParams = {
+                nume: 'Abonare newsletter (site)',
+                email: emailValue,
+                telefon: '',
+                tara: '',
+                provider: '',
+                mesaj: `Cerere abonare newsletter pentru: ${emailValue}`,
+                date: formatDate()
+            };
+
+            try {
+                await emailClient.send(emailConfig.serviceId, emailConfig.templateId, templateParams);
+                setNewsletterMessage('Te-am notat! Revenim cu noutăți.', 'success');
                 newsletterForm.reset();
+            } catch (error) {
+                console.error('EmailJS newsletter error:', error);
+                setNewsletterMessage('Nu am putut înregistra abonarea. Încearcă din nou sau scrie-ne pe WhatsApp.', 'error');
+            } finally {
                 setNewsletterSending(false);
-            }, 900);
+            }
         });
     }
 
