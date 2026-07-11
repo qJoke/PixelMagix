@@ -2413,6 +2413,12 @@ textarea {
     padding: 1rem 1.25rem;
 }
 
+.chat-note {
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+    margin: 0.5rem 0 0;
+}
+
 .chat-body textarea {
     width: 100%;
     min-height: 100px;

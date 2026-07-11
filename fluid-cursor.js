@@ -3,13 +3,14 @@ const useFluidCursor = () => {
 
   // Device detection (do this first before setting canvas size)
   const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Completely disable fluid cursor on mobile phones
-  if (isMobile) {
+  // Completely disable fluid cursor on mobile phones or for reduced motion
+  if (isMobile || prefersReducedMotion) {
     if (canvas) {
       canvas.style.display = 'none';
     }
-    console.log("Fluid cursor disabled on mobile device");
+    console.log("Fluid cursor disabled (mobile or reduced motion)");
     return;
   }
   const isLowPowerDevice = navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4;

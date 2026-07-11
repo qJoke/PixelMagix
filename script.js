@@ -1073,7 +1073,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const sendMessageBtn = document.getElementById('send-whatsapp-message');
     const whatsappTextarea = document.getElementById('whatsapp-message');
     const whatsappNumber = '447449765468';
-    const whatsappDefaultMessage = 'Salut! Sunt interesat de abonamentele Pixel Magix TV. Vreau să aflu detalii și să primesc un test gratuit de 24h. Mulțumesc!';
+    const whatsappDefaultMessage = 'Salut! Sunt interesat de abonamentele Pixel Magix TV. Vreau să aflu detalii și să primesc un test gratuit de 36h. Mulțumesc!';
 
     const openWhatsAppWithMessage = (message = whatsappDefaultMessage) => {
         const finalMessage = (message || '').trim() || whatsappDefaultMessage;
@@ -1111,7 +1111,6 @@ document.addEventListener('DOMContentLoaded', () => {
     sendMessageBtn?.addEventListener('click', () => {
         if (!whatsappTextarea) return;
         const message = whatsappTextarea.value.trim();
-        if (message.length === 0) return;
         openWhatsAppWithMessage(message);
         whatsappTextarea.value = '';
         whatsappWindow?.setAttribute('aria-hidden', 'true');
@@ -1267,7 +1266,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const defaultPhoneCountry = (() => {
         try {
             const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
-            return ['Europe/London', 'Europe/Belfast', 'Europe/Guernsey', 'Europe/Jersey', 'Europe/Isle_of_Man'].includes(timeZone) ? 'gb' : 'ro';
+            const timezoneCountryMap = {
+                'Europe/London': 'gb', 'Europe/Belfast': 'gb', 'Europe/Guernsey': 'gb', 'Europe/Jersey': 'gb', 'Europe/Isle_of_Man': 'gb',
+                'Europe/Rome': 'it',
+                'Europe/Madrid': 'es',
+                'Europe/Berlin': 'de', 'Europe/Busingen': 'de',
+                'Europe/Paris': 'fr',
+                'Europe/Dublin': 'ie',
+                'Europe/Brussels': 'be',
+                'Europe/Amsterdam': 'nl',
+                'Europe/Vienna': 'at',
+                'Europe/Zurich': 'ch',
+                'Europe/Lisbon': 'pt',
+                'Europe/Athens': 'gr',
+                'Europe/Stockholm': 'se',
+                'Europe/Copenhagen': 'dk',
+                'Europe/Oslo': 'no',
+                'America/Toronto': 'ca', 'America/Montreal': 'ca', 'America/Edmonton': 'ca', 'America/Vancouver': 'ca', 'America/Winnipeg': 'ca', 'America/Halifax': 'ca',
+                'America/New_York': 'us', 'America/Chicago': 'us', 'America/Denver': 'us', 'America/Los_Angeles': 'us', 'America/Phoenix': 'us', 'America/Detroit': 'us'
+            };
+            return timezoneCountryMap[timeZone] || 'ro';
         } catch (error) {
             return 'ro';
         }
