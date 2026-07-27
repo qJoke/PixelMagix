@@ -6,3 +6,13 @@ __pycache__/
 # Local browser QA artifacts
 .playwright-mcp/
 theme-preview.png
+gradient-*.png
+hero-*.png
+pricing-*.png
+
+# Raw design exports (kept local, not served by the site)
+Pixel Magix logo*.png
+
+# Local tooling state
+.claude/
+.wrangler/

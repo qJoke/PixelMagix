@@ -1,5 +1,6 @@
 const useFluidCursor = () => {
   const canvas = document.getElementById('fluid');
+  if (!canvas) return;
 
   // Device detection (do this first before setting canvas size)
   const isMobile = window.matchMedia('(max-width: 768px)').matches;
@@ -7,9 +8,7 @@ const useFluidCursor = () => {
 
   // Completely disable fluid cursor on mobile phones or for reduced motion
   if (isMobile || prefersReducedMotion) {
-    if (canvas) {
-      canvas.style.display = 'none';
-    }
+    canvas.style.display = 'none';
     console.log("Fluid cursor disabled (mobile or reduced motion)");
     return;
   }
@@ -86,7 +85,13 @@ const useFluidCursor = () => {
   }
   const pointers = [];
   pointers.push(new pointerPrototype());
-  const { gl, ext } = getWebGLContext(canvas);
+  const webglContext = getWebGLContext(canvas);
+  if (!webglContext) {
+    canvas.style.display = 'none';
+    console.log('Fluid cursor disabled (WebGL unavailable)');
+    return;
+  }
+  const { gl, ext } = webglContext;
   if (!ext.supportLinearFiltering) {
     config.DYE_RESOLUTION = 256;
     config.SHADING = false;
@@ -105,6 +110,7 @@ const useFluidCursor = () => {
       gl =
         canvas.getContext('webgl', params) ||
         canvas.getContext('experimental-webgl', params);
+    if (!gl) return null;
     let halfFloat;
     let supportLinearFiltering;
     if (isWebGL2) {
@@ -114,6 +120,7 @@ const useFluidCursor = () => {
       halfFloat = gl.getExtension('OES_texture_half_float');
       supportLinearFiltering = gl.getExtension('OES_texture_half_float_linear');
     }
+    if (!isWebGL2 && !halfFloat) return null;
     gl.clearColor(0.0, 0.0, 0.0, 0.0);
     const halfFloatTexType = isWebGL2
       ? gl.HALF_FLOAT
@@ -135,6 +142,7 @@ const useFluidCursor = () => {
       formatRG = getSupportedFormat(gl, gl.RGBA, gl.RGBA, halfFloatTexType);
       formatR = getSupportedFormat(gl, gl.RGBA, gl.RGBA, halfFloatTexType);
     }
+    if (!formatRGBA || !formatRG || !formatR) return null;
     return {
       gl,
       ext: {
