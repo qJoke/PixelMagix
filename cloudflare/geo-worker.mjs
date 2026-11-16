@@ -1,21 +1,63 @@
-// Keep this allowlist in sync with the pinned resources in index.html/script.js.
-// The HTML uses inline styles, but executable inline scripts are not required.
-export const pageContentSecurityPolicy = [
-    "default-src 'self'",
-    "base-uri 'none'",
-    "object-src 'none'",
-    "frame-ancestors 'none'",
-    "form-action 'none'",
-    "script-src 'self' https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js https://cdn.jsdelivr.net/npm/@emailjs/browser@4.4.1/dist/email.min.js https://cdn.jsdelivr.net/npm/intl-tel-input@25.12.4/build/js/intlTelInput.min.js https://cdn.jsdelivr.net/npm/intl-tel-input@25.12.4/build/js/utils.js",
-    "script-src-attr 'none'",
-    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.css https://cdn.jsdelivr.net/npm/intl-tel-input@25.12.4/build/css/intlTelInput.css https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css",
-    "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/webfonts/",
-    "img-src 'self' data: https://image.tmdb.org https://images.unsplash.com https://upload.wikimedia.org https://cdn.jsdelivr.net/npm/intl-tel-input@25.12.4/build/img/",
-    "connect-src 'self' https://api.emailjs.com",
-    "frame-src https://www.youtube.com",
-    "worker-src 'none'",
-    'upgrade-insecure-requests'
-].join('; ');
+// Content Security Policy for the HTML pages. Keep it in sync with what index.html and js/ load.
+// The new site loads its own files, plus Meta Pixel and Google Analytics 4 (js/trackers.js), and those only
+// after the visitor's consent. Inline styles stay allowed; inline or injected scripts never are.
+const META_SCRIPT = 'https://connect.facebook.net';
+const META_EVENTS = 'https://www.facebook.com';
+const GOOGLE_TAG = 'https://www.googletagmanager.com';
+const GA_COLLECT = 'https://*.google-analytics.com';
+
+const sitePolicy = [
+    ['default-src', ["'self'"]],
+    ['base-uri', ["'none'"]],
+    ['object-src', ["'none'"]],
+    ['frame-ancestors', ["'none'"]],
+    ['form-action', ["'none'"]],
+    ['script-src', ["'self'", META_SCRIPT, GOOGLE_TAG]],
+    ['script-src-attr', ["'none'"]],
+    ['style-src', ["'self'", "'unsafe-inline'"]],
+    ['font-src', ["'self'"]],
+    ['img-src', ["'self'", 'data:', META_EVENTS, GOOGLE_TAG, GA_COLLECT]],
+    ['connect-src', ["'self'", META_EVENTS, GOOGLE_TAG, GA_COLLECT, 'https://analytics.google.com', 'https://*.analytics.google.com']],
+    ['frame-src', ["'none'"]],
+    ['worker-src', ["'none'"]],
+    ['upgrade-insecure-requests', []]
+];
+
+// What the old site (live until Etapa 4) still loads from other hosts: AOS, EmailJS, intl-tel-input,
+// Font Awesome, Google Fonts, posters and trailers. Remove with the switch to the final policy.
+const legacySources = {
+    'script-src': [
+        'https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js',
+        'https://cdn.jsdelivr.net/npm/@emailjs/browser@4.4.1/dist/email.min.js',
+        'https://cdn.jsdelivr.net/npm/intl-tel-input@25.12.4/build/js/intlTelInput.min.js',
+        'https://cdn.jsdelivr.net/npm/intl-tel-input@25.12.4/build/js/utils.js'
+    ],
+    'style-src': [
+        'https://fonts.googleapis.com',
+        'https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.css',
+        'https://cdn.jsdelivr.net/npm/intl-tel-input@25.12.4/build/css/intlTelInput.css',
+        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css'
+    ],
+    'font-src': ['https://fonts.gstatic.com', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/webfonts/'],
+    'img-src': ['https://image.tmdb.org', 'https://images.unsplash.com', 'https://upload.wikimedia.org', 'https://cdn.jsdelivr.net/npm/intl-tel-input@25.12.4/build/img/'],
+    'connect-src': ['https://api.emailjs.com'],
+    'frame-src': ['https://www.youtube.com']
+};
+
+const serialize = policy => policy.map(([name, sources]) => [name, ...sources].join(' ')).join('; ');
+// 'none' must stand alone, so it gives way when the old site adds a source to the same directive.
+const withLegacy = policy => policy.map(([name, sources]) => {
+    const extra = legacySources[name] ?? [];
+    return [name, extra.length ? [...sources.filter(source => source !== "'none'"), ...extra] : sources];
+});
+
+export const finalContentSecurityPolicy = serialize(sitePolicy);
+export const transitionContentSecurityPolicy = serialize(withLegacy(sitePolicy));
+
+// Publishing order (spec §12, Etapa 4): 1) deploy this Worker as it is ('transition': the old and the new
+// site both work); 2) push the new site to main; 3) check it live; 4) set 'final', run the tests, deploy again.
+export const CSP_STAGE = 'transition';
+export const pageContentSecurityPolicy = CSP_STAGE === 'final' ? finalContentSecurityPolicy : transitionContentSecurityPolicy;
 
 const securityHeaders = {
     'x-content-type-options': 'nosniff',
@@ -40,7 +82,8 @@ function localResponse(request, body, status = 200, extraHeaders = {}) {
     });
 }
 
-export async function handleRequest(request, fetchOrigin = globalThis.fetch) {
+// `contentSecurityPolicy` is for the local preview (tests/preview.mjs), which checks the strictest policy.
+export async function handleRequest(request, fetchOrigin = globalThis.fetch, { contentSecurityPolicy = pageContentSecurityPolicy } = {}) {
     const url = new URL(request.url);
 
     // This is an origin wrapper for the configured apex, never an open proxy.
@@ -78,7 +121,7 @@ export async function handleRequest(request, fetchOrigin = globalThis.fetch) {
         const contentType = headers.get('content-type') || '';
         if (/^(text\/html|application\/xhtml\+xml)(?:;|$)/i.test(contentType)) {
             // A future origin policy is retained; browsers enforce both policies.
-            headers.append('content-security-policy', pageContentSecurityPolicy);
+            headers.append('content-security-policy', contentSecurityPolicy);
         }
 
         return new Response(originResponse.body, {

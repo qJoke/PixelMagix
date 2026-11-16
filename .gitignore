@@ -16,3 +16,6 @@ Pixel Magix logo*.png
 # Local tooling state
 .claude/
 .wrangler/
+
+# Raw design originals for new site imagery (kept local; only optimized WebP in img/ is published)
+design-originale/

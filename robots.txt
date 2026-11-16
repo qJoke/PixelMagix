@@ -1,0 +1,6 @@
+# Pixel Magix TV - https://pixelmagix.shop/
+# Every search engine may read the whole site.
+User-agent: *
+Disallow:
+
+Sitemap: https://pixelmagix.shop/sitemap.xml

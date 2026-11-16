@@ -3,1050 +3,1218 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pixel Magix TV – Poarta ta către divertisment</title>
-    <meta name="theme-color" content="#02050b">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Televiziune românească în străinătate – Pixel Magix TV</title>
+    <meta name="theme-color" content="#05061a">
+    <meta name="color-scheme" content="dark">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <link rel="canonical" href="https://pixelmagix.shop/">
     <meta name="description"
-        content="Pixel Magix TV aduce cele mai îndrăgite canale, filme și seriale direct la tine, oriunde în lume. Descoperă abonamente flexibile, suport rapid și soluții IPTV de top.">
-
-    <!-- Preconnect hints for faster loading -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+        content="Canale românești în direct, filme și seriale la cerere pentru românii din diaspora. Test gratuit 36h. Pe televizor, telefon sau laptop, în orice țară.">
 
     <!-- Open Graph meta tags for social sharing -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Pixel Magix TV – Poarta ta către divertisment">
+    <meta property="og:title" content="Televiziune românească în străinătate – Pixel Magix TV">
     <meta property="og:description"
-        content="Acces instant la 520+ de canale românești, 12.000+ filme la cerere și 1.300+ seriale la cerere. IPTV de top pentru diaspora românească.">
-    <meta property="og:image" content="https://pixelmagix.shop/og-image.jpg">
+        content="Acces instant la 470+ de canale românești, 9.100+ filme la cerere și 950+ seriale la cerere. IPTV de top pentru diaspora românească.">
+    <meta property="og:image" content="https://pixelmagix.shop/img/og-pixelmagix.jpg">
     <meta property="og:image:type" content="image/jpeg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Pixel Magix TV: România pe ecranul tău, fără compromisuri. Un televizor cu un meci în direct.">
+
     <meta property="og:url" content="https://pixelmagix.shop/">
     <meta property="og:site_name" content="Pixel Magix TV">
     <meta property="og:locale" content="ro_RO">
 
     <!-- Twitter Card meta tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Pixel Magix TV – Poarta ta către divertisment">
+    <meta name="twitter:title" content="Televiziune românească în străinătate – Pixel Magix TV">
     <meta name="twitter:description"
-        content="Acces instant la 520+ de canale românești, 12.000+ filme la cerere și 1.300+ seriale la cerere.">
-    <meta name="twitter:image" content="https://pixelmagix.shop/og-image.jpg">
+        content="Acces instant la 470+ de canale românești, 9.100+ filme la cerere și 950+ seriale la cerere.">
+    <meta name="twitter:image" content="https://pixelmagix.shop/img/og-pixelmagix.jpg">
 
-    <link rel="icon" type="image/webp" href="Pixel%20Magix.webp">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@25.12.4/build/css/intlTelInput.css"
-        integrity="sha384-KgNFOuU4mTPtXZmFu6WaY2/jxbJEA+INAC2SFk+B0vTR9iuuKE+5qujIZY8Mnmzt" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css?v=install-apps-2026-09-10">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.css" rel="stylesheet"
-        integrity="sha384-/rJKQnzOkEo+daG0jMjU1IwwY9unxt1NBw3Ef2fmOJ3PW/TfAg2KXVoWwMZQZtw9" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-        integrity="sha384-nRgPTkuX86pH8yjPJUAFuASXQSSl2/bBUiNV47vSYpKFxHJhbcrGnmlYpYJMeD7a" crossorigin="anonymous">
+    <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="preload" href="fonts/sora-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <!-- ă, ș and ț are in the "latin-ext" files: asked for here, they are ready for the first layout. -->
+    <link rel="preload" href="fonts/sora-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/manrope-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" as="image" href="img/tv-sport-1280.webp"
+        imagesrcset="img/tv-sport-720.webp 720w, img/tv-sport-1280.webp 1280w"
+        imagesizes="(min-width: 1024px) 560px, 92vw" fetchpriority="high">
+    <link rel="stylesheet" href="style.css?v=refacere-1">
+    <script type="module" src="script.js?v=refacere-1"></script>
 </head>
 
 <body>
-    <a class="skip-link" href="#main-content">Sari la conținut</a>
-    <canvas id="fluid" class="fluid-canvas" aria-hidden="true"></canvas>
+    <section class="consent glass" id="consent" aria-labelledby="consent-title" tabindex="-1" data-consent hidden>
+        <div class="consent__inner">
+            <h2 class="consent__title" id="consent-title">
+                <img class="consent__mark" src="img/logo-palarie-64.webp"
+                    srcset="img/logo-palarie-64.webp 1x, img/logo-palarie-128.webp 2x" width="79" height="64" alt="">
+                Cookie-uri</h2>
+            <p class="consent__text">Folosim cookie-uri pentru statistici și reclame doar dacă ești de acord. Poți schimba oricând
+                alegerea, din „Setări cookie”, jos în pagină.</p>
+            <div class="consent__options" id="consent-options" data-consent-options hidden>
+                <div class="consent__row">
+                    <p class="consent__name">Strict necesare <span class="consent__always">mereu active</span></p>
+                    <p class="consent__desc">Țin minte doar alegerea ta, în acest browser.</p>
+                </div>
+                <div class="consent__row" data-consent-row="statistici">
+                    <label class="consent__toggle">
+                        <span class="consent__name">Statistici</span>
+                        <input class="consent__switch" type="checkbox" name="statistici" aria-describedby="consent-desc-statistici">
+                    </label>
+                    <p class="consent__desc" id="consent-desc-statistici">Google Analytics: câți vizitatori avem și ce îi ajută pe
+                        pagină.</p>
+                </div>
+                <div class="consent__row" data-consent-row="marketing">
+                    <label class="consent__toggle">
+                        <span class="consent__name">Marketing</span>
+                        <input class="consent__switch" type="checkbox" name="marketing" aria-describedby="consent-desc-marketing">
+                    </label>
+                    <p class="consent__desc" id="consent-desc-marketing">Meta Pixel: ce reclame de pe Facebook și Instagram ne aduc
+                        clienți, ca să le arătăm celor interesați.</p>
+                </div>
+                <button class="btn btn--primary btn--sm btn--block" type="button" data-consent-save>Salvez alegerea</button>
+            </div>
+            <div class="consent__actions">
+                <button class="btn btn--glass btn--sm glass-lite consent__choice" type="button" data-consent-accept>Accept tot</button>
+                <button class="btn btn--glass btn--sm glass-lite consent__choice" type="button" data-consent-reject>Refuz</button>
+            </div>
+            <div class="consent__links">
+                <button class="consent__more" type="button" data-consent-settings aria-expanded="false"
+                    aria-controls="consent-options">Setări</button>
+                <a class="consent__more" href="politica-de-confidentialitate.html">Află mai multe</a>
+            </div>
+        </div>
+    </section>
+    <p class="sr-only" aria-live="polite" data-consent-status></p>
+    <a class="skip-link" href="#continut">Sari la conținut</a>
+    <div class="space" aria-hidden="true"></div>
 
-    <header class="top-bar">
-        <div class="container top-bar__content">
-            <span><i class="fas fa-map-marker-alt"></i> IPTV de top pentru diaspora românească</span>
-            <span><i class="fas fa-phone"></i> <a href="https://wa.me/447449765468" target="_blank" rel="noopener">+44
-                    7449 765468</a></span>
-            <span><i class="fab fa-whatsapp"></i> <a href="https://wa.me/447449765468" target="_blank"
-                    rel="noopener">Scrie-ne pe WhatsApp</a></span>
+    <header class="site-header" data-header>
+        <div class="site-header__bar glass glass--refract">
+            <a class="brand" href="#acasa" aria-label="Pixel Magix – începutul paginii">
+                <img class="brand__mark" src="img/logo-palarie-64.webp"
+                    srcset="img/logo-palarie-64.webp 1x, img/logo-palarie-128.webp 2x" width="79" height="64" alt="">
+                <span class="brand__name">Pixel Magix</span>
+            </a>
+            <nav class="site-nav" aria-label="Navigare principală">
+                <a href="#ce-primesti">Ce primești</a>
+                <a href="#preturi">Prețuri</a>
+                <a href="#cum-functioneaza">Cum funcționează</a>
+                <a href="#instalare">Instalare</a>
+                <a href="#intrebari">Întrebări</a>
+            </nav>
+            <a class="btn btn--primary btn--sm js-trial"
+                href="https://wa.me/447449765468?text=Salut!%20Vreau%20s%C4%83%20primesc%20testul%20gratuit%20de%2036h%20pentru%20Pixel%20Magix%20TV.%20Mul%C8%9Bumesc!"
+                target="_blank" rel="noopener noreferrer">
+                <svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-whatsapp"></use></svg>
+                <span>Test gratuit</span>
+            </a>
         </div>
     </header>
 
-    <header class="navbar">
-        <div class="container navbar__container">
-            <a href="#hero" class="logo">Pixel Magix</a>
-            <nav class="main-nav" aria-label="Navigare principală">
-                <ul class="nav-links">
-                    <li><a href="#hero">Acasă</a></li>
-                    <li><a href="#servicii">Servicii</a></li>
-                    <li><a href="#abonamente">Abonamente</a></li>
-                    <li><a href="#testimoniale">Testimoniale</a></li>
-                    <li><a href="#faq">Întrebări frecvente</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
-            <div class="nav-buttons">
-                <a href="https://wa.me/447449765468" class="btn btn--primary nav-cta"
-                    aria-label="Scrie-ne pe WhatsApp">
-                    <i class="fab fa-whatsapp" aria-hidden="true"></i>
-                    <span>Începe acum</span>
-                </a>
-                <button class="hamburger" type="button" aria-label="Deschide meniul" aria-controls="mobile-menu" aria-expanded="false">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <div class="sidebar" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Meniu mobil" aria-hidden="true" inert>
-        <button class="close-btn" aria-label="Închide meniul">&times;</button>
-        <div class="sidebar-content">
-            <h3 class="sidebar-title">Pixel Magix</h3>
-            <p class="sidebar-description">Cu Pixel Magix TV, distanța nu mai este o barieră. Oferim servicii IPTV
-                sigure, rapide și curate, astfel încât să te poți bucura de canalele preferate oriunde ai fi pe glob.
-            </p>
-            <nav class="sidebar-nav" aria-label="Meniu mobil">
-                <ul>
-                    <li><a href="#hero">Acasă</a></li>
-                    <li><a href="#servicii">Servicii</a></li>
-                    <li><a href="#abonamente">Abonamente</a></li>
-                    <li><a href="#testimoniale">Testimoniale</a></li>
-                    <li><a href="#faq">Întrebări frecvente</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
-            <a href="https://wa.me/447449765468" class="btn btn--primary sidebar-cta" target="_blank" rel="noopener">Scrie-ne pe WhatsApp</a>
-            <div class="sidebar-contact">
-                <h4>Program suport</h4>
-                <p><i class="fas fa-clock"></i> Non-stop, 24/7</p>
-                <p><i class="fas fa-phone"></i> <a href="https://wa.me/447449765468" target="_blank" rel="noopener">+44
-                        7449 765468</a></p>
-                <p><i class="fas fa-envelope"></i> <a href="mailto:pixelmagixtv@gmail.com">pixelmagixtv@gmail.com</a>
-                </p>
-            </div>
-            <div class="social-media">
-                <a href="https://www.facebook.com/pixelmagix.shop/" target="_blank" rel="noopener"
-                    aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                <a href="https://www.facebook.com/pixelmagix.shop/" target="_blank" rel="noopener"
-                    aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                <a href="https://www.instagram.com/pixelmagixtv" target="_blank" rel="noopener"
-                    aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="https://www.facebook.com/pixelmagix.shop/" target="_blank" rel="noopener"
-                    aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-            </div>
-        </div>
-    </div>
-    <div class="overlay"></div>
-
-    <div class="social-icons-fixed">
-        <a href="https://www.facebook.com/pixelmagix.shop/" target="_blank" rel="noopener" aria-label="Facebook"><i
-                class="fab fa-facebook-f"></i></a>
-        <a href="https://www.facebook.com/pixelmagix.shop/" target="_blank" rel="noopener" aria-label="Twitter"><i
-                class="fab fa-twitter"></i></a>
-        <a href="https://www.instagram.com/pixelmagixtv" target="_blank" rel="noopener" aria-label="Instagram"><i
-                class="fab fa-instagram"></i></a>
-        <a href="https://www.facebook.com/pixelmagix.shop/" target="_blank" rel="noopener" aria-label="YouTube"><i
-                class="fab fa-youtube"></i></a>
-    </div>
-
-    <main id="main-content" tabindex="-1">
-        <section id="hero" class="hero-section">
-            <div class="hero-overlay"></div>
-            <div class="container hero-content">
-                <div class="hero-text" data-aos="fade-right">
-                    <span class="hero-tag"><i class="fas fa-satellite-dish" aria-hidden="true"></i> Semnal în direct pentru
-                        diaspora</span>
-                    <h1 class="hero-title">România pe ecranul tău, fără compromisuri.</h1>
-                    <p class="hero-subtitle">Canale românești, filme, sport și seriale la cerere într-o experiență IPTV
-                        stabilă, configurată rapid pentru familia ta oriunde ai fi.</p>
-                    <div class="hero-actions">
-                        <a href="#abonamente" class="btn btn--primary">Vezi abonamentele</a>
-                        <a href="#contact" class="btn btn--ghost">Solicită o probă</a>
+    <main id="continut" tabindex="-1">
+        <section class="hero" id="acasa" aria-labelledby="hero-title">
+            <div class="aurora" aria-hidden="true"><i class="aurora__wave"></i><i class="aurora__wave"></i><i class="aurora__wave"></i></div>
+            <div class="container hero__grid">
+                <div class="hero__copy">
+                    <p class="eyebrow glass-lite"><span class="eyebrow__dot" aria-hidden="true"></span>Televiziune
+                        românească pentru diaspora</p>
+                    <h1 class="hero__title" id="hero-title">România pe ecranul tău, <span class="grad">fără
+                            compromisuri.</span></h1>
+                    <p class="hero__lead">Canale românești în direct, plus filme și seriale la cerere.
+                        <span class="lead-static">Pe televizor, telefon sau laptop, în orice țară.</span>
+                        <span class="lead-rotator" aria-hidden="true">În orice țară, pe <span class="rotator">
+                                <span class="rotator__word">televizor.</span>
+                                <span class="rotator__word">telefon.</span>
+                                <span class="rotator__word">laptop.</span>
+                            </span></span></p>
+                    <div class="hero__actions">
+                        <a class="btn btn--primary btn--lg js-trial"
+                            href="https://wa.me/447449765468?text=Salut!%20Vreau%20s%C4%83%20primesc%20testul%20gratuit%20de%2036h%20pentru%20Pixel%20Magix%20TV.%20Mul%C8%9Bumesc!"
+                            target="_blank" rel="noopener noreferrer">
+                            <svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-whatsapp"></use></svg>
+                            <span>Încearcă gratuit 36h</span>
+                        </a>
+                        <a class="btn btn--glass btn--lg glass-lite" href="#preturi">
+                            <span>Vezi prețurile</span>
+                            <svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-arrow"></use></svg>
+                        </a>
                     </div>
-                    <div class="hero-highlights">
-                        <div>
-                            <strong>520+</strong>
-                            <span>Canale românești</span>
-                        </div>
-                        <div>
-                            <strong>12.000+</strong>
-                            <span>Filme la cerere</span>
-                        </div>
-                        <div>
-                            <strong>1.300+</strong>
-                            <span>Seriale la cerere</span>
-                        </div>
-                        <div>
-                            <strong>36h</strong>
-                            <span>Test și activare rapidă</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="hero-media" data-aos="fade-left">
-                    <div class="hero-screen" aria-hidden="true">
-                        <div class="hero-screen__bar">
-                            <span><i class="fas fa-circle"></i> În direct</span>
-                            <span>Semnal Pixel Magix</span>
-                        </div>
-                        <div class="hero-screen__center">
-                            <span class="hero-screen__eyebrow">EPG actualizat</span>
-                            <strong>România HD</strong>
-                            <span>Stabil pe Smart TV, Android, Apple și Windows</span>
-                        </div>
-                        <div class="hero-screen__channels">
-                            <span>Digi</span>
-                            <span>PRO TV</span>
-                            <span>Antena</span>
-                            <span>HBO</span>
-                        </div>
-                    </div>
-                    <div class="hero-card">
-                        <span class="hero-card__tag">Configurare inclusă</span>
-                        <h3>Test gratuit 36h</h3>
-                        <p>Primești acces de probă, ghid de instalare și suport pe WhatsApp pentru primul ecran.</p>
-                        <a href="https://wa.me/447449765468" class="btn btn--secondary">Solicită acces</a>
-                        <ul class="hero-card__list">
-                            <li><i class="fas fa-check"></i> Activare rapidă</li>
-                            <li><i class="fas fa-check"></i> Ghid pas cu pas</li>
-                            <li><i class="fas fa-check"></i> Suport în română</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section id="stats" class="stats-section">
-            <div class="container stats-grid">
-                <article class="stat-card" data-aos="zoom-in" data-target="520" data-suffix="+">
-                    <span class="stat-value">520+</span>
-                    <span class="stat-label">Canale românești</span>
-                </article>
-                <article class="stat-card" data-aos="zoom-in" data-target="12000" data-suffix="+">
-                    <span class="stat-value">12.000+</span>
-                    <span class="stat-label">Filme la cerere</span>
-                </article>
-                <article class="stat-card" data-aos="zoom-in" data-target="1300" data-suffix="+">
-                    <span class="stat-value">1.300+</span>
-                    <span class="stat-label">Seriale la cerere</span>
-                </article>
-            </div>
-        </section>
-
-        <section id="servicii" class="services-section">
-            <div class="container">
-                <div class="section-header" data-aos="fade-up">
-                    <span class="section-tag">Servicii complete</span>
-                    <h2>Tot ce ai nevoie pentru divertisment non-stop</h2>
-                    <p>Pixel Magix TV combină tehnologie de ultimă generație cu o echipă de suport atentă și
-                        prietenoasă.</p>
-                </div>
-                <div class="services-grid">
-                    <article class="service-card" data-signal="01 DIRECT" data-aos="fade-up" data-aos-delay="50">
-                        <i class="fas fa-bolt"></i>
-                        <h3>Redare stabilă</h3>
-                        <p>Servere optimizate și fluxuri redundante pentru o experiență fără întreruperi.</p>
-                    </article>
-                    <article class="service-card" data-signal="02 GLOBAL" data-aos="fade-up" data-aos-delay="150">
-                        <i class="fas fa-globe"></i>
-                        <h3>Oriunde în lume</h3>
-                        <p>Acces garantat în Europa, America de Nord și Orientul Mijlociu.</p>
-                    </article>
-                    <article class="service-card" data-signal="03 SIGUR" data-aos="fade-up" data-aos-delay="250">
-                        <i class="fas fa-shield-alt"></i>
-                        <h3>Protecție avansată</h3>
-                        <p>Conexiuni securizate și conturi monitorizate împotriva accesului neautorizat.</p>
-                    </article>
-                    <article class="service-card" data-signal="04 AJUTOR" data-aos="fade-up" data-aos-delay="350">
-                        <i class="fas fa-headset"></i>
-                        <h3>Suport 24/7</h3>
-                        <p>Echipa noastră îți răspunde rapid în română, engleză și italiană.</p>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <section id="channels" class="channels-section">
-            <div class="container channels-grid">
-                <div class="channels-text" data-aos="fade-right">
-                    <span class="section-tag">Conținut de top</span>
-                    <h2>Canalele preferate, într-o interfață intuitivă</h2>
-                    <p>De la știri naționale și competiții sportive, până la filme, muzică și programe pentru copii,
-                        bibliotecile Pixel Magix sunt actualizate zilnic.</p>
-                    <ul class="channels-list">
-                        <li><i class="fas fa-tv"></i> Digi, Antena, PRO TV, Prima, TVR, Look Sport</li>
-                        <li><i class="fas fa-film"></i> HBO, Cinemax, FilmBox, AXN, Netflix Originals</li>
-                        <li><i class="fas fa-futbol"></i> Premier League, Champions League, La Liga, F1</li>
-                        <li><i class="fas fa-child"></i> Disney, Nickelodeon, Minimax, Cartoon Network</li>
-                        <li><i class="fas fa-language"></i> Peste 30 de limbi disponibile, inclusiv audio dublat</li>
+                    <ul class="chips" aria-label="Pe scurt">
+                        <li class="chip glass-lite">470+ canale românești</li>
+                        <li class="chip glass-lite">4K pe VIP</li>
+                        <li class="chip glass-lite">3–5 ecrane</li>
+                        <li class="chip glass-lite">Fără reînnoire automată</li>
                     </ul>
-                    <div class="channels-cta">
-                        <a href="#abonamente" class="btn btn--primary">Vezi pachetele</a>
-                        <a href="#contact" class="btn btn--ghost">Primește lista completă</a>
+                </div>
+
+                <div class="hero__media">
+                    <div class="tv glass" data-tv>
+                        <div class="tv__screen" id="tv-panel" role="tabpanel" aria-labelledby="tab-sport">
+                            <img class="tv__img is-active" data-tv-image="sport" data-tv-video="video/tv-sport-960.mp4" src="img/tv-sport-1280.webp"
+                                srcset="img/tv-sport-720.webp 720w, img/tv-sport-1280.webp 1280w"
+                                sizes="(min-width: 1024px) 560px, 92vw" width="1280" height="720"
+                                alt="Stadion plin, noaptea, în timpul unui meci transmis în direct" fetchpriority="high">
+                            <img class="tv__img" aria-hidden="true" data-tv-image="stiri" data-tv-video="video/tv-stiri-960.mp4" data-src="img/tv-stiri-1280.webp"
+                                data-srcset="img/tv-stiri-720.webp 720w, img/tv-stiri-1280.webp 1280w"
+                                sizes="(min-width: 1024px) 560px, 92vw" width="1280" height="720"
+                                alt="Studio modern de știri, cu prezentatoare la pupitru" decoding="async">
+                            <img class="tv__img" aria-hidden="true" data-tv-image="filme" data-tv-video="video/tv-filme-960.mp4" data-src="img/tv-filme-1280.webp"
+                                data-srcset="img/tv-filme-720.webp 720w, img/tv-filme-1280.webp 1280w"
+                                sizes="(min-width: 1024px) 560px, 92vw" width="1280" height="720"
+                                alt="Scenă de film: un explorator pe o planetă îndepărtată, la apus" decoding="async">
+                            <img class="tv__img" aria-hidden="true" data-tv-image="copii" data-tv-video="video/tv-copii-960.mp4" data-src="img/tv-copii-1280.webp"
+                                data-srcset="img/tv-copii-720.webp 720w, img/tv-copii-1280.webp 1280w"
+                                sizes="(min-width: 1024px) 560px, 92vw" width="1280" height="720"
+                                alt="Desen animat: animăluțe prietenoase la un picnic în pădure" decoding="async">
+                            <canvas class="tv__fx" aria-hidden="true"></canvas>
+                            <img class="tv__bug" src="img/logo-palarie-64.webp" width="79" height="64" alt="">
+                            <button class="tv__pause" type="button" data-tv-pause aria-pressed="false"
+                                aria-label="Oprește mișcarea" hidden>
+                                <svg class="icon tv__pause-icon" aria-hidden="true"><use href="img/icons.svg#i-pause"></use></svg>
+                                <svg class="icon tv__play-icon" aria-hidden="true"><use href="img/icons.svg#i-play"></use></svg>
+                            </button>
+                            <div class="tv__overlay">
+                                <span class="live-pill"><span class="live-pill__dot" aria-hidden="true"></span>ÎN
+                                    DIRECT</span>
+                                <p class="tv__title" data-tv-title>Sport în direct</p>
+                            </div>
+                        </div>
+                        <div class="tv__tabs" role="tablist" aria-label="Alege categoria">
+                            <button class="tv__tab" type="button" role="tab" id="tab-sport" aria-controls="tv-panel"
+                                aria-selected="true" data-tab="sport" data-title="Sport în direct"
+                                data-now="Meci în direct" data-next="Studioul de după meci">Sport</button>
+                            <button class="tv__tab" type="button" role="tab" id="tab-stiri" aria-controls="tv-panel"
+                                aria-selected="false" tabindex="-1" data-tab="stiri" data-title="Știri"
+                                data-now="Jurnalul de seară" data-next="Dezbaterea zilei">Știri</button>
+                            <button class="tv__tab" type="button" role="tab" id="tab-filme" aria-controls="tv-panel"
+                                aria-selected="false" tabindex="-1" data-tab="filme" data-title="Filme"
+                                data-now="Aventură SF" data-next="Comedie de familie">Filme</button>
+                            <button class="tv__tab" type="button" role="tab" id="tab-copii" aria-controls="tv-panel"
+                                aria-selected="false" tabindex="-1" data-tab="copii" data-title="Pentru copii"
+                                data-now="Desene animate" data-next="Aventuri în pădure">Copii</button>
+                        </div>
+                    </div>
+                    <div class="epg glass" aria-hidden="true">
+                        <p><span class="epg__label">Acum</span><span data-tv-now>Meci în direct</span></p>
+                        <p><span class="epg__label epg__label--next">Urmează</span><span data-tv-next>Studioul de
+                                după meci</span></p>
                     </div>
                 </div>
-                <div class="channels-media" data-aos="fade-left">
-                    <div class="channels-card">
-                        <img src="background.webp" alt="Interfața Pixel Magix" loading="lazy" width="600" height="338" decoding="async">
-                        <div class="channels-card__badge">520+ canale HD</div>
-                    </div>
+            </div>
+
+            <div class="marquee" role="region" aria-label="Categorii disponibile">
+                <div class="marquee__track">
+                    <ul class="marquee__list">
+                        <li>Sport în direct</li>
+                        <li>Știri</li>
+                        <li>Filme</li>
+                        <li>Seriale</li>
+                        <li>Copii</li>
+                        <li>Documentare</li>
+                        <li>Muzică</li>
+                        <li>Divertisment</li>
+                    </ul>
+                    <ul class="marquee__list" aria-hidden="true">
+                        <li>Sport în direct</li>
+                        <li>Știri</li>
+                        <li>Filme</li>
+                        <li>Seriale</li>
+                        <li>Copii</li>
+                        <li>Documentare</li>
+                        <li>Muzică</li>
+                        <li>Divertisment</li>
+                    </ul>
+                    <ul class="marquee__list" aria-hidden="true">
+                        <li>Sport în direct</li>
+                        <li>Știri</li>
+                        <li>Filme</li>
+                        <li>Seriale</li>
+                        <li>Copii</li>
+                        <li>Documentare</li>
+                        <li>Muzică</li>
+                        <li>Divertisment</li>
+                    </ul>
+                    <ul class="marquee__list" aria-hidden="true">
+                        <li>Sport în direct</li>
+                        <li>Știri</li>
+                        <li>Filme</li>
+                        <li>Seriale</li>
+                        <li>Copii</li>
+                        <li>Documentare</li>
+                        <li>Muzică</li>
+                        <li>Divertisment</li>
+                    </ul>
+                    <ul class="marquee__list" aria-hidden="true">
+                        <li>Sport în direct</li>
+                        <li>Știri</li>
+                        <li>Filme</li>
+                        <li>Seriale</li>
+                        <li>Copii</li>
+                        <li>Documentare</li>
+                        <li>Muzică</li>
+                        <li>Divertisment</li>
+                    </ul>
                 </div>
             </div>
         </section>
 
-        <section id="devices" class="devices-section">
-            <div class="container devices-grid" data-aos="fade-up">
-                <div class="devices-text">
-                    <span class="section-tag">Flexibilitate totală</span>
-                    <h2>Compatibil cu dispozitivul tău preferat</h2>
-                    <p>Pixel Magix funcționează nativ pe televizoare smart, box-uri Android, iOS, tablete, laptopuri și
-                        orice browser web modern.</p>
-                </div>
-                <div class="devices-logos">
-                    <a href="#instalare" data-install-target="samsung"><i class="fas fa-tv"></i> Samsung TV</a>
-                    <a href="#instalare" data-install-target="lg"><i class="fas fa-desktop"></i> LG webOS</a>
-                    <a href="#instalare" data-install-target="android"><i class="fab fa-android"></i> Android / Fire
-                        TV</a>
-                    <a href="#instalare" data-install-target="mobile"><i class="fas fa-mobile-screen-button"></i> Telefoane</a>
-                    <a href="#instalare" data-install-target="windows"><i class="fab fa-windows"></i> Windows</a>
-                    <a href="#instalare" data-install-target="mac"><i class="fab fa-apple"></i> Mac</a>
-                </div>
-            </div>
-        </section>
-
-        <section id="abonamente" class="pricing-section">
+        <section class="section offer" id="ce-primesti" aria-labelledby="ce-primesti-title">
             <div class="container">
-                <div class="section-header" data-aos="fade-up">
-                    <span class="section-tag">Planuri flexibile</span>
-                    <h2>Alege abonamentul perfect pentru familia ta</h2>
-                    <p>Toate abonamentele includ acces la conținut de top, actualizări automate ale listelor și suport
-                        tehnic non-stop.</p>
+                <header class="section__head">
+                    <p class="eyebrow glass-lite"><span class="eyebrow__dot" aria-hidden="true"></span>Ce primești</p>
+                    <h2 class="section__title" id="ce-primesti-title">Tot ce te leagă de acasă, <span class="grad">într-un singur abonament.</span></h2>
+                    <p class="section__lead">Canale în direct, filme și seriale la cerere, pe toate ecranele din casă.</p>
+                </header>
+
+                <div class="bento">
+                    <article class="tile tile--photo tile--live">
+                        <img class="tile__img" src="img/acasa-meci-720.webp"
+                            srcset="img/acasa-meci-720.webp 720w, img/acasa-meci-1280.webp 1280w"
+                            sizes="(min-width: 1024px) 600px, 92vw" width="1280" height="720" alt="" loading="lazy"
+                            decoding="async" data-materialise>
+                        <div class="tile__body">
+                            <h3 class="tile__title">Canale românești în direct</h3>
+                            <p>Știri, sport, divertisment și emisiuni pentru copii, cu ghid TV pentru ce rulează acum și ce
+                                urmează.</p>
+                        </div>
+                    </article>
+                    <article class="tile tile--photo tile--movies">
+                        <img class="tile__img" src="img/acasa-film-720.webp"
+                            srcset="img/acasa-film-720.webp 720w, img/acasa-film-1280.webp 1280w"
+                            sizes="(min-width: 1024px) 600px, 92vw" width="1280" height="720" alt="" loading="lazy"
+                            decoding="async" data-materialise>
+                        <div class="tile__body">
+                            <h3 class="tile__title" aria-label="9.100+ filme la cerere"><span data-count="9100">9.100+</span> filme la cerere</h3>
+                            <p>Pornești când vrei, de pe orice ecran.</p>
+                        </div>
+                    </article>
+                    <article class="tile glass-lite tile--series">
+                        <span class="tile__icon" aria-hidden="true"><svg class="icon"><use href="img/icons.svg#i-play"></use></svg></span>
+                        <h3 class="tile__title" aria-label="950+ seriale"><span data-count="950">950+</span> seriale</h3>
+                        <p>Sezoane întregi, la cerere.</p>
+                    </article>
+                    <article class="tile glass-lite tile--quality">
+                        <span class="tile__icon" aria-hidden="true"><svg class="icon"><use href="img/icons.svg#i-tv"></use></svg></span>
+                        <h3 class="tile__title">Până la 4K pe VIP</h3>
+                        <p>Imagine clară pe televizoarele mari.</p>
+                    </article>
+                    <article class="tile tile--photo tile--kids">
+                        <img class="tile__img" src="img/acasa-copii-720.webp"
+                            srcset="img/acasa-copii-720.webp 720w, img/acasa-copii-1280.webp 1280w"
+                            sizes="(min-width: 1024px) 600px, 92vw" width="1280" height="720" alt="" loading="lazy"
+                            decoding="async" data-materialise>
+                        <div class="tile__body">
+                            <h3 class="tile__title">Pentru cei mici</h3>
+                            <p>Desene animate și emisiuni pentru copii.</p>
+                        </div>
+                    </article>
+                    <article class="tile glass-lite tile--renew">
+                        <span class="tile__icon" aria-hidden="true"><svg class="icon"><use href="img/icons.svg#i-check"></use></svg></span>
+                        <h3 class="tile__title">Fără reînnoire automată</h3>
+                        <p>Plătești o dată pentru perioada aleasă și prelungești doar dacă vrei.</p>
+                    </article>
                 </div>
-                <div class="package-finder" data-aos="fade-up">
-                    <div class="package-finder__copy">
-                        <span>Recomandare rapidă</span>
-                        <h3>Găsim pachetul potrivit în 10 secunde</h3>
-                        <p>Alege contextul tău și îți marcăm planul cu cel mai bun raport între preț, durată și suport.
-                        </p>
-                    </div>
-                    <div class="package-finder__controls" aria-label="Selector pachet recomandat">
-                        <label for="finder-duration">
-                            Pentru cât timp vrei abonamentul?
-                            <select id="finder-duration">
-                                <option value="1">1 lună</option>
-                                <option value="4" selected>4 luni (echilibrat)</option>
-                                <option value="8">7–8 luni (sezon întreg)</option>
-                                <option value="14">13–14 luni (un an)</option>
-                            </select>
-                        </label>
-                        <label for="finder-tier">
-                            Preferință
-                            <select id="finder-tier">
-                                <option value="vip">VIP</option>
-                                <option value="standard">Standard</option>
-                            </select>
-                        </label>
-                    </div>
-                    <div class="package-finder__result" id="package-finder-result" aria-live="polite">
-                        <span class="package-finder__label">Recomandat pentru tine</span>
-                        <strong>VIP 4 luni</strong>
-                        <p>Cel mai echilibrat pachet pentru testare serioasă, calitate 4K și suport complet.</p>
-                        <button type="button" class="btn btn--secondary package-finder__apply">Vezi planul</button>
-                    </div>
-                </div>
-                <div class="toggle-container" data-aos="fade-up">
-                    <button class="toggle-btn" type="button" data-plan="standard" aria-pressed="false" aria-controls="standard-plans">Standard</button>
-                    <button class="toggle-btn active" type="button" data-plan="vip" aria-pressed="true" aria-controls="vip-plans">VIP</button>
-                </div>
-                <div class="pricing-wrapper">
-                    <div class="pricing-grid" id="standard-plans">
-                        <article class="pricing-card" data-aos="fade-up" data-aos-delay="50">
-                            <div class="price-header">
-                                <span class="price-value" data-price="12">€12</span>
-                                <span class="price-duration">1 lună</span>
-                            </div>
-                            <h3 class="plan-name">Standard 1 lună</h3>
-                            <span class="plan-fit">Pentru test rapid</span>
-                            <p>Ideal pentru a testa serviciul nostru complet.</p>
-                            <ul class="features-list">
-                                <li><i class="fas fa-check"></i> Filme HD</li>
-                                <li><i class="fas fa-check"></i> 3 dispozitive simultan</li>
-                                <li><i class="fas fa-check"></i> 520+ canale românești</li>
-                                <li><i class="fas fa-check"></i> 12.000+ Filme la cerere</li>
-                                <li><i class="fas fa-check"></i> 1.300+ Seriale la cerere</li>
-                                <li><i class="fas fa-check"></i> Calitate SD/HD</li>
-                                <li><i class="fas fa-check"></i> Program TV inclus [EPG]</li>
-                                <li><i class="fas fa-check"></i> Suport 24/7 + instalare</li>
-                                <li><i class="fas fa-check"></i> Opțional: canale pentru adulți</li>
-                                <li><i class="fas fa-check"></i> Filme și seriale la cerere</li>
-                            </ul>
-                            <a href="https://wa.me/447449765468" class="btn btn--secondary js-whatsapp-plan">Activează
-                                Standard</a>
-                        </article>
-                        <article class="pricing-card pricing-card--highlight" data-aos="fade-up" data-aos-delay="150">
-                            <div class="price-header">
-                                <span class="price-value" data-price="35">€35</span>
-                                <span class="price-duration">3 luni + 1 gratis</span>
-                            </div>
-                            <h3 class="plan-name">Standard 4 luni</h3>
-                            <span class="plan-fit">Cel mai bun început</span>
-                            <span class="plan-badge">Cel mai popular</span>
-                            <p>Plătești trei luni și te bucuri de a patra lună bonus.</p>
-                            <ul class="features-list">
-                                <li><i class="fas fa-check"></i> 1 lună cadou</li>
-                                <li><i class="fas fa-check"></i> Filme HD</li>
-                                <li><i class="fas fa-check"></i> 3 dispozitive simultan</li>
-                                <li><i class="fas fa-check"></i> 520+ canale românești</li>
-                                <li><i class="fas fa-check"></i> 12.000+ Filme la cerere</li>
-                                <li><i class="fas fa-check"></i> 1.300+ Seriale la cerere</li>
-                                <li><i class="fas fa-check"></i> Calitate SD/HD</li>
-                                <li><i class="fas fa-check"></i> Program TV inclus [EPG]</li>
-                                <li><i class="fas fa-check"></i> Suport 24/7 + instalare</li>
-                                <li><i class="fas fa-check"></i> Opțional: canale pentru adulți</li>
-                                <li><i class="fas fa-check"></i> Filme și seriale la cerere</li>
-                            </ul>
-                            <a href="https://wa.me/447449765468" class="btn btn--primary js-whatsapp-plan">Începe
-                                pachetul</a>
-                        </article>
-                        <article class="pricing-card" data-aos="fade-up" data-aos-delay="250">
-                            <div class="price-header">
-                                <span class="price-value" data-price="60">€60</span>
-                                <span class="price-duration">6 luni + 1 gratis</span>
-                            </div>
-                            <h3 class="plan-name">Standard 7 luni</h3>
-                            <span class="plan-fit">Pentru familii ocupate</span>
-                            <p>Abonament optim pentru familii cu program încărcat.</p>
-                            <ul class="features-list">
-                                <li><i class="fas fa-check"></i> 1 lună cadou</li>
-                                <li><i class="fas fa-check"></i> Filme HD</li>
-                                <li><i class="fas fa-check"></i> 3 dispozitive simultan</li>
-                                <li><i class="fas fa-check"></i> 520+ canale românești</li>
-                                <li><i class="fas fa-check"></i> 12.000+ Filme la cerere</li>
-                                <li><i class="fas fa-check"></i> 1.300+ Seriale la cerere</li>
-                                <li><i class="fas fa-check"></i> Calitate SD/HD</li>
-                                <li><i class="fas fa-check"></i> Program TV inclus [EPG]</li>
-                                <li><i class="fas fa-check"></i> Suport 24/7 + instalare</li>
-                                <li><i class="fas fa-check"></i> Opțional: canale pentru adulți</li>
-                                <li><i class="fas fa-check"></i> Filme și seriale la cerere</li>
-                            </ul>
-                            <a href="https://wa.me/447449765468" class="btn btn--secondary js-whatsapp-plan">Rezervă
-                                abonamentul</a>
-                        </article>
-                        <article class="pricing-card" data-aos="fade-up" data-aos-delay="350">
-                            <div class="price-header">
-                                <span class="price-value" data-price="110">€110</span>
-                                <span class="price-duration">12 luni + 1 gratis</span>
-                            </div>
-                            <h3 class="plan-name">Standard 13 luni</h3>
-                            <span class="plan-fit">Pentru stabilitate anuală</span>
-                            <span class="plan-badge">Bonus extra</span>
-                            <p>Plan anual cu un dispozitiv suplimentar inclus.</p>
-                            <ul class="features-list">
-                                <li><i class="fas fa-check"></i> 1 lună cadou</li>
-                                <li><i class="fas fa-check"></i> Filme HD</li>
-                                <li><i class="fas fa-check"></i> 3 dispozitive simultan</li>
-                                <li><i class="fas fa-check"></i> 520+ canale românești</li>
-                                <li><i class="fas fa-check"></i> 12.000+ Filme la cerere</li>
-                                <li><i class="fas fa-check"></i> 1.300+ Seriale la cerere</li>
-                                <li><i class="fas fa-check"></i> Calitate SD/HD</li>
-                                <li><i class="fas fa-check"></i> Program TV inclus [EPG]</li>
-                                <li><i class="fas fa-check"></i> Suport 24/7 + instalare</li>
-                                <li><i class="fas fa-check"></i> Opțional: canale pentru adulți</li>
-                                <li><i class="fas fa-check"></i> Filme și seriale la cerere</li>
-                            </ul>
-                            <a href="https://wa.me/447449765468" class="btn btn--primary js-whatsapp-plan">Solicită
-                                oferta</a>
-                        </article>
-                    </div>
-                    <div class="pricing-grid active" id="vip-plans">
-                        <article class="pricing-card" data-aos="fade-up" data-aos-delay="50">
-                            <div class="price-header">
-                                <span class="price-value" data-price="14">€14</span>
-                                <span class="price-duration">1 lună</span>
-                            </div>
-                            <h3 class="plan-name">VIP 1 lună</h3>
-                            <span class="plan-fit">Pachet de probă</span>
-                            <p>Experiență de top pentru cei care vor maximum din prima zi.</p>
-                            <ul class="features-list">
-                                <li><i class="fas fa-check"></i> Filme 4K</li>
-                                <li><i class="fas fa-check"></i> 5 dispozitive simultan</li>
-                                <li><i class="fas fa-check"></i> 520+ canale românești</li>
-                                <li><i class="fas fa-check"></i> 12.000+ Filme la cerere</li>
-                                <li><i class="fas fa-check"></i> 1.300+ Seriale la cerere</li>
-                                <li><i class="fas fa-check"></i> Calitate SD/HD/4K</li>
-                                <li><i class="fas fa-check"></i> Program TV inclus [EPG]</li>
-                                <li><i class="fas fa-check"></i> Suport 24/7 + instalare</li>
-                                <li><i class="fas fa-check"></i> Opțional: canale pentru adulți</li>
-                                <li><i class="fas fa-check"></i> Filme și seriale la cerere</li>
-                            </ul>
-                            <a href="https://wa.me/447449765468" class="btn btn--secondary js-whatsapp-plan">Activează
-                                VIP</a>
-                        </article>
-                        <article class="pricing-card pricing-card--highlight" data-aos="fade-up" data-aos-delay="150">
-                            <div class="price-header">
-                                <span class="price-value" data-price="39">€39</span>
-                                <span class="price-duration">3 luni + 1 gratis</span>
-                            </div>
-                            <h3 class="plan-name">VIP 4 luni</h3>
-                            <span class="plan-fit">Recomandarea principală</span>
-                            <span class="plan-badge">Preferatul clienților</span>
-                            <p>Plătești trei luni, primești a patra lună cadou plus acces de top.</p>
-                            <ul class="features-list">
-                                <li><i class="fas fa-check"></i> 1 lună cadou</li>
-                                <li><i class="fas fa-check"></i> Filme 4K</li>
-                                <li><i class="fas fa-check"></i> 5 dispozitive simultan</li>
-                                <li><i class="fas fa-check"></i> 520+ canale românești</li>
-                                <li><i class="fas fa-check"></i> 12.000+ Filme la cerere</li>
-                                <li><i class="fas fa-check"></i> 1.300+ Seriale la cerere</li>
-                                <li><i class="fas fa-check"></i> Calitate SD/HD/4K</li>
-                                <li><i class="fas fa-check"></i> Program TV inclus [EPG]</li>
-                                <li><i class="fas fa-check"></i> Suport 24/7 + instalare</li>
-                                <li><i class="fas fa-check"></i> Opțional: canale pentru adulți</li>
-                                <li><i class="fas fa-check"></i> Filme și seriale la cerere</li>
-                            </ul>
-                            <a href="https://wa.me/447449765468" class="btn btn--primary js-whatsapp-plan">Treci la
-                                VIP</a>
-                        </article>
-                        <article class="pricing-card" data-aos="fade-up" data-aos-delay="250">
-                            <div class="price-header">
-                                <span class="price-value" data-price="69">€69</span>
-                                <span class="price-duration">6 luni + 2 gratis</span>
-                            </div>
-                            <h3 class="plan-name">VIP 8 luni</h3>
-                            <span class="plan-fit">Pentru diaspora departe</span>
-                            <p>Perfect pentru familii care vor toate avantajele de top.</p>
-                            <ul class="features-list">
-                                <li><i class="fas fa-check"></i> 2 luni cadou</li>
-                                <li><i class="fas fa-check"></i> Filme 4K</li>
-                                <li><i class="fas fa-check"></i> 5 dispozitive simultan</li>
-                                <li><i class="fas fa-check"></i> 520+ canale românești</li>
-                                <li><i class="fas fa-check"></i> 12.000+ Filme la cerere</li>
-                                <li><i class="fas fa-check"></i> 1.300+ Seriale la cerere</li>
-                                <li><i class="fas fa-check"></i> Calitate SD/HD/4K</li>
-                                <li><i class="fas fa-check"></i> Program TV inclus [EPG]</li>
-                                <li><i class="fas fa-check"></i> Suport 24/7 + instalare</li>
-                                <li><i class="fas fa-check"></i> Opțional: canale pentru adulți</li>
-                                <li><i class="fas fa-check"></i> Filme și seriale la cerere</li>
-                            </ul>
-                            <a href="https://wa.me/447449765468" class="btn btn--secondary js-whatsapp-plan">Rezervă
-                                VIP</a>
-                        </article>
-                        <article class="pricing-card" data-aos="fade-up" data-aos-delay="350">
-                            <div class="price-header">
-                                <span class="price-value" data-price="139">€139</span>
-                                <span class="price-duration">12 luni + 2 gratis</span>
-                            </div>
-                            <h3 class="plan-name">VIP 14 luni</h3>
-                            <span class="plan-fit">Plan anual</span>
-                            <span class="plan-badge">Maxim avantaj</span>
-                            <p>Plan anual cu două luni bonus și suport complet dedicat.</p>
-                            <ul class="features-list">
-                                <li><i class="fas fa-check"></i> 2 luni cadou</li>
-                                <li><i class="fas fa-check"></i> Filme 4K</li>
-                                <li><i class="fas fa-check"></i> 5 dispozitive simultan</li>
-                                <li><i class="fas fa-check"></i> 520+ canale românești</li>
-                                <li><i class="fas fa-check"></i> 12.000+ Filme la cerere</li>
-                                <li><i class="fas fa-check"></i> 1.300+ Seriale la cerere</li>
-                                <li><i class="fas fa-check"></i> Calitate SD/HD/4K</li>
-                                <li><i class="fas fa-check"></i> Program TV inclus [EPG]</li>
-                                <li><i class="fas fa-check"></i> Suport 24/7 + instalare</li>
-                                <li><i class="fas fa-check"></i> Opțional: canale pentru adulți</li>
-                                <li><i class="fas fa-check"></i> Filme și seriale la cerere</li>
-                            </ul>
-                            <a href="https://wa.me/447449765468" class="btn btn--primary js-whatsapp-plan">Discută cu
-                                noi</a>
-                        </article>
-                    </div>
+
+                <div class="cta-band glass">
+                    <p class="cta-band__text"><strong>36 de ore gratuit.</strong> Fără plată, fără obligații.</p>
+                    <a class="btn btn--primary btn--lg js-trial"
+                        href="https://wa.me/447449765468?text=Salut!%20Vreau%20s%C4%83%20primesc%20testul%20gratuit%20de%2036h%20pentru%20Pixel%20Magix%20TV.%20Mul%C8%9Bumesc!"
+                        target="_blank" rel="noopener noreferrer">
+                        <svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-whatsapp"></use></svg>
+                        <span>Încearcă gratuit</span>
+                    </a>
                 </div>
             </div>
         </section>
 
-        <section id="filme-recente" class="recent-movies-section">
+        <section class="section pricing" id="preturi" aria-labelledby="preturi-title" data-pricing>
             <div class="container">
-                <div class="recent-movies-header" data-aos="fade-up">
-                    <div class="recent-movies-title">
-                        <span class="section-tag">Filme populare disponibile acum</span>
-                        <h2>Raftul tău de filme pentru seara asta</h2>
-                        <p>Postere, previzualizări video și titluri populare disponibile în HD și 4K pe platforma Pixel Magix.</p>
-                    </div>
-                    <div class="recent-movies-controls">
-                        <button class="recent-movies-pause btn btn--ghost" type="button" aria-pressed="false">Pauză derulare</button>
-                        <button class="slider-btn recent-movies-btn--prev" type="button"
-                            aria-label="Deruleaza filmele inapoi"><i class="fas fa-chevron-left"></i></button>
-                        <button class="slider-btn recent-movies-btn--next" type="button"
-                            aria-label="Deruleaza filmele inainte"><i class="fas fa-chevron-right"></i></button>
-                    </div>
-                </div>
-                <div class="recent-movies-slider" data-aos="fade-up">
-                    <div class="recent-movies-window" role="region" aria-label="Carusel filme recente">
-                        <div class="recent-movies-track" id="recent-movies-track" aria-live="polite"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
+                <header class="section__head">
+                    <p class="eyebrow glass-lite"><span class="eyebrow__dot" aria-hidden="true"></span>Prețuri</p>
+                    <h2 class="section__title" id="preturi-title">Alege în doi pași</h2>
+                    <p class="section__lead">Alegi câte ecrane folosești și pentru cât timp, apoi comanzi direct pe WhatsApp.</p>
+                </header>
 
-        <section id="testimoniale" class="testimonials-section">
-            <div class="container">
-                <div class="section-header" data-aos="fade-up">
-                    <span class="section-tag">Ce spun clienții</span>
-                    <h2>Păreri autentice din partea comunității noastre</h2>
-                    <p>Suntem recomandați de români din toată lumea pentru stabilitate, promptitudine și calitatea
-                        conținutului oferit.</p>
-                </div>
-                <div class="testimonials-slider" data-aos="fade-up">
-                    <button class="slider-btn slider-btn--prev" aria-label="Anterior"><i
-                            class="fas fa-chevron-left"></i></button>
-                    <div class="testimonials-window">
-                        <div class="testimonials-track">
-                            <article class="testimonial-card">
-                                <div class="testimonial-rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <p>„În Germania, găseam greu posturi românești stabile. Pixel Magix TV a schimbat totul
-                                    – calitate impecabilă și suport rapid când am avut întrebări.”</p>
-                                <span class="testimonial-author">Andreea M. – München</span>
-                            </article>
-                            <article class="testimonial-card">
-                                <div class="testimonial-rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                                <p>„Îmi place că pot urmări Champions League fără întreruperi și că pot reveni la
-                                    emisiunile ratate. Abonamentul anual e cea mai bună alegere.”</p>
-                                <span class="testimonial-author">Radu M. – Toronto</span>
-                            </article>
-                            <article class="testimonial-card">
-                                <div class="testimonial-rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <p>„Suntem o familie mare în Italia și folosim Pixel Magix pe 5 dispozitive. Copiii au
-                                    secțiunea lor, iar bunicii găsesc posturile preferate ușor.”</p>
-                                <span class="testimonial-author">Familia Ionescu – Milano</span>
-                            </article>
-                            <article class="testimonial-card">
-                                <div class="testimonial-rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <p>„Suportul tehnic răspunde rapid, iar platforma rămâne stabilă chiar și la meciuri
-                                    importante.”</p>
-                                <span class="testimonial-author">Marius M. – Londra</span>
-                            </article>
-                            <article class="testimonial-card">
-                                <div class="testimonial-rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <p>„Am încercat multe servicii IPTV, dar Pixel Magix e singurul care funcționează fără
-                                    probleme. Copiii mei adoră desenele românești!"</p>
-                                <span class="testimonial-author">Elena D. – Madrid</span>
-                            </article>
-                            <article class="testimonial-card">
-                                <div class="testimonial-rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                                <p>„Ca fan al fotbalului, apreciez că pot urmări toate ligile europene. Calitatea
-                                    transmisiei e excelentă chiar și pe conexiuni mai slabe."</p>
-                                <span class="testimonial-author">Bogdan T. – Dublin</span>
-                            </article>
-                            <article class="testimonial-card">
-                                <div class="testimonial-rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <p>„Îmi place să urmăresc știrile de acasă în fiecare dimineață. Activarea a durat
-                                    doar 5 minute și totul a mers perfect din prima."</p>
-                                <span class="testimonial-author">Cristina P. – Amsterdam</span>
-                            </article>
-                            <article class="testimonial-card">
-                                <div class="testimonial-rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <p>„Configurarea pe Samsung TV a fost incredibil de simplă. Echipa de suport m-a ghidat
-                                    pas cu pas. Recomand cu încredere!"</p>
-                                <span class="testimonial-author">Adrian N. – Paris</span>
-                            </article>
-                        </div>
-                    </div>
-                    <button class="slider-btn slider-btn--next" aria-label="Următor"><i
-                            class="fas fa-chevron-right"></i></button>
-                </div>
-            </div>
-        </section>
-        <section id="faq" class="faq-section">
-            <div class="container faq-container">
-                <div class="faq-left" data-aos="fade-right">
-                    <div class="faq-item">
-                        <button class="faq-question active">Oferiți test gratuit?</button>
-                        <div class="faq-answer" style="max-height: fit-content;">
-                            <p>Desigur! Trimite-ne un mesaj pe WhatsApp și îți activăm un cont de probă valabil 36 de ore.
-                                Vei primi și un ghid rapid de instalare.</p>
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <button class="faq-question">Pot întrerupe abonamentul oricând?</button>
-                        <div class="faq-answer">
-                            <p>Abonamentele se prelungesc doar la cerere. Nu percepem plăți recurente automate, astfel
-                                încât să controlezi în totalitate abonamentul.</p>
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <button class="faq-question">Ce conexiune la internet este necesară?</button>
-                        <div class="faq-answer">
-                            <p>Pentru canale difuzate în format:<br>- 4K: minim 80 Mbit/s<br>- FULL HD: minim 40
-                                Mbit/s<br>- HD: minim 30 Mbit/s<br>- SD: minim 8 Mbit/s<br>Pentru cea mai bună
-                                performanță, conectează dispozitivul prin cablu sau Wi-Fi 5 GHz.</p>
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <button class="faq-question">Cât durează activarea serviciului?</button>
-                        <div class="faq-answer">
-                            <p>După confirmarea plății, activăm abonamentul în 5-10 minute. Îți trimitem credențialele
-                                și instrucțiunile direct pe email sau WhatsApp.</p>
-                        </div>
-                    </div>
-                    <div class="faq-item">
-                        <button class="faq-question">Ce aplicații recomandă Pixel Magix?</button>
-                        <div class="faq-answer">
-                            <p>Hot Player pentru Samsung TV, LG TV, Apple TV și telefoane Android sau iPhone.
-                                Signal Player pentru Android TV, Amazon Fire TV, Windows și Mac cu Apple Silicon;
-                                pe telefoanele Android îl poți instala și prin APK.
-                                La cerere, te ajutăm cu instalarea și configurarea.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="faq-right" data-aos="fade-left">
-                    <div class="promo-card">
-                        <div class="promo-header">
-                            <span class="promo-tag">Fii mai aproape de casă</span>
-                            <h3 class="promo-title">Discută cu un consultant</h3>
-                        </div>
-                        <p class="promo-description">Spune-ne ce canale urmărești, ce dispozitive folosești și îți
-                            recomandăm pachetul ideal. Totul fără costuri și fără obligații.</p>
-                        <div class="promo-image-container">
-                            <img src="https://images.unsplash.com/photo-1525182008055-f88b95ff7980?auto=format&fit=crop&w=600&q=80"
-                                alt="Client fericit folosind Pixel Magix" loading="lazy" width="600" height="400" decoding="async">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+                <div class="pricing__layout">
+                    <form class="pricing__steps" data-pricing-form>
+                        <fieldset class="pricing__step">
+                            <legend class="pricing__legend"><span class="pricing__num" aria-hidden="true">1</span>Câte ecrane folosești?</legend>
+                            <div class="pricing__plans">
+                                <label class="choice">
+                                    <input class="choice__input" type="radio" name="plan" value="standard">
+                                    <span class="choice__body">
+                                        <span class="choice__name">Standard</span>
+                                        <span class="choice__meta">Până la 3 ecrane</span>
+                                    </span>
+                                </label>
+                                <label class="choice">
+                                    <input class="choice__input" type="radio" name="plan" value="vip" checked>
+                                    <span class="choice__body">
+                                        <span class="choice__name">VIP</span>
+                                        <span class="choice__meta">Până la 5 ecrane</span>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="compare">
+                                <table class="compare__table">
+                                    <caption class="sr-only">Ce include fiecare pachet</caption>
+                                    <thead>
+                                        <tr>
+                                            <td></td>
+                                            <th scope="col">Standard</th>
+                                            <th scope="col">VIP</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row"><span class="compare__label"><svg class="icon compare__icon" aria-hidden="true"><use href="img/icons.svg#i-tv"></use></svg>Ecrane</span></th>
+                                            <td><span class="compare__num">3</span></td>
+                                            <td><span class="compare__num">5</span></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"><span class="compare__label"><svg class="icon compare__icon" aria-hidden="true"><use href="img/icons.svg#i-spark"></use></svg>Imagine</span></th>
+                                            <td><span class="compare__badge">FHD</span></td>
+                                            <td><span class="compare__badge">4K</span></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"><span class="compare__label"><svg class="icon compare__icon" aria-hidden="true"><use href="img/icons.svg#i-gift"></use></svg>Luni cadou</span></th>
+                                            <td><span class="compare__gift">+1</span></td>
+                                            <td><span class="compare__gift"><span class="compare__upto">până la</span> +2</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- Decorative: the one-home rule as a drawing. The table above and the line below say it in words. -->
+                            <div class="home-viz" aria-hidden="true">
+                                <svg class="home-viz__art" viewBox="0 0 360 150" focusable="false">
+                                    <defs>
+                                        <linearGradient id="hv-line" x1="0" y1="0" x2="1" y2="0">
+                                            <stop offset="0" stop-color="#15cef6" />
+                                            <stop offset="0.5" stop-color="#9b82e4" />
+                                            <stop offset="1" stop-color="#db84e8" />
+                                        </linearGradient>
+                                        <linearGradient id="hv-scr-tv" x1="0" y1="0" x2="1" y2="1">
+                                            <stop offset="0" stop-color="#3fdcff" />
+                                            <stop offset="0.55" stop-color="#8fa2ff" />
+                                            <stop offset="1" stop-color="#e27df1" />
+                                        </linearGradient>
+                                        <linearGradient id="hv-scr-cool" x1="0" y1="0" x2="1" y2="1">
+                                            <stop offset="0" stop-color="#15cef6" />
+                                            <stop offset="1" stop-color="#7f8ff5" />
+                                        </linearGradient>
+                                        <linearGradient id="hv-scr-warm" x1="0" y1="0" x2="1" y2="1">
+                                            <stop offset="0" stop-color="#a993ee" />
+                                            <stop offset="1" stop-color="#e27df1" />
+                                        </linearGradient>
+                                        <filter id="hv-blur" x="-60%" y="-80%" width="220%" height="260%">
+                                            <feGaussianBlur stdDeviation="7" />
+                                        </filter>
+                                        <filter id="hv-soft" x="-10%" y="-40%" width="120%" height="180%">
+                                            <feGaussianBlur stdDeviation="2.6" />
+                                        </filter>
+                                        <clipPath id="hv-room">
+                                            <path d="M31 63 L180 13 L329 63 V134 H31 Z" />
+                                        </clipPath>
+                                    </defs>
 
-        <section id="contact" class="contact-section">
-            <div class="container contact-grid">
-                <div class="contact-info" data-aos="fade-right">
-                    <span class="section-tag">Contact direct</span>
-                    <h2>Hai să găsim soluția perfectă pentru tine</h2>
-                    <p>Completează formularul și te contactăm în maxim 30 de minute.
-                    </p>
-                    <div class="contact-details">
-                        <p><i class="fas fa-phone"></i> <a href="https://wa.me/447449765468" target="_blank"
-                                rel="noopener">+44 7449 765468</a></p>
-                        <p><i class="fas fa-envelope"></i> <a
-                                href="mailto:pixelmagixtv@gmail.com">pixelmagixtv@gmail.com</a></p>
-                        <p><i class="fas fa-clock"></i> Suport non-stop, 24/7</p>
-                        <p><i class="fas fa-map-marked-alt"></i> București • Londra • Toronto</p>
-                    </div>
-                    <div class="contact-trust" aria-label="Beneficii contact Pixel Magix">
-                        <span><i class="fas fa-bolt"></i> Activare rapidă</span>
-                        <span><i class="fas fa-tools"></i> Instalare inclusă</span>
-                        <span><i class="fas fa-headset"></i> Suport zilnic</span>
-                        <span><i class="fab fa-whatsapp"></i> WhatsApp direct</span>
-                    </div>
-                    <div class="contact-cta">
-                        <a href="https://wa.me/447449765468" class="btn btn--primary">Scrie-ne pe WhatsApp</a>
-                    </div>
-                </div>
-                <div class="contact-form" data-aos="fade-left">
-                    <form id="contact-form" action="#" method="post" aria-label="Formular contact">
-                        <p class="form-required-note">* câmp obligatoriu</p>
-                        <div class="form-group">
-                            <label for="nume">Nume complet <span class="required-mark" aria-hidden="true">*</span></label>
-                            <input type="text" id="nume" name="nume" placeholder="Introduceți numele" required maxlength="120" autocomplete="name">
-                        </div>
-                        <div class="form-group phone-group">
-                            <label for="telefon">Număr de telefon</label>
-                            <input type="tel" id="telefon" name="telefon" placeholder="Ex. 0712 345 678"
-                                autocomplete="tel" inputmode="tel" maxlength="40" aria-describedby="contact-method-note">
-                            <p class="input-note" id="contact-method-note">Prefixul țării se detectează automat — îl poți schimba din listă.
-                                Completează cel puțin unul: telefonul sau emailul.</p>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Adresă de email</label>
-                            <input type="email" id="email" name="email" placeholder="exemplu@domeniu.com" maxlength="254" autocomplete="email">
-                        </div>
-                        <div class="form-group">
-                            <label for="tara">Țara de reședință <span class="required-mark" aria-hidden="true">*</span></label>
-                            <input type="text" id="tara" name="tara" placeholder="Ex. Italia" required maxlength="100" autocomplete="country-name">
-                        </div>
-                        <div class="form-group">
-                            <label for="furnizor">Furnizor Internet</label>
-                            <input type="text" id="furnizor" name="furnizor"
-                                placeholder="Ex. Virgin Media, TIM Italia, Fastweb" maxlength="160">
-                        </div>
-                        <div class="form-group">
-                            <label for="mesaj">Mesaj</label>
-                            <textarea id="mesaj" name="mesaj" rows="4"
-                                placeholder="Spune-ne ce canale urmărești sau ce dispozitiv folosești" maxlength="3000"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn--primary">Trimite mesajul</button>
-                        <div class="form-status" role="status" aria-live="polite" aria-atomic="true" aria-hidden="true">
-                            <i class="fas fa-check-circle" aria-hidden="true"></i>
-                            <span>Mulțumim! Formularul a fost trimis. Revenim cât mai rapid.</span>
-                        </div>
-                        <div class="form-group"
-                            style="position: absolute; left: -9999px; opacity: 0; pointer-events: none;"
-                            aria-hidden="true">
-                            <label for="website">Nu completa acest câmp</label>
-                            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
-                        </div>
-                        <p class="form-note">Prin completarea formularului ești de acord cu prelucrarea datelor pentru a
-                            te contacta. Cel puțin numărul de telefon (cu prefix) sau emailul trebuie completat.
-                            Detalii în <a href="politica-de-confidentialitate.html">politica de confidențialitate</a>.</p>
+                                    <g class="hv-waves" clip-path="url(#hv-room)" fill="none" stroke="url(#hv-line)" stroke-linecap="round">
+                                        <circle class="hv-wave" cx="180" cy="50" r="30" />
+                                        <circle class="hv-wave hv-wave--2" cx="180" cy="50" r="64" />
+                                        <circle class="hv-wave hv-wave--3" cx="180" cy="50" r="104" />
+                                        <circle class="hv-wave hv-wave--4" cx="180" cy="50" r="146" />
+                                    </g>
+
+                                    <path class="hv-roofglow" d="M12 69 L180 13 L348 69" fill="none" stroke="url(#hv-line)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#hv-soft)" />
+                                    <g fill="none" stroke="url(#hv-line)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M12 69 L180 13 L348 69" />
+                                        <path d="M262 40.3 V22 H280 V46.3" />
+                                        <path d="M30 63 V136 M330 63 V136" />
+                                    </g>
+                                    <path class="hv-floor" d="M10 136 H350" />
+                                    <rect class="hv-smoke hv-smoke--1" x="267" y="10" width="5" height="5" rx="1" />
+                                    <rect class="hv-smoke hv-smoke--2" x="276" y="3" width="4" height="4" rx="1" />
+                                    <rect class="hv-smoke hv-smoke--3" x="270" y="-3" width="3" height="3" rx="0.8" />
+
+                                    <g class="hv-router">
+                                        <path d="M173 46 L170 37 M187 46 L190 37" />
+                                        <rect x="167" y="46" width="26" height="9" rx="3.5" />
+                                        <circle class="hv-led" cx="174" cy="50.5" r="1.4" />
+                                        <circle class="hv-led" cx="179.5" cy="50.5" r="1.4" />
+                                    </g>
+
+                                    <g class="hv-dev hv-dev--vip">
+                                        <rect class="hv-glow" x="42" y="100" width="40" height="32" rx="8" fill="url(#hv-scr-warm)" filter="url(#hv-blur)" />
+                                        <rect class="hv-body" x="44" y="103" width="36" height="27" rx="5" />
+                                        <rect class="hv-on" x="47" y="106" width="30" height="21" rx="2.5" fill="url(#hv-scr-warm)" />
+                                        <path class="hv-gloss" d="M48.5 107.5 H60 L52.5 125.5 H48.5 Z" />
+                                        <path class="hv-stand" d="M62 130 V133 M54 134 H70" />
+                                        <text class="hv-tag" x="62" y="96">VIP</text>
+                                    </g>
+
+                                    <g class="hv-dev hv-dev--core">
+                                        <rect class="hv-glow" x="102" y="96" width="24" height="40" rx="8" fill="url(#hv-scr-cool)" filter="url(#hv-blur)" />
+                                        <rect class="hv-body" x="104" y="98" width="20" height="36" rx="5" />
+                                        <rect class="hv-on" x="106.5" y="101" width="15" height="30" rx="2.5" fill="url(#hv-scr-cool)" />
+                                        <path class="hv-gloss" d="M108 102.5 H114 L109.5 129.5 H108 Z" />
+                                    </g>
+
+                                    <g class="hv-dev hv-dev--core hv-dev--tv">
+                                        <rect class="hv-glow" x="132" y="70" width="96" height="60" rx="10" fill="url(#hv-scr-tv)" filter="url(#hv-blur)" />
+                                        <rect class="hv-body" x="136" y="74" width="88" height="52" rx="6" />
+                                        <rect class="hv-on" x="140" y="78" width="80" height="44" rx="3" fill="url(#hv-scr-tv)" />
+                                        <path class="hv-gloss" d="M141.5 79.5 H170 L150 120.5 H141.5 Z" />
+                                        <text class="hv-q hv-q--vip" x="180" y="106">4K</text>
+                                        <text class="hv-q hv-q--standard" x="180" y="106">FHD</text>
+                                        <path class="hv-stand" d="M180 126 V132 M165 134 H195" />
+                                    </g>
+
+                                    <g class="hv-dev hv-dev--core">
+                                        <rect class="hv-glow" x="224" y="100" width="44" height="32" rx="8" fill="url(#hv-scr-warm)" filter="url(#hv-blur)" />
+                                        <rect class="hv-body" x="226" y="103" width="40" height="27" rx="4" />
+                                        <rect class="hv-on" x="229" y="106" width="34" height="21" rx="2" fill="url(#hv-scr-warm)" />
+                                        <path class="hv-gloss" d="M230.5 107.5 H243 L235 125.5 H230.5 Z" />
+                                        <path class="hv-stand hv-stand--deck" d="M221 133.5 H271" />
+                                    </g>
+
+                                    <g class="hv-dev hv-dev--vip">
+                                        <rect class="hv-glow" x="276" y="96" width="48" height="34" rx="8" fill="url(#hv-scr-cool)" filter="url(#hv-blur)" />
+                                        <rect class="hv-body" x="278" y="98" width="44" height="29" rx="4" />
+                                        <rect class="hv-on" x="281" y="101" width="38" height="23" rx="2" fill="url(#hv-scr-cool)" />
+                                        <path class="hv-gloss" d="M282.5 102.5 H296 L288 122.5 H282.5 Z" />
+                                        <path class="hv-stand" d="M300 127 V132 M291 134 H309" />
+                                        <text class="hv-tag" x="300" y="91">VIP</text>
+                                    </g>
+                                </svg>
+                            </div>
+                            <p class="pricing__rule">
+                                <svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-home"></use></svg>
+                                <span><strong>Un abonament, o casă:</strong> toate ecranele pe același internet.</span>
+                            </p>
+                        </fieldset>
+
+                        <fieldset class="pricing__step">
+                            <legend class="pricing__legend"><span class="pricing__num" aria-hidden="true">2</span>Pentru cât timp?</legend>
+                            <div class="pricing__durations">
+                                <label class="choice choice--duration" data-option>
+                                    <input class="choice__input" type="radio" name="paid" value="1">
+                                    <span class="choice__body">
+                                        <span class="choice__name" data-option-months>1 lună</span>
+                                        <span class="choice__price" data-option-price>14&nbsp;€</span>
+                                        <span class="choice__tags">
+                                            <span class="gift" data-option-gift hidden></span>
+                                            <span class="favourite" data-option-favourite hidden></span>
+                                        </span>
+                                    </span>
+                                </label>
+                                <label class="choice choice--duration" data-option>
+                                    <input class="choice__input" type="radio" name="paid" value="3" checked>
+                                    <span class="choice__body">
+                                        <span class="choice__name" data-option-months>3 luni</span>
+                                        <span class="choice__price" data-option-price>39&nbsp;€</span>
+                                        <span class="choice__tags">
+                                            <span class="gift" data-option-gift>+1 lună cadou</span>
+                                            <span class="favourite" data-option-favourite>Cel mai ales</span>
+                                        </span>
+                                    </span>
+                                </label>
+                                <label class="choice choice--duration" data-option>
+                                    <input class="choice__input" type="radio" name="paid" value="6">
+                                    <span class="choice__body">
+                                        <span class="choice__name" data-option-months>6 luni</span>
+                                        <span class="choice__price" data-option-price>69&nbsp;€</span>
+                                        <span class="choice__tags">
+                                            <span class="gift" data-option-gift>+2 luni cadou</span>
+                                            <span class="favourite" data-option-favourite hidden></span>
+                                        </span>
+                                    </span>
+                                </label>
+                                <label class="choice choice--duration" data-option>
+                                    <input class="choice__input" type="radio" name="paid" value="12">
+                                    <span class="choice__body">
+                                        <span class="choice__name" data-option-months>12 luni</span>
+                                        <span class="choice__price" data-option-price>139&nbsp;€</span>
+                                        <span class="choice__tags">
+                                            <span class="gift" data-option-gift>+2 luni cadou</span>
+                                            <span class="favourite" data-option-favourite hidden></span>
+                                        </span>
+                                    </span>
+                                </label>
+                            </div>
+                        </fieldset>
                     </form>
+
+                    <article class="pricing__card glass" aria-labelledby="pricing-card-title">
+                        <p class="pricing__kicker">Alegerea ta</p>
+                        <h3 class="pricing__title" id="pricing-card-title" data-card-title>VIP · 3 luni + 1 lună cadou</h3>
+                        <p class="pricing__amount"><span data-card-price>39&nbsp;€</span></p>
+                        <p class="pricing__gift"><span class="months" data-card-months aria-hidden="true"><i class="months__m"></i><i class="months__m"></i><i class="months__m"></i><i class="months__m months__m--gift"></i></span><span class="gift" data-card-gift>+1 lună cadou</span></p>
+                        <ul class="pricing__benefits" data-card-benefits>
+                            <li>Până la <strong>5 ecrane</strong>, în aceeași casă</li>
+                            <li>Calitate până la <strong>4K</strong></li>
+                            <li>Canale românești în direct, cu ghid TV</li>
+                            <li>Filme și seriale la cerere</li>
+                            <li>Te ajutăm la instalare</li>
+                        </ul>
+                        <a class="btn btn--primary btn--lg btn--block" data-order
+                            href="https://wa.me/447449765468?text=Salut!%20Vreau%20pachetul%20VIP%20%C2%B7%203%20luni%20%2B%201%20lun%C4%83%20cadou%20(39%20%E2%82%AC).%20%C3%8Emi%20trimite%C8%9Bi%2C%20v%C4%83%20rog%2C%20pa%C8%99ii%20de%20plat%C4%83%3F"
+                            target="_blank" rel="noopener noreferrer">
+                            <svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-whatsapp"></use></svg>
+                            <span>Comandă pe WhatsApp</span>
+                        </a>
+                        <p class="pricing__note">Plată unică, fără reînnoire automată.</p>
+                        <p class="sr-only" aria-live="polite" data-card-summary></p>
+                    </article>
                 </div>
             </div>
         </section>
 
-        <section id="instalare" class="install-section">
+        <section class="section steps" id="cum-functioneaza" aria-labelledby="cum-functioneaza-title">
             <div class="container">
-                <div class="section-header" data-aos="fade-up">
-                    <span class="section-tag">Ghid instalare</span>
-                    <h2>Instalează Pixel Magix pe orice ecran</h2>
-                    <p>Alege platforma și urmează pașii rapizi pentru instalare.</p>
+                <header class="section__head">
+                    <p class="eyebrow glass-lite"><span class="eyebrow__dot" aria-hidden="true"></span>Cum funcționează</p>
+                    <h2 class="section__title" id="cum-functioneaza-title">În trei pași simpli</h2>
+                    <p class="section__lead">Fără contracte și fără aparate noi: folosești televizorul, telefonul sau laptopul pe care
+                        le ai deja.</p>
+                </header>
+                <div class="steps__layout">
+                    <ol class="steps__list">
+                        <li class="step glass-lite">
+                            <span class="step__num" aria-hidden="true">1</span>
+                            <h3 class="step__title">Ne scrii pe WhatsApp</h3>
+                            <p>Primești testul gratuit de 36 de ore, fără plată.</p>
+                        </li>
+                        <li class="step glass-lite">
+                            <span class="step__num" aria-hidden="true">2</span>
+                            <h3 class="step__title">Te ajutăm să instalezi</h3>
+                            <p>Pe televizor, telefon sau laptop, pas cu pas. <a class="text-link" href="#instalare">Vezi ghidul</a></p>
+                        </li>
+                        <li class="step glass-lite">
+                            <span class="step__num" aria-hidden="true">3</span>
+                            <h3 class="step__title">Alegi pachetul</h3>
+                            <p>Plată unică, fără reînnoire automată.</p>
+                        </li>
+                    </ol>
+
+                    <figure class="chat-demo">
+                        <figcaption class="sr-only">Exemplu de conversație pe WhatsApp</figcaption>
+                        <div class="chat">
+                            <div class="chat__system" aria-hidden="true">
+                                <span class="chat__clock">21:05</span>
+                                <svg class="chat__signal"><use href="img/icons.svg#i-status"></use></svg>
+                            </div>
+                            <div class="chat__bar" aria-hidden="true">
+                                <svg class="icon chat__back"><use href="img/icons.svg#i-arrow"></use></svg>
+                                <span class="chat__avatar"><img src="img/logo-palarie-64.webp" width="79" height="64" alt=""
+                                        loading="lazy" decoding="async"></span>
+                                <span class="chat__who">
+                                    <span class="chat__name">Pixel Magix</span>
+                                    <span class="chat__status"><span class="chat__online">online</span><span
+                                            class="chat__typing">scrie…</span></span>
+                                </span>
+                                <span class="chat__actions">
+                                    <svg class="icon"><use href="img/icons.svg#i-video"></use></svg>
+                                    <svg class="icon"><use href="img/icons.svg#i-call"></use></svg>
+                                    <svg class="icon"><use href="img/icons.svg#i-more"></use></svg>
+                                </span>
+                            </div>
+                            <div class="chat__body">
+                                <p class="chat__day" aria-hidden="true">Azi</p>
+                                <ol class="chat__msgs">
+                                    <li class="chat__row chat__row--out">
+                                        <div class="chat__bubble">
+                                            <p class="chat__text"><span class="sr-only">Tu: </span>Salut! Vreau testul gratuit de 36h.</p>
+                                            <span class="chat__meta" aria-hidden="true">21:04<svg class="chat__ticks"
+                                                    viewBox="0 0 18 11"><path d="M1 5.6l3.1 3.1L10.4 2.3M7.6 8.1l.6.6L16.9 2.3" /></svg></span>
+                                        </div>
+                                    </li>
+                                    <li class="chat__row chat__row--in">
+                                        <span class="chat__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+                                        <div class="chat__bubble">
+                                            <p class="chat__text"><span class="sr-only">Pixel Magix: </span>Salut! Ți-am activat testul de 36 de ore.</p>
+                                            <span class="chat__meta" aria-hidden="true">21:05</span>
+                                        </div>
+                                    </li>
+                                    <li class="chat__row chat__row--in">
+                                        <span class="chat__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+                                        <div class="chat__bubble">
+                                            <p class="chat__text"><span class="sr-only">Pixel Magix: </span>Îți trimit acum datele și pașii de instalare.</p>
+                                            <span class="chat__meta" aria-hidden="true">21:05</span>
+                                        </div>
+                                    </li>
+                                </ol>
+                            </div>
+                            <div class="chat__input" aria-hidden="true">
+                                <span class="chat__field">
+                                    <svg class="icon chat__tool"><use href="img/icons.svg#i-smile"></use></svg>
+                                    <span class="chat__placeholder">Mesaj</span>
+                                    <span class="chat__tools">
+                                        <svg class="icon chat__tool"><use href="img/icons.svg#i-clip"></use></svg>
+                                        <svg class="icon chat__tool"><use href="img/icons.svg#i-camera"></use></svg>
+                                    </span>
+                                </span>
+                                <span class="chat__send"><svg class="icon"><use href="img/icons.svg#i-mic"></use></svg></span>
+                            </div>
+                        </div>
+                    </figure>
                 </div>
-                <div class="install-grid">
-                    <article class="install-card" data-install="samsung" data-aos="fade-up">
-                        <div class="install-card__top">
-                            <span class="install-platform-icon" aria-hidden="true"><i class="fas fa-tv"></i></span>
-                            <img class="install-hot-player-logo" src="hot-player.png" alt="Hot Player" loading="lazy"
-                                width="419" height="200" decoding="async">
-                        </div>
-                        <div class="install-card__body">
-                            <h3>Samsung TV</h3>
-                            <span class="install-platform-label">Smart TV · Tizen</span>
-                            <p>Deschide secțiunea <strong>Apps</strong> de pe televizorul Samsung, caută
-                                <strong>Hot Player</strong> și instalează aplicația.</p>
-                            <div class="install-card__footer">
-                                <span class="install-store-hint"><i class="fas fa-store" aria-hidden="true"></i> Disponibil în Apps pe televizor</span>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="install-card" data-install="lg" data-aos="fade-up" data-aos-delay="100">
-                        <div class="install-card__top">
-                            <span class="install-platform-icon" aria-hidden="true"><i class="fas fa-display"></i></span>
-                            <img class="install-hot-player-logo" src="hot-player.png" alt="Hot Player" loading="lazy"
-                                width="419" height="200" decoding="async">
-                        </div>
-                        <div class="install-card__body">
-                            <h3>LG TV</h3>
-                            <span class="install-platform-label">Smart TV · webOS</span>
-                            <p>Deschide <strong>LG Content Store</strong> pe televizor, caută
-                                <strong>Hot Player</strong> și instalează aplicația.</p>
-                            <div class="install-card__footer">
-                                <span class="install-store-hint"><i class="fas fa-store" aria-hidden="true"></i> Disponibil în LG Content Store</span>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="install-card" data-install="android" data-aos="fade-up" data-aos-delay="200">
-                        <div class="install-card__top">
-                            <span class="install-platform-icon" aria-hidden="true"><i class="fab fa-android"></i></span>
-                            <span class="install-app-badge"><i class="fas fa-play" aria-hidden="true"></i> Signal Player</span>
-                        </div>
-                        <div class="install-card__body">
-                            <h3>Android TV și Amazon Fire TV</h3>
-                            <span class="install-platform-label">Smart TV · TV box · Fire TV Stick</span>
-                            <p>În aplicația <strong>Downloader</strong>, introdu codul de mai jos pentru a instala Signal Player.</p>
-                            <div class="install-code-panel">
-                                <span>Cod Downloader</span>
-                                <strong class="install-downloader-code">5882191</strong>
-                            </div>
-                            <div class="install-card__footer">
-                                <div class="install-actions">
-                                    <span class="install-note">Sau instalează direct fișierul APK</span>
-                                    <a class="btn btn--primary" href="https://signal-player.com/signal.apk"
-                                        target="_blank" rel="noopener"><i class="fas fa-download" aria-hidden="true"></i> Descarcă APK</a>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="install-card" data-install="mobile" data-aos="fade-up">
-                        <div class="install-card__top">
-                            <span class="install-platform-icon" aria-hidden="true"><i class="fas fa-mobile-screen-button"></i></span>
-                            <img class="install-hot-player-logo" src="hot-player.png" alt="Hot Player" loading="lazy"
-                                width="419" height="200" decoding="async">
-                        </div>
-                        <div class="install-card__body">
-                            <h3>Telefoane Android și iPhone</h3>
-                            <span class="install-platform-label">Google Play · App Store</span>
-                            <p>Caută <strong>Hot Player</strong> în Google Play pe Android sau în App Store pe iPhone
-                                și instalează aplicația.</p>
-                            <p>Pe <strong>Android</strong>, poți alege și Signal Player, prin fișierul APK.</p>
-                            <div class="install-card__footer">
-                                <div class="install-actions">
-                                    <span class="install-note">Alternativă pentru telefoanele Android</span>
-                                    <a class="btn btn--primary" href="https://signal-player.com/signal.apk"
-                                        target="_blank" rel="noopener"><i class="fas fa-download" aria-hidden="true"></i> APK pentru Android</a>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="install-card" data-install="windows" data-aos="fade-up" data-aos-delay="100">
-                        <div class="install-card__top">
-                            <span class="install-platform-icon" aria-hidden="true"><i class="fab fa-windows"></i></span>
-                            <span class="install-app-badge"><i class="fas fa-play" aria-hidden="true"></i> Signal Player</span>
-                        </div>
-                        <div class="install-card__body">
-                            <h3>Windows 10/11</h3>
-                            <span class="install-platform-label">PC · Laptop</span>
-                            <p>Descarcă <strong>Signal Player</strong> pentru PC sau laptop, deschide fișierul
-                                <strong>.exe</strong> și urmează pașii de instalare.</p>
-                            <div class="install-card__footer">
-                                <div class="install-actions">
-                                    <span class="install-note">Kit de instalare .exe</span>
-                                    <a class="btn btn--primary" href="https://signal-player.com/signal.exe"
-                                        target="_blank" rel="noopener"><i class="fas fa-download" aria-hidden="true"></i> Descarcă pentru Windows</a>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="install-card" data-install="mac" data-aos="fade-up" data-aos-delay="200">
-                        <div class="install-card__top">
-                            <span class="install-platform-icon" aria-hidden="true"><i class="fab fa-apple"></i></span>
-                            <span class="install-app-badge"><i class="fas fa-play" aria-hidden="true"></i> Signal Player</span>
-                        </div>
-                        <div class="install-card__body">
-                            <h3>Mac cu Apple Silicon</h3>
-                            <span class="install-platform-label">macOS · Laptop și desktop</span>
-                            <p>Descarcă <strong>Signal Player</strong> pentru macOS și deschide fișierul
-                                <strong>.dmg</strong> pentru instalare.</p>
-                            <p>Pentru MacBook, iMac, Mac mini și alte Mac-uri cu procesor Apple Silicon.</p>
-                            <div class="install-card__footer">
-                                <div class="install-actions">
-                                    <span class="install-note">Kit de instalare .dmg · Apple Silicon</span>
-                                    <a class="btn btn--primary" href="https://signal-player.com/signal.dmg"
-                                        target="_blank" rel="noopener"><i class="fas fa-download" aria-hidden="true"></i> Descarcă pentru Mac</a>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-                <p class="install-apple-tv-note"><i class="fab fa-apple" aria-hidden="true"></i>
-                    <span>Folosești <strong>Apple TV</strong>? Caută <strong>Hot Player</strong> în App Store și instalează aplicația.</span></p>
             </div>
         </section>
+
+        <section class="section install" id="instalare" aria-labelledby="instalare-title">
+            <div class="container">
+                <header class="section__head">
+                    <p class="eyebrow glass-lite"><span class="eyebrow__dot" aria-hidden="true"></span>Instalare</p>
+                    <h2 class="section__title" id="instalare-title">Instalează pe ecranul tău</h2>
+                    <p class="section__lead">Alege dispozitivul. Durează câteva minute, iar dacă te încurci, te ajutăm pe WhatsApp.</p>
+                </header>
+
+                <div class="install__wrap" data-install>
+                    <div class="install__tabs" role="tablist" aria-label="Alege dispozitivul" hidden>
+                        <button class="install__tab" type="button" role="tab" id="inst-tab-samsung" aria-controls="inst-samsung" data-device="samsung" aria-selected="true">Samsung TV</button>
+                        <button class="install__tab" type="button" role="tab" id="inst-tab-lg" aria-controls="inst-lg" data-device="lg" aria-selected="false" tabindex="-1">LG TV</button>
+                        <button class="install__tab" type="button" role="tab" id="inst-tab-android" aria-controls="inst-android" data-device="android" aria-selected="false" tabindex="-1">Android TV / Fire TV</button>
+                        <button class="install__tab" type="button" role="tab" id="inst-tab-telefon" aria-controls="inst-telefon" data-device="telefon" aria-selected="false" tabindex="-1">Telefon</button>
+                        <button class="install__tab" type="button" role="tab" id="inst-tab-windows" aria-controls="inst-windows" data-device="windows" aria-selected="false" tabindex="-1">Windows</button>
+                        <button class="install__tab" type="button" role="tab" id="inst-tab-mac" aria-controls="inst-mac" data-device="mac" aria-selected="false" tabindex="-1">Mac</button>
+                        <button class="install__tab" type="button" role="tab" id="inst-tab-appletv" aria-controls="inst-appletv" data-device="appletv" aria-selected="false" tabindex="-1">Apple TV</button>
+                    </div>
+
+                    <div class="device" data-device="samsung" aria-hidden="true">
+                        <div class="device__body">
+                            <div class="device__screen">
+                                <img class="device__img device__img--wide" src="img/app-ecran-lat.webp" width="960" height="540"
+                                    alt="" loading="lazy" decoding="async">
+                                <img class="device__img device__img--tall" src="img/app-ecran-telefon.webp" width="432" height="936"
+                                    alt="" loading="lazy" decoding="async">
+                            </div>
+                        </div>
+                        <span class="device__stand"><span class="device__box"></span></span>
+                    </div>
+
+                    <div class="install__panels">
+                        <article class="install__panel glass" id="inst-samsung">
+                            <div class="install__head">
+                                <ul class="app-chips" aria-label="Aplicații">
+                                    <li class="app-chip">Hot Player</li>
+                                    <li class="app-chip">SmartOne</li>
+                                </ul>
+                                <h3 class="install__title">Samsung TV</h3>
+                                <p class="install__meta">Smart TV · Tizen</p>
+                            </div>
+                            <ol class="install__steps">
+                                <li>Deschide secțiunea <strong>Apps</strong> de pe televizorul Samsung.</li>
+                                <li>Caută și instalează <strong>Hot Player</strong> sau <strong>SmartOne</strong>.</li>
+                                <li>Deschide aplicația și trimite-ne pe WhatsApp <strong>codul MAC</strong> de pe ecran (merge și o poză).
+                                    Noi ne ocupăm de rest.</li>
+                            </ol>
+                        </article>
+
+                        <article class="install__panel glass" id="inst-lg">
+                            <div class="install__head">
+                                <ul class="app-chips" aria-label="Aplicații">
+                                    <li class="app-chip">Hot Player</li>
+                                    <li class="app-chip">SmartOne</li>
+                                </ul>
+                                <h3 class="install__title">LG TV</h3>
+                                <p class="install__meta">Smart TV · webOS</p>
+                            </div>
+                            <ol class="install__steps">
+                                <li>Deschide <strong>LG Content Store</strong> pe televizor.</li>
+                                <li>Caută și instalează <strong>Hot Player</strong> sau <strong>SmartOne</strong>.</li>
+                                <li>Deschide aplicația și trimite-ne pe WhatsApp <strong>codul MAC</strong> de pe ecran (merge și o poză).
+                                    Noi ne ocupăm de rest.</li>
+                            </ol>
+                        </article>
+
+                        <article class="install__panel glass" id="inst-android">
+                            <div class="install__head">
+                                <span class="app-chip">Signal Player</span>
+                                <h3 class="install__title">Android TV și Amazon Fire TV</h3>
+                                <p class="install__meta">Smart TV · TV box · Fire TV Stick</p>
+                            </div>
+                            <ol class="install__steps">
+                                <li>Instalează <strong><span class="app-name"><img class="app-icon" src="img/downloader-96.webp"
+                                                width="28" height="28" alt="" loading="lazy" decoding="async">Downloader</span>
+                                        by AFTVnews</strong> din magazinul de aplicații al televizorului.</li>
+                                <li>Deschide Downloader, scrie codul de mai jos și instalează <strong>Signal Player</strong>. Dacă
+                                    televizorul întreabă, permite instalarea.</li>
+                                <li>Ne scrii pe WhatsApp și îți trimitem datele de conectare.</li>
+                            </ol>
+                            <div class="code-box">
+                                <span class="code-box__label">Cod Downloader</span>
+                                <strong class="code-box__value">3246757</strong>
+                            </div>
+                            <div class="install__actions">
+                                <p class="install__note">Sau instalează direct fișierul APK:</p>
+                                <a class="btn btn--primary" href="https://signal-player.com/signal.apk?v=1.0.37" target="_blank"
+                                    rel="noopener noreferrer">
+                                    <svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-download"></use></svg>
+                                    <span>Descarcă APK</span>
+                                </a>
+                            </div>
+                        </article>
+
+                        <article class="install__panel glass" id="inst-telefon">
+                            <div class="install__head">
+                                <ul class="app-chips" aria-label="Aplicații">
+                                    <li class="app-chip">Signal Player</li>
+                                    <li class="app-chip">Another IPTV Player</li>
+                                </ul>
+                                <h3 class="install__title">Telefoane Android și iPhone</h3>
+                                <p class="install__meta">Android: fișier APK · iPhone: App Store</p>
+                            </div>
+                            <ol class="install__steps">
+                                <li>Apasă mai jos butonul potrivit: <strong>Signal Player</strong> pentru Android sau
+                                    <strong>Another IPTV Player</strong> pentru iPhone.</li>
+                                <li>Instalează aplicația. Pe Android, dacă telefonul întreabă, permite instalarea.</li>
+                                <li>Ne scrii pe WhatsApp și îți trimitem datele de conectare.</li>
+                            </ol>
+                            <div class="install__actions">
+                                <a class="btn btn--primary" href="https://signal-player.com/signal.apk?v=1.0.37" target="_blank"
+                                    rel="noopener noreferrer">
+                                    <svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-download"></use></svg>
+                                    <span>Descarcă pentru Android</span>
+                                </a>
+                                <a class="btn btn--primary" href="https://apps.apple.com/us/app/another-iptv-player-m3u-xtream/id6747290392"
+                                    target="_blank" rel="noopener noreferrer">
+                                    <svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-download"></use></svg>
+                                    <span>Instalează pe iPhone</span>
+                                </a>
+                            </div>
+                        </article>
+
+                        <article class="install__panel glass" id="inst-windows">
+                            <div class="install__head">
+                                <span class="app-chip">Signal Player</span>
+                                <h3 class="install__title">Windows 10 și 11</h3>
+                                <p class="install__meta">PC · Laptop</p>
+                            </div>
+                            <ol class="install__steps">
+                                <li>Descarcă <strong>Signal Player</strong> pentru Windows.</li>
+                                <li>Deschide fișierul <strong>.exe</strong> și urmează pașii de instalare.</li>
+                                <li>Ne scrii pe WhatsApp și îți trimitem datele de conectare.</li>
+                            </ol>
+                            <div class="install__actions">
+                                <a class="btn btn--primary" href="https://signal-player.com/signal.exe" target="_blank"
+                                    rel="noopener noreferrer">
+                                    <svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-download"></use></svg>
+                                    <span>Descarcă pentru Windows</span>
+                                </a>
+                            </div>
+                        </article>
+
+                        <article class="install__panel glass" id="inst-mac">
+                            <div class="install__head">
+                                <span class="app-chip">Signal Player</span>
+                                <h3 class="install__title">Mac cu Apple Silicon</h3>
+                                <p class="install__meta">MacBook, iMac, Mac mini și alte Mac-uri cu procesor Apple Silicon</p>
+                            </div>
+                            <ol class="install__steps">
+                                <li>Descarcă <strong>Signal Player</strong> pentru macOS.</li>
+                                <li>Deschide fișierul <strong>.dmg</strong> și instalează aplicația.</li>
+                                <li>Ne scrii pe WhatsApp și îți trimitem datele de conectare.</li>
+                            </ol>
+                            <div class="install__actions">
+                                <a class="btn btn--primary" href="https://signal-player.com/signal.dmg" target="_blank"
+                                    rel="noopener noreferrer">
+                                    <svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-download"></use></svg>
+                                    <span>Descarcă pentru Mac</span>
+                                </a>
+                            </div>
+                        </article>
+
+                        <article class="install__panel glass" id="inst-appletv">
+                            <div class="install__head">
+                                <span class="app-chip">Hot Player</span>
+                                <h3 class="install__title">Apple TV</h3>
+                                <p class="install__meta">tvOS · App Store</p>
+                            </div>
+                            <ol class="install__steps">
+                                <li>Caută <strong>Hot Player</strong> în App Store pe Apple TV.</li>
+                                <li>Instalează aplicația.</li>
+                                <li>Deschide aplicația și trimite-ne pe WhatsApp <strong>codul MAC</strong> de pe ecran (merge și o poză).
+                                    Noi ne ocupăm de rest.</li>
+                            </ol>
+                            <div class="install__actions">
+                                <a class="btn btn--glass glass-lite" href="https://apps.apple.com/us/app/hot-player/id6695762404?platform=tv"
+                                    target="_blank" rel="noopener noreferrer">
+                                    <span>Vezi Hot Player în App Store</span>
+                                    <svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-arrow"></use></svg>
+                                </a>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+
+                <p class="install__help">Te încurci? <a class="text-link"
+                        href="https://wa.me/447449765468?text=Salut!%20Am%20nevoie%20de%20ajutor%20la%20instalarea%20aplica%C8%9Biei%20pentru%20Pixel%20Magix%20TV."
+                        target="_blank" rel="noopener noreferrer">Scrie-ne pe WhatsApp</a> și te ajutăm pas cu pas.</p>
+            </div>
+        </section>
+
+        <section class="section diaspora" aria-labelledby="diaspora-title">
+            <div class="container">
+                <div class="diaspora__card glass">
+                    <div class="diaspora__body">
+                        <h2 class="diaspora__title" id="diaspora-title">Departe de casă, <span class="grad">aproape de ai
+                                tăi.</span></h2>
+                        <p>Seara de film cu familia, meciul de duminică, știrile de acasă: toate pe ecranele din casa ta, în
+                            orice țară ai locui.</p>
+                        <a class="btn btn--glass btn--lg glass-lite" href="#preturi">
+                            <span>Vezi prețurile</span>
+                            <svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-arrow"></use></svg>
+                        </a>
+                    </div>
+                    <div class="diaspora__media">
+                        <img class="diaspora__img" src="img/diaspora-960.webp"
+                            srcset="img/diaspora-960.webp 960w, img/diaspora-1600.webp 1600w"
+                            sizes="(min-width: 1024px) 680px, 92vw" width="1600" height="904"
+                            alt="O familie se uită seara la un meci, împreună pe canapea, într-un apartament din străinătate"
+                            loading="lazy" decoding="async" data-materialise>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section faq" id="intrebari" aria-labelledby="intrebari-title">
+            <div class="container faq__container">
+                <header class="section__head">
+                    <p class="eyebrow glass-lite"><span class="eyebrow__dot" aria-hidden="true"></span>Întrebări</p>
+                    <h2 class="section__title" id="intrebari-title">Întrebări frecvente</h2>
+                    <p class="section__lead">Răspunsuri scurte la ce ne întreabă cel mai des clienții.</p>
+                </header>
+                <div class="faq__list">
+                    <details class="faq__item glass-lite">
+                        <summary class="faq__q">Oferiți test gratuit?</summary>
+                        <div class="faq__a">
+                            <p>Da. Ne scrii pe WhatsApp și îți activăm un cont de probă pentru 36 de ore, fără plată. Primești
+                                și un ghid rapid de instalare.</p>
+                        </div>
+                    </details>
+                    <details class="faq__item glass-lite">
+                        <summary class="faq__q">Cât costă abonamentul?</summary>
+                        <div class="faq__a">
+                            <p><strong>Standard</strong> (până la 3 ecrane, Full HD)</p>
+                            <ul>
+                                <li>1 lună: <span data-price="12">12&nbsp;€</span></li>
+                                <li>3 luni + 1 lună cadou: <span data-price="35">35&nbsp;€</span></li>
+                                <li>6 luni + 1 lună cadou: <span data-price="60">60&nbsp;€</span></li>
+                                <li>12 luni + 1 lună cadou: <span data-price="110">110&nbsp;€</span></li>
+                            </ul>
+                            <p><strong>VIP</strong> (până la 5 ecrane, 4K)</p>
+                            <ul>
+                                <li>1 lună: <span data-price="14">14&nbsp;€</span></li>
+                                <li>3 luni + 1 lună cadou: <span data-price="39">39&nbsp;€</span></li>
+                                <li>6 luni + 2 luni cadou: <span data-price="69">69&nbsp;€</span></li>
+                                <li>12 luni + 2 luni cadou: <span data-price="139">139&nbsp;€</span></li>
+                            </ul>
+                            <p>Plătești o singură dată, fără reînnoire automată.</p>
+                        </div>
+                    </details>
+                    <details class="faq__item glass-lite">
+                        <summary class="faq__q">Cum plătesc?</summary>
+                        <div class="faq__a">
+                            <p>Alegi pachetul și ne scrii pe WhatsApp, iar noi îți trimitem acolo pașii pentru plată. Plătești o
+                                singură dată, pentru toată perioada aleasă.</p>
+                        </div>
+                    </details>
+                    <details class="faq__item glass-lite">
+                        <summary class="faq__q">Se reînnoiește automat?</summary>
+                        <div class="faq__a">
+                            <p>Nu. Nu există plăți automate. Când se apropie finalul perioadei, prelungești doar dacă vrei.</p>
+                        </div>
+                    </details>
+                    <details class="faq__item glass-lite">
+                        <summary class="faq__q">Cât durează activarea?</summary>
+                        <div class="faq__a">
+                            <p>După confirmarea plății, activăm abonamentul în 5–10 minute. Primești datele și instrucțiunile pe
+                                WhatsApp sau pe email.</p>
+                        </div>
+                    </details>
+                    <details class="faq__item glass-lite">
+                        <summary class="faq__q">Pe câte ecrane pot folosi abonamentul?</summary>
+                        <div class="faq__a">
+                            <p>Standard: până la 3 ecrane în același timp, cu imagine până la Full HD. VIP: până la 5 ecrane în
+                                același timp, cu imagine până la 4K.</p>
+                            <p>Toate ecranele trebuie să fie în aceeași casă, pe același internet.</p>
+                        </div>
+                    </details>
+                    <details class="faq__item glass-lite">
+                        <summary class="faq__q">Pot folosi abonamentul și în altă parte decât acasă?</summary>
+                        <div class="faq__a">
+                            <p>Nu. Un abonament e pentru o singură casă: toate ecranele trebuie să fie pe același internet. Dacă e
+                                folosit din alt loc, se blochează automat.</p>
+                            <p>E valabil și pentru telefon: merge pe Wi-Fi-ul de acasă, nu pe date mobile.</p>
+                        </div>
+                    </details>
+                    <details class="faq__item glass-lite">
+                        <summary class="faq__q">Ce aplicații folosesc?</summary>
+                        <div class="faq__a">
+                            <p>Hot Player sau SmartOne pe Samsung TV și LG TV. Hot Player pe Apple TV. Signal Player pe Android
+                                TV, Fire TV, telefoane Android, Windows și Mac cu Apple Silicon. Another IPTV Player pe iPhone.
+                                Te ajutăm noi cu instalarea.</p>
+                            <p><a class="text-link" href="#instalare">Vezi ghidul de instalare</a></p>
+                        </div>
+                    </details>
+                    <details class="faq__item glass-lite">
+                        <summary class="faq__q">Ce internet îmi trebuie?</summary>
+                        <div class="faq__a">
+                            <ul>
+                                <li>4K: minim 80 Mbit/s</li>
+                                <li>Full HD: minim 40 Mbit/s</li>
+                                <li>HD: minim 30 Mbit/s</li>
+                                <li>SD: minim 8 Mbit/s</li>
+                            </ul>
+                            <p>Pentru o imagine stabilă, conectează dispozitivul prin cablu sau la Wi-Fi pe 5 GHz.</p>
+                        </div>
+                    </details>
+                    <details class="faq__item glass-lite">
+                        <summary class="faq__q">Funcționează în orice țară?</summary>
+                        <div class="faq__a">
+                            <p>Da, în orice țară, pe internetul de acasă.</p>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        <section class="section final-cta" aria-labelledby="final-cta-title">
+            <div class="container">
+                <div class="final-cta__card glass">
+                    <span class="final-cta__hat" aria-hidden="true">
+                        <img class="final-cta__mark" src="img/logo-palarie-128.webp" width="157" height="128" alt=""
+                            loading="lazy" decoding="async">
+                    </span>
+                    <h2 class="final-cta__title" id="final-cta-title">Pornește testul <span class="grad">gratuit</span></h2>
+                    <p class="final-cta__text">36 de ore, fără plată și fără obligații. Îți răspundem pe WhatsApp sau pe
+                        Messenger.</p>
+                    <div class="final-cta__actions">
+                        <a class="btn btn--primary btn--lg js-trial"
+                            href="https://wa.me/447449765468?text=Salut!%20Vreau%20s%C4%83%20primesc%20testul%20gratuit%20de%2036h%20pentru%20Pixel%20Magix%20TV.%20Mul%C8%9Bumesc!"
+                            target="_blank" rel="noopener noreferrer">
+                            <svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-whatsapp"></use></svg>
+                            <span>Scrie pe WhatsApp</span>
+                        </a>
+                        <a class="btn btn--glass btn--lg glass-lite" href="https://m.me/pixelmagix.shop" target="_blank"
+                            rel="noopener noreferrer">
+                            <svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-messenger"></use></svg>
+                            <span>Scrie pe Messenger</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
-    <footer class="footer-section">
-        <div class="container footer-grid">
-            <div class="footer-column">
-                <h3>Pixel Magix TV</h3>
-                <p>Platformă IPTV de top destinată românilor din diaspora. Ne mândrim cu stabilitate, conținut bogat și
-                    suport prietenos.</p>
-            </div>
-            <div class="footer-column">
-                <h4>Linkuri utile</h4>
-                <ul>
-                    <li><a href="#hero">Acasă</a></li>
-                    <li><a href="#servicii">Servicii</a></li>
-                    <li><a href="#abonamente">Abonamente</a></li>
-                    <li><a href="#faq">Întrebări frecvente</a></li>
-                    <li><a href="politica-de-confidentialitate.html">Politica de confidențialitate</a></li>
+    <footer class="site-footer">
+        <div class="container site-footer__grid">
+            <div class="site-footer__brand">
+                <a class="brand" href="#acasa" aria-label="Pixel Magix – începutul paginii">
+                    <img class="brand__mark" src="img/logo-palarie-64.webp"
+                        srcset="img/logo-palarie-64.webp 1x, img/logo-palarie-128.webp 2x" width="79" height="64" alt=""
+                        loading="lazy" decoding="async">
+                    <span class="brand__name">Pixel Magix</span>
+                </a>
+                <p>Televiziune românească pentru diaspora.</p>
+                <ul class="social">
+                    <li><a class="social__link" href="https://www.facebook.com/pixelmagix.shop/" target="_blank"
+                            rel="noopener noreferrer" aria-label="Pixel Magix pe Facebook"><svg class="icon"
+                                aria-hidden="true"><use href="img/icons.svg#i-facebook"></use></svg></a></li>
+                    <li><a class="social__link" href="https://www.facebook.com/pixelmagix.shop/" target="_blank"
+                            rel="noopener noreferrer" aria-label="Pixel Magix pe Facebook"><svg class="icon"
+                                aria-hidden="true"><use href="img/icons.svg#i-x"></use></svg></a></li>
+                    <li><a class="social__link" href="https://www.instagram.com/pixelmagixtv" target="_blank"
+                            rel="noopener noreferrer" aria-label="Pixel Magix pe Instagram"><svg class="icon"
+                                aria-hidden="true"><use href="img/icons.svg#i-instagram"></use></svg></a></li>
+                    <li><a class="social__link" href="https://www.facebook.com/pixelmagix.shop/" target="_blank"
+                            rel="noopener noreferrer" aria-label="Pixel Magix pe Facebook"><svg class="icon"
+                                aria-hidden="true"><use href="img/icons.svg#i-youtube"></use></svg></a></li>
                 </ul>
             </div>
-            <div class="footer-column">
-                <h4>Contact rapid</h4>
-                <p><i class="fas fa-phone"></i> <a href="https://wa.me/447449765468" target="_blank" rel="noopener">+44
-                        7449 765468</a></p>
-                <p><i class="fab fa-whatsapp"></i> <a href="https://wa.me/447449765468" target="_blank"
-                        rel="noopener">WhatsApp imediat</a></p>
-                <p><i class="fas fa-envelope"></i> <a href="mailto:pixelmagixtv@gmail.com">pixelmagixtv@gmail.com</a>
-                </p>
-            </div>
-            <div class="footer-column">
-                <h4>Abonează-te la noutăți</h4>
-                <form class="newsletter-form" novalidate>
-                    <label class="sr-only" for="newsletter-email">Adresa ta de email</label>
-                    <input type="email" id="newsletter-email" name="newsletter-email" placeholder="Emailul tău"
-                        autocomplete="email" inputmode="email" maxlength="254" required>
-                    <button type="submit" aria-label="Trimite abonarea"><i class="fas fa-paper-plane"></i></button>
-                </form>
-                <p class="newsletter-status" role="status" aria-live="polite" aria-atomic="true"></p>
-                <p class="newsletter-note">Primești oferte exclusive, actualizări și ghiduri utile.</p>
+            <nav class="site-footer__col" aria-label="Linkuri din subsol">
+                <h2 class="site-footer__title">Pagina</h2>
+                <ul>
+                    <li><a href="#ce-primesti">Ce primești</a></li>
+                    <li><a href="#preturi">Prețuri</a></li>
+                    <li><a href="#cum-functioneaza">Cum funcționează</a></li>
+                    <li><a href="#instalare">Instalare</a></li>
+                    <li><a href="#intrebari">Întrebări frecvente</a></li>
+                    <li><a href="politica-de-confidentialitate.html">Politica de confidențialitate</a></li>
+                    <li data-consent-footer hidden><button class="link-button" type="button" id="setari-cookie" data-consent-open>Setări cookie</button></li>
+                </ul>
+            </nav>
+            <div class="site-footer__col">
+                <h2 class="site-footer__title">Contact</h2>
+                <ul>
+                    <li><a href="https://wa.me/447449765468" target="_blank" rel="noopener noreferrer">WhatsApp: +44 7449
+                            765468</a></li>
+                    <li><a href="https://m.me/pixelmagix.shop" target="_blank" rel="noopener noreferrer">Messenger</a></li>
+                    <li><a href="mailto:pixelmagixtv@gmail.com">pixelmagixtv@gmail.com</a></li>
+                </ul>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; <span id="current-year"></span> Pixel Magix TV. Toate drepturile rezervate.</p>
+        <div class="container site-footer__bottom">
+            <p>© 2026 Pixel Magix TV.</p>
         </div>
     </footer>
 
-    <button class="scroll-to-top" aria-label="Înapoi sus"><i class="fas fa-arrow-up"></i></button>
+    <nav class="tabbar glass" aria-label="Navigare rapidă">
+        <a class="tabbar__item is-active" href="#acasa" aria-current="true">
+            <svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-home"></use></svg>
+            <span>Acasă</span>
+        </a>
+        <a class="tabbar__item" href="#preturi">
+            <svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-tag"></use></svg>
+            <span>Prețuri</span>
+        </a>
+        <a class="tabbar__item" href="#instalare">
+            <svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-download"></use></svg>
+            <span>Instalare</span>
+        </a>
+        <a class="tabbar__item tabbar__item--wa js-trial"
+            href="https://wa.me/447449765468?text=Salut!%20Vreau%20s%C4%83%20primesc%20testul%20gratuit%20de%2036h%20pentru%20Pixel%20Magix%20TV.%20Mul%C8%9Bumesc!"
+            target="_blank" rel="noopener noreferrer">
+            <span class="tabbar__wa"><svg class="icon" aria-hidden="true"><use href="img/icons.svg#i-whatsapp"></use></svg></span>
+            <span>WhatsApp</span>
+        </a>
+    </nav>
 
-    <button class="whatsapp-bubble" id="whatsapp-bubble" type="button" aria-label="Deschide chat WhatsApp" aria-controls="whatsapp-chat-window" aria-expanded="false">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" width="28"
-            height="28" decoding="async">
-    </button>
+    <svg class="svg-defs" aria-hidden="true" focusable="false">
+        <filter id="lg-refract" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+            <feTurbulence type="fractalNoise" baseFrequency="0.008 0.014" numOctaves="2" seed="7" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="14" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+    </svg>
 
-    <div class="whatsapp-chat-window" id="whatsapp-chat-window" role="dialog" aria-modal="true" aria-label="Chat WhatsApp" aria-hidden="true" inert>
-        <div class="chat-header">
-            <span>WhatsApp Chat</span>
-            <button class="close-btn" id="close-chat-btn" aria-label="Închide chatul">&times;</button>
-        </div>
-        <div class="chat-body">
-            <label class="sr-only" for="whatsapp-message">Mesaj pentru WhatsApp</label>
-            <textarea id="whatsapp-message" maxlength="2000" placeholder="Scrie mesajul tău aici..."></textarea>
-            <p class="chat-note">Mesajul se deschide în aplicația WhatsApp.</p>
-        </div>
-        <div class="chat-footer">
-            <button id="send-whatsapp-message">Trimite</button>
-        </div>
-    </div>
-
-    <div class="trailer-modal" id="trailer-modal" aria-hidden="true" aria-modal="true" role="dialog" aria-label="Previzualizare video film" inert>
-        <div class="trailer-modal__backdrop" data-trailer-close></div>
-        <div class="trailer-modal__content" role="document">
-            <button class="trailer-modal__close" type="button" data-trailer-close
-                aria-label="Închide previzualizarea video">&times;</button>
-            <div class="trailer-modal__frame">
-                <iframe title="Previzualizare video" allow="autoplay; fullscreen; picture-in-picture"
-                    allowfullscreen></iframe>
-                <div class="trailer-modal__fallback" aria-live="polite">
-                    Previzualizarea video este indisponibilă momentan. Revino mai târziu.
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"
-        integrity="sha384-wziAfh6b/qT+3LrqebF9WeK4+J5sehS6FA10J1t3a866kJ/fvU5UwofWnQyzLtwu"
-        crossorigin="anonymous" defer></script>
-    <script src="fluid-cursor.js?v=responsive-security-2026-09-10" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4.4.1/dist/email.min.js" defer
-        integrity="sha384-SALc35EccAf6RzGw4iNsyj7kTPr33K7RoGzYu+7heZhT8s0GZouafRiCg1qy44AS"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@25.12.4/build/js/intlTelInput.min.js"
-        integrity="sha384-MaP+WODIptSC7Wk4y9Nk8mXLNQ6IqnRFPz1xfc40J25Tr215Ll4YjcBXEPxjiFhG"
-        crossorigin="anonymous" defer></script>
-    <script src="script.js?v=install-apps-2026-09-10" defer></script>
+    <!-- Structured data for search engines. It only repeats what the page says; tests/seo.test.mjs keeps the two equal. -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Organization",
+                "@id": "https://pixelmagix.shop/#organization",
+                "name": "Pixel Magix TV",
+                "alternateName": "Pixel Magix",
+                "url": "https://pixelmagix.shop/",
+                "logo": "https://pixelmagix.shop/apple-touch-icon.png",
+                "description": "Televiziune românească pentru diaspora.",
+                "email": "pixelmagixtv@gmail.com",
+                "telephone": "+447449765468",
+                "sameAs": [
+                    "https://www.facebook.com/pixelmagix.shop/",
+                    "https://www.instagram.com/pixelmagixtv"
+                ]
+            },
+            {
+                "@type": "WebSite",
+                "@id": "https://pixelmagix.shop/#website",
+                "name": "Pixel Magix TV",
+                "alternateName": "Pixel Magix",
+                "url": "https://pixelmagix.shop/",
+                "inLanguage": "ro",
+                "publisher": {
+                    "@id": "https://pixelmagix.shop/#organization"
+                }
+            },
+            {
+                "@type": "FAQPage",
+                "@id": "https://pixelmagix.shop/#intrebari",
+                "inLanguage": "ro",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "Oferiți test gratuit?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Da. Ne scrii pe WhatsApp și îți activăm un cont de probă pentru 36 de ore, fără plată. Primești și un ghid rapid de instalare."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Cât costă abonamentul?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "<p><strong>Standard</strong> (până la 3 ecrane, Full HD)</p><ul><li>1 lună: 12 €</li><li>3 luni + 1 lună cadou: 35 €</li><li>6 luni + 1 lună cadou: 60 €</li><li>12 luni + 1 lună cadou: 110 €</li></ul><p><strong>VIP</strong> (până la 5 ecrane, 4K)</p><ul><li>1 lună: 14 €</li><li>3 luni + 1 lună cadou: 39 €</li><li>6 luni + 2 luni cadou: 69 €</li><li>12 luni + 2 luni cadou: 139 €</li></ul><p>Plătești o singură dată, fără reînnoire automată.</p>"
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Cum plătesc?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Alegi pachetul și ne scrii pe WhatsApp, iar noi îți trimitem acolo pașii pentru plată. Plătești o singură dată, pentru toată perioada aleasă."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Se reînnoiește automat?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Nu. Nu există plăți automate. Când se apropie finalul perioadei, prelungești doar dacă vrei."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Cât durează activarea?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "După confirmarea plății, activăm abonamentul în 5–10 minute. Primești datele și instrucțiunile pe WhatsApp sau pe email."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Pe câte ecrane pot folosi abonamentul?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "<p>Standard: până la 3 ecrane în același timp, cu imagine până la Full HD. VIP: până la 5 ecrane în același timp, cu imagine până la 4K.</p><p>Toate ecranele trebuie să fie în aceeași casă, pe același internet.</p>"
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Pot folosi abonamentul și în altă parte decât acasă?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "<p>Nu. Un abonament e pentru o singură casă: toate ecranele trebuie să fie pe același internet. Dacă e folosit din alt loc, se blochează automat.</p><p>E valabil și pentru telefon: merge pe Wi-Fi-ul de acasă, nu pe date mobile.</p>"
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Ce aplicații folosesc?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "<p>Hot Player sau SmartOne pe Samsung TV și LG TV. Hot Player pe Apple TV. Signal Player pe Android TV, Fire TV, telefoane Android, Windows și Mac cu Apple Silicon. Another IPTV Player pe iPhone. Te ajutăm noi cu instalarea.</p><p><a href=\"https://pixelmagix.shop/#instalare\">Vezi ghidul de instalare</a></p>"
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Ce internet îmi trebuie?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "<ul><li>4K: minim 80 Mbit/s</li><li>Full HD: minim 40 Mbit/s</li><li>HD: minim 30 Mbit/s</li><li>SD: minim 8 Mbit/s</li></ul><p>Pentru o imagine stabilă, conectează dispozitivul prin cablu sau la Wi-Fi pe 5 GHz.</p>"
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Funcționează în orice țară?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Da, în orice țară, pe internetul de acasă."
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+    </script>
 </body>
 
 </html>

@@ -118,28 +118,40 @@ GitHub Pages now redirects it to the canonical apex.
 
 ## Content Security Policy compatibility
 
-The exported `pageContentSecurityPolicy` pins the current AOS, EmailJS,
-intl-tel-input and Font Awesome CDN resource paths. It permits Google Fonts,
-the existing external image hosts, country-flag images, EmailJS's API and
-`www.youtube.com` embeds. Same-origin Cloudflare email obfuscation scripts
-observed on the live site remain allowed. Cloudflare Insights was not observed
-and is not added speculatively.
+The Worker holds two policies (`geo-worker.mjs`):
 
-Inline JavaScript and JavaScript URLs are blocked. Deploy the accompanying
-`script.js` change that handles failed movie posters through an event listener
-before enabling this CSP; the old generated `onerror` attribute would be blocked.
-Inline CSS remains allowed for the existing HTML styles, animations and widgets.
-YouTube receives an origin referrer, which its player needs; do not replace the
-referrer policy with `no-referrer` without testing trailer playback.
+- `finalContentSecurityPolicy`, for the new site:
+  - its own files only, plus Meta Pixel and Google Analytics 4;
+  - the trackers are loaded by `js/trackers.js`, and only after the visitor's consent;
+  - `script-src` adds `https://connect.facebook.net` and `https://www.googletagmanager.com`;
+  - `img-src` adds `https://www.facebook.com`, `https://www.googletagmanager.com` and
+    `https://*.google-analytics.com`;
+  - `connect-src` adds those three hosts plus `https://analytics.google.com` and
+    `https://*.analytics.google.com`;
+  - fonts are self-hosted (`font-src 'self'`);
+  - frames are refused (`frame-src 'none'`).
+- `transitionContentSecurityPolicy`: the final policy plus every host the old site still uses (AOS,
+  EmailJS, intl-tel-input, Font Awesome, Google Fonts, TMDB posters, YouTube trailers). The tests check
+  that it covers, source by source, both the policy deployed today and the final one.
 
-Native form submissions are blocked (`form-action 'none'`), because the contact
-and newsletter forms submit using EmailJS JavaScript/fetch. This also prevents
-native fallback from sending form data to static hosting if JavaScript fails.
-This directive does not restrict the authorized EmailJS fetch request.
+`CSP_STAGE` picks the one the Worker sends. It is `'transition'`, so deploying the current file at any
+moment keeps the live (old) site working.
 
-Keep CDN version/path changes and this policy synchronized. Test the contact
-form and newsletter with mocked network responses so verification does not send
-messages. Test actual delivery only when separately authorized.
+**Etapa 4 order (spec §12):**
+
+1. Deploy the Worker as it is (`transition`).
+2. Push the new site to `main`.
+3. Check it live: no CSP violations, banner, events in Meta "Test events".
+4. Set `CSP_STAGE = 'final'`, run `node --test tests/*.test.mjs` (the stage test expects `'transition'`;
+   update it in the same change) and deploy again.
+
+Inline JavaScript and JavaScript URLs stay blocked in both policies (`script-src` has no `'unsafe-*'`,
+`script-src-attr 'none'`). The tracker snippets are module code, not inline scripts. Inline CSS stays
+allowed. Native form submissions stay blocked (`form-action 'none'`). Same-origin Cloudflare email
+obfuscation scripts remain allowed by `'self'`.
+
+The local preview (`node tests/preview.mjs [port]`) serves the site through `handleRequest` with the
+final policy, the strictest. Whatever works there also works under the transition policy.
 
 ## Local checks
 

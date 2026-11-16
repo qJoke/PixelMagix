@@ -1,6 +1,12 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { handleRequest, pageContentSecurityPolicy } from '../cloudflare/geo-worker.mjs';
+import {
+    CSP_STAGE,
+    finalContentSecurityPolicy,
+    handleRequest,
+    pageContentSecurityPolicy,
+    transitionContentSecurityPolicy
+} from '../cloudflare/geo-worker.mjs';
 
 const noOrigin = () => { throw new Error('The origin must not be contacted for this request'); };
 const requestFor = (path = '/', init = {}, country) => {
@@ -144,17 +150,76 @@ test('origin failures return a generic non-cacheable response without error deta
     assert.deepEqual(await response.json(), { error: 'Temporarily unavailable' });
 });
 
-test('HTML policy blocks inline executable code while retaining required integrations', () => {
-    const directives = new Map(pageContentSecurityPolicy.split('; ').map(value => {
-        const [name, ...sources] = value.split(' ');
-        return [name, sources];
-    }));
-    assert.ok(!directives.get('script-src').includes("'unsafe-inline'"));
-    assert.ok(!directives.get('script-src').includes("'unsafe-eval'"));
-    assert.deepEqual(directives.get('script-src-attr'), ["'none'"]);
-    assert.deepEqual(directives.get('frame-ancestors'), ["'none'"]);
-    assert.deepEqual(directives.get('form-action'), ["'none'"]);
-    assert.ok(directives.get('connect-src').includes('https://api.emailjs.com'));
-    assert.ok(directives.get('script-src').includes('https://cdn.jsdelivr.net/npm/intl-tel-input@25.12.4/build/js/utils.js'));
-    assert.ok(directives.get('frame-src').includes('https://www.youtube.com'));
+// --- Content Security Policy: old+new during the switch (Etapa 4), then final (spec §9, §12) ------------
+// The policy live on pixelmagix.shop today (deployed for the old site), copied verbatim.
+const LIVE_POLICY = [
+    "default-src 'self'",
+    "base-uri 'none'",
+    "object-src 'none'",
+    "frame-ancestors 'none'",
+    "form-action 'none'",
+    "script-src 'self' https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js https://cdn.jsdelivr.net/npm/@emailjs/browser@4.4.1/dist/email.min.js https://cdn.jsdelivr.net/npm/intl-tel-input@25.12.4/build/js/intlTelInput.min.js https://cdn.jsdelivr.net/npm/intl-tel-input@25.12.4/build/js/utils.js",
+    "script-src-attr 'none'",
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.css https://cdn.jsdelivr.net/npm/intl-tel-input@25.12.4/build/css/intlTelInput.css https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css",
+    "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/webfonts/",
+    "img-src 'self' data: https://image.tmdb.org https://images.unsplash.com https://upload.wikimedia.org https://cdn.jsdelivr.net/npm/intl-tel-input@25.12.4/build/img/",
+    "connect-src 'self' https://api.emailjs.com",
+    "frame-src https://www.youtube.com",
+    "worker-src 'none'",
+    'upgrade-insecure-requests'
+].join('; ');
+
+const directives = policy => new Map(policy.split('; ').map(value => {
+    const [name, ...sources] = value.split(' ');
+    return [name, sources];
+}));
+
+test('the transition policy keeps everything the live site uses today, plus everything the new site needs', () => {
+    const transition = directives(transitionContentSecurityPolicy);
+    for (const policy of [LIVE_POLICY, finalContentSecurityPolicy]) {
+        for (const [name, sources] of directives(policy)) {
+            assert.ok(transition.has(name), name);
+            // 'none' allows nothing, so any list covers it.
+            for (const source of sources.filter(item => item !== "'none'")) {
+                assert.ok(transition.get(name).includes(source), `${name} ${source}`);
+            }
+        }
+    }
+    for (const [name, sources] of transition) {
+        assert.ok(!(sources.includes("'none'") && sources.length > 1), `${name}: 'none' must stand alone`);
+    }
+});
+
+test('the final policy drops the old site\'s hosts and allows only what the trackers need', () => {
+    for (const old of ['cdn.jsdelivr.net', 'cdnjs.cloudflare.com', 'fonts.googleapis.com', 'fonts.gstatic.com', 'image.tmdb.org', 'images.unsplash.com', 'upload.wikimedia.org', 'api.emailjs.com', 'www.youtube.com']) {
+        assert.ok(!finalContentSecurityPolicy.includes(old), old);
+    }
+    const final = directives(finalContentSecurityPolicy);
+    assert.deepEqual(final.get('script-src'), ["'self'", 'https://connect.facebook.net', 'https://www.googletagmanager.com']);
+    assert.deepEqual(final.get('img-src'), ["'self'", 'data:', 'https://www.facebook.com', 'https://www.googletagmanager.com', 'https://*.google-analytics.com']);
+    assert.deepEqual(final.get('connect-src'), ["'self'", 'https://www.facebook.com', 'https://www.googletagmanager.com', 'https://*.google-analytics.com', 'https://analytics.google.com', 'https://*.analytics.google.com']);
+    assert.deepEqual(final.get('font-src'), ["'self'"]);
+    assert.deepEqual(final.get('frame-src'), ["'none'"]);
+    assert.deepEqual(final.get('style-src'), ["'self'", "'unsafe-inline'"]);
+});
+
+test('both policies still block inline and injected code', () => {
+    for (const policy of [finalContentSecurityPolicy, transitionContentSecurityPolicy]) {
+        const map = directives(policy);
+        assert.ok(!map.get('script-src').some(source => source.startsWith("'unsafe")), 'no unsafe-inline/eval for scripts');
+        assert.ok(!map.get('script-src').includes('*') && !map.get('script-src').includes('https:'), 'no wildcard script hosts');
+        for (const name of ['script-src-attr', 'frame-ancestors', 'form-action', 'object-src', 'base-uri', 'worker-src']) {
+            assert.deepEqual(map.get(name), ["'none'"], name);
+        }
+    }
+});
+
+test('the Worker serves the transition policy until Etapa 4 switches it to the final one', async () => {
+    assert.equal(CSP_STAGE, 'transition');
+    assert.equal(pageContentSecurityPolicy, transitionContentSecurityPolicy);
+    const policyFor = async options => (await handleRequest(requestFor('/'), async () => new Response('page', {
+        headers: { 'content-type': 'text/html; charset=utf-8' }
+    }), options)).headers.get('content-security-policy');
+    assert.equal(await policyFor(), transitionContentSecurityPolicy);
+    assert.equal(await policyFor({ contentSecurityPolicy: finalContentSecurityPolicy }), finalContentSecurityPolicy);
 });
