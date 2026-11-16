@@ -214,12 +214,15 @@ test('both policies still block inline and injected code', () => {
     }
 });
 
-test('the Worker serves the transition policy until Etapa 4 switches it to the final one', async () => {
-    assert.equal(CSP_STAGE, 'transition');
-    assert.equal(pageContentSecurityPolicy, transitionContentSecurityPolicy);
+test('the Worker serves the final policy now that the new site is live', async () => {
+    // Since 17 Nov 2026. The transition policy stays in the file only for a rollback to the old site.
+    assert.equal(CSP_STAGE, 'final');
+    assert.equal(pageContentSecurityPolicy, finalContentSecurityPolicy);
     const policyFor = async options => (await handleRequest(requestFor('/'), async () => new Response('page', {
         headers: { 'content-type': 'text/html; charset=utf-8' }
     }), options)).headers.get('content-security-policy');
-    assert.equal(await policyFor(), transitionContentSecurityPolicy);
-    assert.equal(await policyFor({ contentSecurityPolicy: finalContentSecurityPolicy }), finalContentSecurityPolicy);
+    assert.equal(await policyFor(), finalContentSecurityPolicy);
+    assert.equal(await policyFor({ contentSecurityPolicy: transitionContentSecurityPolicy }), transitionContentSecurityPolicy);
+    // None of the old site's hosts is left in what visitors get.
+    assert.doesNotMatch(await policyFor(), /jsdelivr|cdnjs|fonts\.g|emailjs|tmdb|unsplash|wikimedia|youtube/);
 });

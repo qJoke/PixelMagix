@@ -5,6 +5,26 @@ origin with HTTPS redirects and response headers. The worker name stays
 `pixelmagix-geo` to update the existing deployment instead of creating another.
 Editing the files does not update the public site until Wrangler is deployed.
 
+## Deployment status (2026-11-17)
+
+- The redesigned site was published through GitHub Pages from commit `3841386` (Pages build finished
+  2026-11-16 22:25 UTC).
+- The Worker lives in the Cloudflare account that holds the `pixelmagix.shop` zone. Check with
+  `wrangler whoami` and `wrangler deployments list` before any deploy: a deploy from another account would
+  create a second, unrouted Worker.
+- Worker versions, in order: `8c0556b8-cb5d-4312-9955-dcbf9bca1f9b` (old site's policy, live until this
+  date), `45476dfc-eb0e-4693-bf5e-5ca3479177fe` (transition policy, deployed before the site was pushed),
+  then `15f46bab-5797-4a45-b80f-5b2949bbe4e0` (final policy, deployed after the live checks).
+- Live checks after the push, under the transition policy and again under the final one: the new page and
+  its assets answer 200; `tests/`, `cloudflare/`, the Markdown files, `_config.yml` and `.gitignore` are not
+  served; a wrong address gets the 404 page; `/geo.json` answers and refuses POST; http and `www` redirect
+  to `https://pixelmagix.shop`; CSP, HSTS, nosniff, frame, referrer and permissions headers are present.
+  In a browser: no console error and nothing blocked on a plain visit, nothing asked from Meta or Google
+  before consent, both tags asked for after "Accept tot", no CSP violation.
+- Open: GitHub's certificate for the domain expires on **2026-12-09** and its ACME state is `bad_authz`.
+  The renewal described under "Origin certificate provisioned" has to be repeated before that date (or the
+  files moved off GitHub Pages); with Full (strict) the site would answer 526 after it.
+
 ## Deployment status (2026-09-10)
 
 - The responsive UI was published through GitHub Pages from commit
@@ -134,16 +154,17 @@ The Worker holds two policies (`geo-worker.mjs`):
   EmailJS, intl-tel-input, Font Awesome, Google Fonts, TMDB posters, YouTube trailers). The tests check
   that it covers, source by source, both the policy deployed today and the final one.
 
-`CSP_STAGE` picks the one the Worker sends. It is `'transition'`, so deploying the current file at any
-moment keeps the live (old) site working.
+`CSP_STAGE` picks the one the Worker sends. It is `'final'` since the new site went live (17 Nov 2026).
 
-**Etapa 4 order (spec §12):**
+**How the switch was made, and how to go back:**
 
-1. Deploy the Worker as it is (`transition`).
-2. Push the new site to `main`.
-3. Check it live: no CSP violations, banner, events in Meta "Test events".
-4. Set `CSP_STAGE = 'final'`, run `node --test tests/*.test.mjs` (the stage test expects `'transition'`;
-   update it in the same change) and deploy again.
+1. The Worker was deployed with `transition`, which serves both sites.
+2. The new site was pushed to `main` and checked live: no CSP violation, the banner, nothing asked from
+   Meta or Google before consent and both tags asked for after it.
+3. `CSP_STAGE` was set to `'final'` (with its test) and the Worker deployed again.
+
+To roll back to the old site: set `CSP_STAGE = 'transition'` (and its test), deploy the Worker, then revert
+the site commit on `main`. In that order, so the old page never meets the final policy.
 
 Inline JavaScript and JavaScript URLs stay blocked in both policies (`script-src` has no `'unsafe-*'`,
 `script-src-attr 'none'`). The tracker snippets are module code, not inline scripts. Inline CSS stays

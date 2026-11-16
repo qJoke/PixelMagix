@@ -23,8 +23,9 @@ const sitePolicy = [
     ['upgrade-insecure-requests', []]
 ];
 
-// What the old site (live until Etapa 4) still loads from other hosts: AOS, EmailJS, intl-tel-input,
-// Font Awesome, Google Fonts, posters and trailers. Remove with the switch to the final policy.
+// What the old site (live until 17 Nov 2026) loaded from other hosts: AOS, EmailJS, intl-tel-input,
+// Font Awesome, Google Fonts, posters and trailers. Only the transition policy uses them; remove the list
+// once a rollback to the old site is no longer wanted.
 const legacySources = {
     'script-src': [
         'https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js',
@@ -54,9 +55,9 @@ const withLegacy = policy => policy.map(([name, sources]) => {
 export const finalContentSecurityPolicy = serialize(sitePolicy);
 export const transitionContentSecurityPolicy = serialize(withLegacy(sitePolicy));
 
-// Publishing order (spec §12, Etapa 4): 1) deploy this Worker as it is ('transition': the old and the new
-// site both work); 2) push the new site to main; 3) check it live; 4) set 'final', run the tests, deploy again.
-export const CSP_STAGE = 'transition';
+// The new site has been live since 17 Nov 2026, so the Worker sends the final policy. 'transition' (the final
+// policy plus the hosts the old site loaded) stays only so that a rollback to the old site is one word away.
+export const CSP_STAGE = 'final';
 export const pageContentSecurityPolicy = CSP_STAGE === 'final' ? finalContentSecurityPolicy : transitionContentSecurityPolicy;
 
 const securityHeaders = {
