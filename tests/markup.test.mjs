@@ -753,16 +753,34 @@ test('the cookie banner comes first in the page, hidden until the script decides
     assert.match(consentBlock(), /href="politica-de-confidentialitate\.html"/);
 });
 
-test('"Accept tot" and "Refuz" are the same button, side by side', () => {
+test('the first screen offers one "Accept toate" in the brand gradient; "Refuz toate" waits in the settings', () => {
     const block = consentBlock();
-    const accept = block.match(/<button ([^>]*data-consent-accept[^>]*)>([^<]*)<\/button>/);
-    const reject = block.match(/<button ([^>]*data-consent-reject[^>]*)>([^<]*)<\/button>/);
-    assert.ok(accept && reject, 'both buttons exist');
-    assert.equal(accept[2].trim(), 'Accept tot');
-    assert.equal(reject[2].trim(), 'Refuz');
-    const classOf = attributes => attributes.match(/class="([^"]+)"/)[1];
-    assert.equal(classOf(accept[1]), classOf(reject[1]));
-    for (const attributes of [accept[1], reject[1]]) assert.match(attributes, /type="button"/);
+    const buttonsIn = part => [...part.matchAll(/<button ([^>]*)>([^<]*)<\/button>/g)].map(([, attributes, label]) => ({ attributes, label: label.trim() }));
+    const classOf = attributes => attributes.match(/class="([^"]+)"/)?.[1] ?? '';
+    const first = buttonsIn(block.match(/<div class="consent__actions">([\s\S]*?)<\/div>/)?.[1] ?? '');
+    assert.equal(first.length, 1, 'one button on the first screen');
+    assert.equal(first[0].label, 'Accept toate');
+    assert.match(first[0].attributes, /data-consent-accept/);
+    assert.match(first[0].attributes, /type="button"/);
+    assert.match(classOf(first[0].attributes), /\bbtn--primary\b/);
+    assert.doesNotMatch(classOf(first[0].attributes), /\bbtn--sm\b/);
+    assert.equal(block.match(/\bbtn--primary\b/g)?.length, 1, 'the only gradient button in the banner');
+    // Refusing stays possible: in the settings, with the same weight as saving a custom choice.
+    const options = block.match(/<div class="consent__options"[\s\S]*?<div class="consent__actions">/)?.[0] ?? '';
+    const pair = buttonsIn(options.match(/<div class="consent__pair">([\s\S]*?)<\/div>/)?.[1] ?? '');
+    assert.deepEqual(pair.map(button => button.label), ['Salvez alegerea', 'Refuz toate']);
+    assert.match(pair[0].attributes, /data-consent-save/);
+    assert.match(pair[1].attributes, /data-consent-reject/);
+    for (const button of pair) {
+        assert.equal(classOf(button.attributes), 'btn btn--glass btn--sm glass-lite');
+        assert.match(button.attributes, /type="button"/);
+    }
+});
+
+test('the first-screen text still says what the cookies are for (statistics and ads)', () => {
+    const text = consentBlock().match(/<p class="consent__text">([\s\S]*?)<\/p>/)?.[1].replace(/\s+/g, ' ').trim() ?? '';
+    assert.match(text, /\bstatistici\b/);
+    assert.match(text, /\breclame\b/);
 });
 
 test('the settings start closed, with unticked switches for Statistici and Marketing', () => {
@@ -801,6 +819,10 @@ test('the banner floats above the tab bar, scrolls inside when tall, and moves o
     assert.match(rule('.consent[hidden]'), /display:\s*none/);
     assert.match(rule('.consent__inner'), /overflow-y:\s*auto/);
     assert.match(rule('.consent__inner'), /max-height:/);
+    // "Salvez alegerea" and "Refuz toate" share a row, and stack instead of overflowing on narrow phones.
+    assert.match(rule('.consent__pair'), /display:\s*flex/);
+    assert.match(rule('.consent__pair'), /flex-wrap:\s*wrap/);
+    assert.match(rule('.consent__pair .btn'), /flex:\s*1 1 0/);
     const motion = css.match(/@media \(prefers-reduced-motion: no-preference\) \{\s*\.consent \{\s*animation:[^}]*\}/);
     assert.ok(motion, 'the entrance animation exists only for prefers-reduced-motion: no-preference');
     assert.match(css, /@media \(forced-colors: active\) \{\s*\.consent__switch \{\s*appearance: auto;/);

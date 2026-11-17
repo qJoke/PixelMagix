@@ -55,8 +55,7 @@
                 <img class="consent__mark" src="img/logo-palarie-64.webp"
                     srcset="img/logo-palarie-64.webp 1x, img/logo-palarie-128.webp 2x" width="79" height="64" alt="">
                 Cookie-uri</h2>
-            <p class="consent__text">Folosim cookie-uri pentru statistici și reclame doar dacă ești de acord. Poți schimba oricând
-                alegerea, din „Setări cookie”, jos în pagină.</p>
+            <p class="consent__text">Folosim cookie-uri pentru statistici și reclame. Poți schimba oricând alegerea.</p>
             <div class="consent__options" id="consent-options" data-consent-options hidden>
                 <div class="consent__row">
                     <p class="consent__name">Strict necesare <span class="consent__always">mereu active</span></p>
@@ -78,11 +77,13 @@
                     <p class="consent__desc" id="consent-desc-marketing">Meta Pixel: ce reclame de pe Facebook și Instagram ne aduc
                         clienți, ca să le arătăm celor interesați.</p>
                 </div>
-                <button class="btn btn--primary btn--sm btn--block" type="button" data-consent-save>Salvez alegerea</button>
+                <div class="consent__pair">
+                    <button class="btn btn--glass btn--sm glass-lite" type="button" data-consent-save>Salvez alegerea</button>
+                    <button class="btn btn--glass btn--sm glass-lite" type="button" data-consent-reject>Refuz toate</button>
+                </div>
             </div>
             <div class="consent__actions">
-                <button class="btn btn--glass btn--sm glass-lite consent__choice" type="button" data-consent-accept>Accept tot</button>
-                <button class="btn btn--glass btn--sm glass-lite consent__choice" type="button" data-consent-reject>Refuz</button>
+                <button class="btn btn--primary consent__choice" type="button" data-consent-accept>Accept toate</button>
             </div>
             <div class="consent__links">
                 <button class="consent__more" type="button" data-consent-settings aria-expanded="false"

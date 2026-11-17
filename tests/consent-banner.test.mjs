@@ -70,7 +70,7 @@ function fakeBanner({ enabled = { statistici: true, marketing: true } } = {}) {
     return { doc, root, parts, status, choices, banner, element };
 }
 
-test('"Accept tot" and "Refuz" decide both categories at once and close the banner', () => {
+test('"Accept toate" and "Refuz toate" decide both categories at once and close the banner', () => {
     const accepted = fakeBanner();
     accepted.banner.show();
     assert.equal(accepted.root.hidden, false);

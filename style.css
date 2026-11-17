@@ -3810,8 +3810,16 @@ html.motion-paused .rotator__word {
     border-color: var(--cyan);
 }
 
-.consent__options .btn {
+/* "Salvez alegerea" and "Refuz toate": two equal halves, stacked when a narrow phone has no room for both. */
+.consent__pair {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
     margin-top: 12px;
+}
+
+.consent__pair .btn {
+    flex: 1 1 0;
 }
 
 .consent__actions {
